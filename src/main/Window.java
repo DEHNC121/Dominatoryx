@@ -11,6 +11,7 @@ public class Window extends JFrame
         setUndecorated(true);
 
         setTitle ("Dominatoryx");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setContentPane (new GamePanel ((int)ekran.getWidth(), (int)ekran.getHeight()));
