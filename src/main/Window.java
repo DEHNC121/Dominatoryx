@@ -6,11 +6,13 @@ import java.awt.*;
 
 public class Window extends JFrame
 {
+    public static String panelTitle;
     public Window () {
+        panelTitle="Dominatoryx";
         Dimension ekran=Toolkit.getDefaultToolkit().getScreenSize();
         setUndecorated(true);
 
-        setTitle ("Dominatoryx");
+        setTitle (panelTitle);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setContentPane (new GamePanel ((int)ekran.getWidth(), (int)ekran.getHeight()));
