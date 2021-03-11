@@ -139,18 +139,18 @@ public class GamePanel extends JPanel implements Runnable
 
     public void render ()
     {
-        if (g != null)
-        {
-            g.setColor(new Color (22, 104, 4));
-            g.fillRect(0, 0, width, height);
-            gsm.render(g);
-        }
+//        if (g != null)
+//        {
+//            g.setColor(new Color (22, 104, 4));
+//            g.fillRect(0, 0, width, height);
+//            gsm.render(g);
+//        }
     }
     public void draw ()
     {
-        Graphics g2 = (Graphics) this.getGraphics();
-        g2.drawImage(img, 0, 0, width, height, null);
-        g2.dispose();
+//        Graphics g2 = (Graphics) this.getGraphics();
+//        g2.drawImage(img, 0, 0, width, height, null);
+//        g2.dispose();
     }
 
 }

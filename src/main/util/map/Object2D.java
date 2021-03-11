@@ -1,4 +1,4 @@
-package main.util;
+package main.util.map;
 
 public class Object2D {
 
@@ -51,6 +51,7 @@ public class Object2D {
     public void setWidth(int width) {
         this.width = width;
     }
+
     public boolean isInside(int x,int y){
         return (x>=this.x && x<= this.x+width && y>=this.y && y<=this.y+height );
     }
