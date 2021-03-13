@@ -15,9 +15,9 @@ public class PlayState extends GameState
         LARGE;
         public Pair<Integer, Integer> size;
         static {
-            SMALL.size=new Pair<>(20,20);
-            MEDIUM.size=new Pair<>(30,30);
-            LARGE.size=new Pair<>(40,40);
+            SMALL.size=new Pair<>(20,40);
+            MEDIUM.size=new Pair<>(30,60);
+            LARGE.size=new Pair<>(40,80);
         }
 
     }
