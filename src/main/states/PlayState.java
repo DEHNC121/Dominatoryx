@@ -5,16 +5,23 @@ import main.util.MouseHandler;
 import main.util.map.WorldMap;
 
 import java.awt.*;
-
+import javafx.util.Pair;
 public class PlayState extends GameState
 {
     public static WorldMap worldMap;
     public enum GameMapSize{
-        SMAll,
-        MIDDLE,
-        LARGE
+        SMALL,
+        MEDIUM,
+        LARGE;
+        public Pair<Integer, Integer> size;
+        static {
+            SMALL.size=new Pair<>(20,20);
+            MEDIUM.size=new Pair<>(30,30);
+            LARGE.size=new Pair<>(40,40);
+        }
+
     }
-    public GameMapSize gameMapSize=GameMapSize.SMAll;
+    public GameMapSize gameMapSize=GameMapSize.SMALL;
 
 
 
