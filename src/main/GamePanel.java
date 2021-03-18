@@ -19,7 +19,7 @@ public class GamePanel extends JPanel implements Runnable
     private boolean running = false;
 
     private MouseHandler mouse;
-    private KeyHandler key;
+    private KeyHandler keyHandler;
 
     private GameStateManager gsm;
 
@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable
         graphics2D = (Graphics2D) image.getGraphics();
 
         mouse = new MouseHandler(this);
-        key = new KeyHandler(this);
+        keyHandler = new KeyHandler(this);
 
         gsm = new GameStateManager();
     }
@@ -85,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable
             while ((now - lastUpdateTime) > TBU && (updateCount < MUBR))
             {
                 update ();
-                input (mouse, key);
+                input (mouse, keyHandler);
                 lastUpdateTime += TBU;
                 updateCount++;
             }
@@ -95,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable
                 lastUpdateTime = now - TBU;
             }
 
-            input (mouse, key);
+            input (mouse, keyHandler);
             render ();
             draw ();
             lastRenderTime = now;
