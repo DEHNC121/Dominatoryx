@@ -16,6 +16,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener
     public MouseHandler(GamePanel game)
     {
         game.addMouseListener (this);
+        game.addMouseMotionListener(this);
     }
 
     public int getX ()
