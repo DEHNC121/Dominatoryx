@@ -14,5 +14,3 @@ public class GameLauncher
         new GameLauncher();
     }
 }
-
-// can i edit?
