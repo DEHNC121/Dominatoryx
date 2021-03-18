@@ -2,21 +2,21 @@ package main.util;
 
 import main.GamePanel;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
-public class MouseHandler implements MouseListener, MouseMotionListener
+public class MouseHandler implements MouseListener, MouseMotionListener, MouseWheelListener
 {
 
     private static int mouseX = -1;
     private static int mouseY = -1;
     private static int mouseB = -1;
+    private static int mouseRot = -1;
 
     public MouseHandler(GamePanel game)
     {
         game.addMouseListener (this);
         game.addMouseMotionListener(this);
+        game.addMouseWheelListener(this);
     }
 
     public int getX ()
@@ -33,6 +33,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener
     {
         return mouseB;
     }
+
+    public int getRotation () { return mouseRot; }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent)
@@ -76,5 +78,10 @@ public class MouseHandler implements MouseListener, MouseMotionListener
     {
         mouseX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
+        mouseRot = mouseWheelEvent.getWheelRotation();
     }
 }

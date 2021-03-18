@@ -140,7 +140,7 @@ public class GamePanel extends JPanel implements Runnable
 
     public void input (MouseHandler mouse, KeyHandler key)
     {
-        System.out.println(mouse.getX()+", "+mouse.getY());
+        //System.out.println(mouse.getX()+", "+mouse.getY());
         gsm.input(mouse, key);
     }
 
