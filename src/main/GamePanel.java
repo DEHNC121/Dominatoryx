@@ -23,13 +23,13 @@ public class GamePanel extends JPanel implements Runnable
 
     private GameStateManager gsm;
 
-    private BufferedImage img;
-    private Graphics2D g;
+    private BufferedImage image;
+    private Graphics2D graphics2D;
 
-    public GamePanel (int w, int h)
+    public GamePanel (int width, int height)
     {
-        width = w;
-        height = h;
+        GamePanel.width = width;
+        GamePanel.height = height;
         setPreferredSize(new Dimension(width, height));
         setFocusable(true);
         requestFocus();
@@ -49,6 +49,9 @@ public class GamePanel extends JPanel implements Runnable
     {
         running = true;
 
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        graphics2D = (Graphics2D) image.getGraphics();
+
         mouse = new MouseHandler(this);
         key = new KeyHandler(this);
 
@@ -58,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable
     @Override
     public void run()
     {
-        init ();
+        init();
 
         final double GAME_HERTZ = 60.0;
         final double TBU = 1000000000 / GAME_HERTZ; // Time before Update
@@ -73,6 +76,8 @@ public class GamePanel extends JPanel implements Runnable
         int frameCount = 0;
         int lastSecondTime = (int) (lastUpdateTime / 1000000000);
 
+
+        
         while (running)
         {
             double now = System.nanoTime();
@@ -117,7 +122,7 @@ public class GamePanel extends JPanel implements Runnable
                 }
                 catch (Exception e)
                 {
-                    System.out.println("ERROR: yealding thread");
+                    System.out.println("ERROR: yielding thread");
                 }
                 now = System.nanoTime();
             }
@@ -134,23 +139,24 @@ public class GamePanel extends JPanel implements Runnable
 
     public void input (MouseHandler mouse, KeyHandler key)
     {
+        //System.out.println(mouse.getX()+", "+mouse.getY());
         gsm.input(mouse, key);
     }
 
     public void render ()
     {
-//        if (g != null)
-//        {
-//            g.setColor(new Color (22, 104, 4));
-//            g.fillRect(0, 0, width, height);
-//            gsm.render(g);
-//        }
+        if (graphics2D != null)
+        {
+            graphics2D.setColor(new Color (44, 163, 219));
+            graphics2D.fillRect(0, 0, width, height);
+            gsm.render(graphics2D);
+        }
     }
     public void draw ()
     {
-//        Graphics g2 = (Graphics) this.getGraphics();
-//        g2.drawImage(img, 0, 0, width, height, null);
-//        g2.dispose();
+        Graphics g2 = (Graphics) this.getGraphics();
+        g2.drawImage(image, 0, 0, width, height, null);
+        g2.dispose();
     }
 
 }
