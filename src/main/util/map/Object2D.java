@@ -2,11 +2,11 @@ package main.util.map;
 
 public class Object2D {
 
-    public int x;
-    public int y;
+    public float x;
+    public float y;
 
-    public int height;
-    public int width;
+    public float height;
+    public float width;
 
     public Object2D(){
         x=0;
@@ -16,7 +16,7 @@ public class Object2D {
         width =0;
     }
 
-    public Object2D(int x,int y,int w,int h){
+    public Object2D(float x,float y,float w,float h){
         this.x=x;
         this.y=y;
 
@@ -24,24 +24,24 @@ public class Object2D {
         this.height=h;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
