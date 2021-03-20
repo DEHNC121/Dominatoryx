@@ -11,7 +11,7 @@ public class Sprite
 
     private BufferedImage SPRITESHEET = null;
     private BufferedImage [][] spriteArray;
-    private final int TILE_SIZE = 64;
+    private final int TILE_SIZE = 128;
     public int w;
     public int h;
     private int wSprite;

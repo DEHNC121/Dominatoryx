@@ -135,6 +135,5 @@ public class Camera
             //hexagon2D.render(g,sprite.getSprite(0,0));
         }
         g.setColor (Color.blue);
-        //g.drawRect ((int) collisionCam.getPos ().x, (int) collisionCam.getPos ().y, (int)collisionCam.getWidth (), (int)collisionCam.getHeight ());
     }
 }

@@ -37,6 +37,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     public int getRotation () { return mouseRot; }
 
     public void setRotation(int mouseRot) { this.mouseRot = mouseRot; }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent)
     {
