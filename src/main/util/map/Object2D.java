@@ -45,14 +45,14 @@ public class Object2D {
         return width;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public boolean isInside(int x,int y){
+    public boolean isInside(float x,float y){
         return (x>=this.x && x<= this.x+width && y>=this.y && y<=this.y+height );
     }
 }

@@ -4,13 +4,13 @@ public class HexagonPart2D extends Object2D {
     public HexagonPart2D(){
         super();
     }
-    public HexagonPart2D(int x,int y,int w,int h){
+    public HexagonPart2D(float x,float y,float w,float h){
         super(x, y, w, h);
     }
     public enum Parts{
         UPPER,LOWER,LEFT,RIGHT,OUT
     }
-    public Parts whichPart(int x,int y){
+    public Parts whichPart(float x,float y){
         if(!isInside(x,y))
             return Parts.OUT;
         int counter=0;
@@ -57,7 +57,7 @@ public class HexagonPart2D extends Object2D {
         right=hexagon;
         return this;
     }
-    public Hexagon2D getHexagon(int x,int y){
+    public Hexagon2D getHexagon(float x,float y){
         Parts part=whichPart(x,y);
         switch (part){
             case LEFT:

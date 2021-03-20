@@ -61,7 +61,7 @@ public class WorldMap {
         Parts[firstPartIndex+hexagonPartsInRow+2].setAllHexagons(hexagon);
         Parts[firstPartIndex+hexagonPartsInRow+3].setLeftHexagon(hexagon).setUpperHexagon(hexagon);
     }
-    static public HexagonPart2D getHexagonPart(int x,int y){
+    static public HexagonPart2D getHexagonPart(float x,float y){
         //returns clicked HexagonPart: O(log(Parts.len()))
         int lowerBound=0;
         int upperBound=hexagonPartsInColumn*hexagonPartsInRow-1;
@@ -85,7 +85,7 @@ public class WorldMap {
         }
         return Parts[lowerBound];
     }
-    static public Hexagon2D getHexagon(int x,int y){
+    static public Hexagon2D getHexagon(float x,float y){
         return getHexagonPart(x,y).getHexagon(x,y);
     }
 }

@@ -7,7 +7,7 @@ public class Hexagon2D extends Object2D {
     public Hexagon2D(){
         super();
     }
-    public Hexagon2D(int x,int y,int w,int h){
+    public Hexagon2D(float x,float y,float w,float h){
         super(x, y, w, h);
     }
 

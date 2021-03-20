@@ -6,75 +6,87 @@ import main.states.PlayState;
 import main.util.map.Object2D;
 
 import java.awt.*;
-import java.util.concurrent.Executor;
+import main.util.map.WorldMap;
 
 public class Camera
 {
-    private Object2D object;
+    private Object2D camera;
+    private Object2D cameraBoundary; //red rectangle
     final static float zoomScale=1.2f;
-    private boolean scrollUp=false;
-    private boolean scrollDown=false;
+
+    final private float maxCameraWidth=WorldMap.Parts[WorldMap.hexagonPartsInRow-2].getX();
+    final private float maxCameraHeight=WorldMap.Parts[WorldMap.hexagonPartsInRow*
+            (WorldMap.hexagonPartsInColumn-2)].getY();
+    final private float minCameraWidth=maxCameraWidth/5f;
+    final private float minCameraHeight=maxCameraHeight/5f;
+    //to be changed if things look bad
 
     private int mouseX=-1;
     private int mouseY=-1;
-    private float maxSpeed = 4f;
-    private float acc = 1f;
-    private float deacc = 0.3f;
-    public int stamina;
+    private boolean scrollUp=false;
+    private boolean scrollDown=false;
+
     public int pause;
     public boolean paused;
-    private int widthLimit;
-    private int heightLimit;
-    float bonus=0f;
 
 
-    //private Entity e;
 
-    public Camera (Object2D object)
+    public Camera ()
     {
-        this.object=object;
+        //camera has to be created AFTER WorldMap
+        camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),
+                maxCameraWidth, maxCameraHeight);
+        cameraBoundary=new Object2D(camera.getX(),camera.getY(),0f,0f);
+    }
+    public void updateCameraBoundary(){
+        cameraBoundary.setWidth(maxCameraWidth-camera.getWidth());
+        cameraBoundary.setHeight(maxCameraHeight-camera.getHeight());
     }
     public void zoomIn(){
-
+        if(scrollUp){
+            scrollUp=false;
+            camera.setWidth(Math.max(camera.getWidth()/zoomScale,minCameraWidth));
+            camera.setHeight(Math.max(camera.getHeight()/zoomScale,minCameraHeight));
+            updateCameraBoundary();
+        }
 
     }
     public void zoomOut(){
-        //TODO: when zooming out if colliding,then it ,might be neccesary to change x,y
+        if(scrollDown){
+            scrollDown=false;
+            camera.setWidth(Math.max(camera.getWidth()*zoomScale,maxCameraWidth));
+            camera.setHeight(Math.max(camera.getHeight()*zoomScale,maxCameraHeight));
+            updateCameraBoundary();
+            //when zooming out if colliding,then it ,might be necessary to change x,y
+            if(camera.getX()>cameraBoundary.getX()+cameraBoundary.getWidth())
+                camera.setX(cameraBoundary.getX()+cameraBoundary.getWidth());
+            if(camera.getY()>cameraBoundary.getY()+cameraBoundary.getHeight())
+                camera.setY(cameraBoundary.getY()+cameraBoundary.getHeight());
+        }
+
 
     }
     private void moveCamera(){
         if(mouseX<25){
-            object.setX(Math.max(0,object.getX()-25));
+            camera.setX(Math.max(cameraBoundary.getX(),camera.getX()-25));
         }
         if(mouseY<25){
-            object.setY(Math.max(0,object.getY()-25));
+            camera.setY(Math.max(cameraBoundary.getY(),camera.getY()-25));
         }
         if(GamePanel.width-mouseX<25){
-            object.setX(Math.min(GamePanel.width-1-object.getWidth(),object.getX()+25));
+            camera.setX(Math.min(cameraBoundary.getX()+cameraBoundary.getWidth(),camera.getX()+25));
         }
         if(GamePanel.width-mouseY<25){
-            object.setY(Math.min(GamePanel.width-1-object.getWidth(),object.getY()+25));
+            camera.setY(Math.min(cameraBoundary.getY()+cameraBoundary.getHeight(),camera.getY()+25));
         }
 
     }
 
-    public void setLimit (int widthLimit, int heightLimit)
-    {
-        this.widthLimit = widthLimit;
-        this.heightLimit = heightLimit;
-    }
-    /*
-    public AABB getBounds ()
-    {
-        return collisionCam;
-    }
 
-     */
     public void update ()
     {
         move ();
-        //PlayState.map.x += dx;
-        //PlayState.map.y += dy;
+
     }
 
     public void move ()
@@ -89,6 +101,11 @@ public class Camera
     {
         mouseX=mouse.getX();
         mouseY=mouse.getY();
+        //swap these if
+        if(mouse.getRotation()>0)
+            scrollUp=true;
+        if(mouse.getRotation()<0)
+            scrollDown=true;
     }
 
 
