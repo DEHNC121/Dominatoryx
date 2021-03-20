@@ -122,11 +122,13 @@ public class Camera
         //g.clipRect((int) camera.x, (int) camera.y, (int) camera.width, (int) camera.height);
 
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
-            float x = hexagon2D.x  - camera.x;
-            float y = hexagon2D.y - camera.y;
-            float width = hexagon2D.width * GamePanel.width / camera.width;
-            float height = hexagon2D.height * GamePanel.height / camera.height;
-            //System.out.println(camera.x + " " + camera.y);
+            float scaleWidth = GamePanel.width / camera.width;
+            float scaleHeight = GamePanel.height / camera.height;
+            float x = hexagon2D.x * scaleHeight  - camera.x;
+            float y = hexagon2D.y * scaleWidth - camera.y;
+            float width = hexagon2D.width * scaleWidth;
+            float height = hexagon2D.height * scaleWidth;
+            System.out.println(camera.x + " " + camera.y);
             //System.out.println(x + " " + y + " " + width + " " + height);
             g.drawImage(sprite.getSprite(0,0),
                     (int) x,(int) y,(int)width,(int)height,null);
