@@ -7,10 +7,10 @@ import java.awt.event.*;
 public class MouseHandler implements MouseListener, MouseMotionListener, MouseWheelListener
 {
 
-    private static int mouseX = -1;
-    private static int mouseY = -1;
-    private static int mouseB = -1;
-    private static int mouseRot = -1;
+    private int mouseX = -1;
+    private int mouseY = -1;
+    private int mouseB = -1;
+    private int mouseRot = 0; //1 - scroll down, -1 - scroll up
 
     public MouseHandler(GamePanel game)
     {
@@ -36,6 +36,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
     public int getRotation () { return mouseRot; }
 
+    public void setRotation(int mouseRot) { this.mouseRot = mouseRot; }
     @Override
     public void mouseClicked(MouseEvent mouseEvent)
     {
@@ -83,5 +84,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     @Override
     public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) {
         mouseRot = mouseWheelEvent.getWheelRotation();
+        //System.out.println(mouseRot);
     }
 }

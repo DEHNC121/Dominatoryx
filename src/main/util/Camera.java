@@ -72,18 +72,18 @@ public class Camera
 
     }
     private void moveCamera(){
-        if(mouseX<25){
-            camera.setX(Math.max(cameraBoundary.getX(),camera.getX()-25));
-        }
-        if(mouseY<25){
-            camera.setY(Math.max(cameraBoundary.getY(),camera.getY()-25));
-        }
-        if(GamePanel.width-mouseX<25){
-            camera.setX(Math.min(cameraBoundary.getX()+cameraBoundary.getWidth(),camera.getX()+25));
-        }
-        if(GamePanel.width-mouseY<25){
-            camera.setY(Math.min(cameraBoundary.getY()+cameraBoundary.getHeight(),camera.getY()+25));
-        }
+//        if(mouseX<25){
+//            camera.setX(Math.max(cameraBoundary.getX(),camera.getX()-25));
+//        }
+//        if(mouseY<25){
+//            camera.setY(Math.max(cameraBoundary.getY(),camera.getY()-25));
+//        }
+//        if(GamePanel.width-mouseX<25){
+//            camera.setX(Math.min(cameraBoundary.getX()+cameraBoundary.getWidth(),camera.getX()+25));
+//        }
+//        if(GamePanel.width-mouseY<25){
+//            camera.setY(Math.min(cameraBoundary.getY()+cameraBoundary.getHeight(),camera.getY()+25));
+//        }
 
     }
 
@@ -106,22 +106,32 @@ public class Camera
     {
         mouseX=mouse.getX();
         mouseY=mouse.getY();
+
         //swap these if
-        if(mouse.getRotation()>0)
-            scrollUp=true;
         if(mouse.getRotation()<0)
+            scrollUp=true;
+        if(mouse.getRotation()>0)
             scrollDown=true;
+        mouse.setRotation(0);
     }
 
 
 
     public void render (Graphics g)
     {
+        //g.clipRect((int) camera.x, (int) camera.y, (int) camera.width, (int) camera.height);
+
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
-            hexagon2D.render(g,sprite.getSprite(0,0));
-
+            float x = hexagon2D.x  - camera.x;
+            float y = hexagon2D.y - camera.y;
+            float width = hexagon2D.width * GamePanel.width / camera.width;
+            float height = hexagon2D.height * GamePanel.height / camera.height;
+            //System.out.println(camera.x + " " + camera.y);
+            //System.out.println(x + " " + y + " " + width + " " + height);
+            g.drawImage(sprite.getSprite(0,0),
+                    (int) x,(int) y,(int)width,(int)height,null);
+            //hexagon2D.render(g,sprite.getSprite(0,0));
         }
-
         g.setColor (Color.blue);
         //g.drawRect ((int) collisionCam.getPos ().x, (int) collisionCam.getPos ().y, (int)collisionCam.getWidth (), (int)collisionCam.getHeight ());
     }

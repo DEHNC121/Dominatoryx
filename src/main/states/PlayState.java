@@ -37,12 +37,12 @@ public class PlayState extends GameState
 
     @Override
     public void update() {
-
+        camera.update();
     }
 
     @Override
     public void input(MouseHandler mouse, KeyHandler key) {
-
+        camera.input(mouse, key);
     }
 
     @Override
