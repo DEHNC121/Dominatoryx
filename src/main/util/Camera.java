@@ -13,7 +13,8 @@ import main.util.map.WorldMap;
 public class Camera
 {
     private Object2D camera;
-    private Object2D cameraBoundary; //red rectangle
+    private Object2D cameraBoundary;
+    private Object2D oldCameraBoundary; //red rectangle
     final static float zoomScale=1.2f;
     private Sprite sprite;
 
@@ -38,13 +39,14 @@ public class Camera
     {
         //camera has to be created AFTER WorldMap
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
-        cameraBoundary=new Object2D(camera.getX(),camera.getY(),0f,0f);
+        cameraBoundary=new Object2D(camera.getX(),camera.getY(),maxCameraWidth,maxCameraHeight);
+        oldCameraBoundary=new Object2D(camera.getX(),camera.getY(),0f,0f);
         sprite=new Sprite("map/HexagonMap.png");
     }
 
-    public void updateCameraBoundary(){
-        cameraBoundary.setWidth(maxCameraWidth-camera.getWidth());
-        cameraBoundary.setHeight(maxCameraHeight-camera.getHeight());
+    public void updateOldCameraBoundary(){
+        oldCameraBoundary.setWidth(maxCameraWidth-camera.getWidth());
+        oldCameraBoundary.setHeight(maxCameraHeight-camera.getHeight());
     }
 
     public void zoomIn(){
@@ -52,7 +54,7 @@ public class Camera
             scrollUp=false;
             camera.setWidth(Math.max(camera.getWidth()/zoomScale,minCameraWidth));
             camera.setHeight(Math.max(camera.getHeight()/zoomScale,minCameraHeight));
-            updateCameraBoundary();
+            updateOldCameraBoundary();
         }
 
     }
@@ -60,9 +62,9 @@ public class Camera
     public void zoomOut(){
         if(scrollDown){
             scrollDown=false;
-            camera.setWidth(Math.max(camera.getWidth()*zoomScale,maxCameraWidth));
-            camera.setHeight(Math.max(camera.getHeight()*zoomScale,maxCameraHeight));
-            updateCameraBoundary();
+            camera.setWidth(Math.min(camera.getWidth()*zoomScale,maxCameraWidth));
+            camera.setHeight(Math.min(camera.getHeight()*zoomScale,maxCameraHeight));
+            updateOldCameraBoundary();
             //when zooming out if colliding,then it ,might be necessary to change x,y
             if(camera.getX()>cameraBoundary.getX()+cameraBoundary.getWidth())
                 camera.setX(cameraBoundary.getX()+cameraBoundary.getWidth());
@@ -74,16 +76,16 @@ public class Camera
     }
     private void moveCamera(){
 //        if(mouseX<25){
-//            camera.setX(Math.max(cameraBoundary.getX(),camera.getX()-25));
+//            camera.setX(Math.max(oldCameraBoundary.getX(),camera.getX()-25));
 //        }
 //        if(mouseY<25){
-//            camera.setY(Math.max(cameraBoundary.getY(),camera.getY()-25));
+//            camera.setY(Math.max(oldCameraBoundary.getY(),camera.getY()-25));
 //        }
 //        if(GamePanel.width-mouseX<25){
-//            camera.setX(Math.min(cameraBoundary.getX()+cameraBoundary.getWidth(),camera.getX()+25));
+//            camera.setX(Math.min(oldCameraBoundary.getX()+oldCameraBoundary.getWidth(),camera.getX()+25));
 //        }
 //        if(GamePanel.width-mouseY<25){
-//            camera.setY(Math.min(cameraBoundary.getY()+cameraBoundary.getHeight(),camera.getY()+25));
+//            camera.setY(Math.min(oldCameraBoundary.getY()+oldCameraBoundary.getHeight(),camera.getY()+25));
 //        }
 
     }
