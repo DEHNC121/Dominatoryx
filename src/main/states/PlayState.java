@@ -37,11 +37,13 @@ public class PlayState extends GameState
 
     @Override
     public void input(MouseHandler mouse, KeyHandler key) {
+
     }
 
     @Override
     public void render(Graphics2D g) {
-
+//        Sprite
+//        g.drawImage (ani.getImage (), (int) (pos.getWorldVar ().x), (int) (pos.getWorldVar ().y), size, size, null);
     }
 }
 
