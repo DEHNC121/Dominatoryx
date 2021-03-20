@@ -44,7 +44,8 @@ public class WorldMap {
                     firstPartRow++;
                 int firstPartIndex=hexagonPartsInRow*firstPartRow+firstPartColumn;
                 hexagonMap[i+j*widthHexagonNumber]=new Hexagon2D(Parts[firstPartIndex].getX(),Parts[firstPartIndex].getY(),
-                        4*hexagonPartWidthDiff,2*hexagonPartHeightDiff);
+                        4*hexagonPartWidthDiff,2*hexagonPartHeightDiff)
+                                .setPosition(i+j*widthHexagonNumber);
                 setPartsInHexagon(hexagonMap[i+j*widthHexagonNumber],firstPartIndex);
             }
         }
