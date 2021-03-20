@@ -37,16 +37,16 @@ public class Camera
     public Camera ()
     {
         //camera has to be created AFTER WorldMap
-        camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),
-                maxCameraWidth, maxCameraHeight);
+        camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
         cameraBoundary=new Object2D(camera.getX(),camera.getY(),0f,0f);
-
         sprite=new Sprite("map/HexagonMap.png");
     }
+
     public void updateCameraBoundary(){
         cameraBoundary.setWidth(maxCameraWidth-camera.getWidth());
         cameraBoundary.setHeight(maxCameraHeight-camera.getHeight());
     }
+
     public void zoomIn(){
         if(scrollUp){
             scrollUp=false;
@@ -56,6 +56,7 @@ public class Camera
         }
 
     }
+
     public void zoomOut(){
         if(scrollDown){
             scrollDown=false;
@@ -130,9 +131,7 @@ public class Camera
             float height = hexagon2D.height * scaleWidth;
             System.out.println(camera.x + " " + camera.y);
             //System.out.println(x + " " + y + " " + width + " " + height);
-            g.drawImage(sprite.getSprite(0,0),
-                    (int) x,(int) y,(int)width,(int)height,null);
-            //hexagon2D.render(g,sprite.getSprite(0,0));
+            hexagon2D.render(g,sprite.getSprite(0,0),(int) x,(int) y,(int)width,(int)height);
         }
         g.setColor (Color.blue);
     }

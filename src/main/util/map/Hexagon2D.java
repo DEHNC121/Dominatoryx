@@ -86,9 +86,9 @@ public class Hexagon2D extends Object2D {
         return list;
     }
 
-    public void render(Graphics g, BufferedImage sprite)
+    public void render(Graphics g, BufferedImage sprite, int x, int y, int width, int height)
     {
 
-        g.drawImage(sprite,(int)x,(int)y,(int)width,(int)height,null);
+        g.drawImage(sprite,x,y,width,height,null);
     }
 }
