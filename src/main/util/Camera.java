@@ -4,6 +4,7 @@ package main.util;
 import main.GamePanel;
 import main.graphics.Sprite;
 import main.states.PlayState;
+import main.util.map.Hexagon2D;
 import main.util.map.Object2D;
 
 import java.awt.*;
@@ -116,8 +117,11 @@ public class Camera
 
     public void render (Graphics g)
     {
+        for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
+            hexagon2D.render(g,sprite.getSprite(0,0));
 
-        g.drawImage(sprite.getSprite(0,0),0,0,100,100,null);
+        }
+
         g.setColor (Color.blue);
         //g.drawRect ((int) collisionCam.getPos ().x, (int) collisionCam.getPos ().y, (int)collisionCam.getWidth (), (int)collisionCam.getHeight ());
     }

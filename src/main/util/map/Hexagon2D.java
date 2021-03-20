@@ -4,6 +4,7 @@ import main.util.map.Object2D;
 import main.util.map.WorldMap;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Hexagon2D extends Object2D {
@@ -36,8 +37,9 @@ public class Hexagon2D extends Object2D {
         return list;
     }
 
-    public void render (Graphics g)
+    public void render(Graphics g, BufferedImage sprite)
     {
 
+        g.drawImage(sprite,(int)x,(int)y,(int)width,(int)height,null);
     }
 }
