@@ -47,6 +47,8 @@ public class WorldMap {
                         4*hexagonPartWidthDiff,2*hexagonPartHeightDiff)
                                 .setPosition(i+j*widthHexagonNumber);
                 setPartsInHexagon(hexagonMap[i+j*widthHexagonNumber],firstPartIndex);
+                if(i==0 || j==0 || i==widthHexagonNumber-1 ||j==heightHexagonNumber-1)
+                    hexagonMap[i+j*widthHexagonNumber].setBorder(true);
             }
         }
 

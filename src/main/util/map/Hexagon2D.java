@@ -1,14 +1,16 @@
 package main.util.map;
 
+import javafx.util.Pair;
 import main.util.map.Object2D;
 import main.util.map.WorldMap;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Hexagon2D extends Object2D {
     int positionInWorldMapArray;
+    public boolean border=false;
     public Hexagon2D(){
         super();
     }
@@ -19,21 +21,68 @@ public class Hexagon2D extends Object2D {
         positionInWorldMapArray=i;
         return this;
     }
-    private void recursiveGetNeighbors(int distance,ArrayList<Hexagon2D> list,boolean[] isVisited){
-        if(distance==0)
-            return;
+
+    public void setBorder(boolean border) {
+        this.border = border;
+    }
+
+    private void getNeighborsLoop(int maxDistance, ArrayList<Pair<Hexagon2D,Integer>> list, boolean[] isVisited,
+                                  Queue<Pair<Hexagon2D,Integer>> queue){
+        while(!queue.isEmpty()){
+            Pair<Hexagon2D,Integer> pair=queue.poll();
+            isVisited[positionInWorldMapArray]=true;
+            if(pair.getKey().border)
+                continue;
+            list.add(pair);
+            if(pair.getValue()==maxDistance)
+                continue;
+
+            if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber])
+                queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                        +WorldMap.widthHexagonNumber],pair.getValue()+1));
+            if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber])
+                queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                        -WorldMap.widthHexagonNumber],pair.getValue()+1));
+            if(!isVisited[pair.getKey().positionInWorldMapArray+1])
+                queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                        +1],pair.getValue()+1));
+            if(!isVisited[pair.getKey().positionInWorldMapArray-1] )
+                queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                        -1],pair.getValue()+1));
+                switch (positionInWorldMapArray%2){
+                    case 0:
+                        if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber-1] )
+                            queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                                    +WorldMap.widthHexagonNumber-1],pair.getValue()+1));
+                        if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber+1] )
+                            queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                                    +WorldMap.widthHexagonNumber+1],pair.getValue()+1));
+                        break;
+                    case 1:
+                        if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber-1] )
+                            queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                                    +WorldMap.widthHexagonNumber-1],pair.getValue()+1));
+                        if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber+1] )
+                            queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
+                                    +WorldMap.widthHexagonNumber+1],pair.getValue()+1));
+                        break;
+                }
+        }
+
 
     }
-    public ArrayList<Hexagon2D> getNeighbors(int distance){
-        ArrayList<Hexagon2D> list=new ArrayList<>();
+    public ArrayList<Pair<Hexagon2D,Integer>> getNeighbors(int distance){
+        ArrayList<Pair<Hexagon2D,Integer>> list=new ArrayList<>();
         if(distance==0)
             return list;
-        boolean isVisited[]=new boolean[WorldMap.widthHexagonNumber*WorldMap.heightHexagonNumber];
+        Queue<Pair<Hexagon2D,Integer>> queue=new LinkedList<>();
+        boolean[] isVisited=new boolean[WorldMap.widthHexagonNumber*WorldMap.heightHexagonNumber];
         int len=isVisited.length;
         for(int i=0;i<len;i++){
             isVisited[i]=false;
         }
-        isVisited[positionInWorldMapArray]=true;
+        getNeighborsLoop(distance,list,isVisited, queue);
+        list.remove(new Pair<>(this,0));
         return list;
     }
 
