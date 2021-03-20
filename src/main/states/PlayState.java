@@ -1,6 +1,7 @@
 package main.states;
 
 import main.graphics.Sprite;
+import main.util.Camera;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.map.WorldMap;
@@ -11,6 +12,7 @@ public class PlayState extends GameState
 {
     public static WorldMap worldMap;
     Sprite sprite;
+    Camera camera;
     public enum GameMapSize{
         SMALL,
         MEDIUM,
@@ -30,8 +32,7 @@ public class PlayState extends GameState
     public PlayState(GameStateManager gsm) {
         super(gsm);
         worldMap= new WorldMap(gameMapSize);
-
-        sprite=new Sprite("map/HexagonMap.png",32,32);
+        camera=new Camera();
     }
 
     @Override
@@ -46,7 +47,8 @@ public class PlayState extends GameState
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(sprite.getSpriteSheet(),0,0,64,64,null);
+        camera.render(g);
+
 
     }
 }

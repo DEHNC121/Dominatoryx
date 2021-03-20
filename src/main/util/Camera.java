@@ -2,6 +2,7 @@ package main.util;
 
 
 import main.GamePanel;
+import main.graphics.Sprite;
 import main.states.PlayState;
 import main.util.map.Object2D;
 
@@ -13,6 +14,7 @@ public class Camera
     private Object2D camera;
     private Object2D cameraBoundary; //red rectangle
     final static float zoomScale=1.2f;
+    private Sprite sprite;
 
     final private float maxCameraWidth=WorldMap.Parts[WorldMap.hexagonPartsInRow-2].getX();
     final private float maxCameraHeight=WorldMap.Parts[WorldMap.hexagonPartsInRow*
@@ -37,6 +39,8 @@ public class Camera
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),
                 maxCameraWidth, maxCameraHeight);
         cameraBoundary=new Object2D(camera.getX(),camera.getY(),0f,0f);
+
+        sprite=new Sprite("map/HexagonMap.png");
     }
     public void updateCameraBoundary(){
         cameraBoundary.setWidth(maxCameraWidth-camera.getWidth());
@@ -112,6 +116,8 @@ public class Camera
 
     public void render (Graphics g)
     {
+
+        g.drawImage(sprite.getSprite(0,0),0,0,100,100,null);
         g.setColor (Color.blue);
         //g.drawRect ((int) collisionCam.getPos ().x, (int) collisionCam.getPos ().y, (int)collisionCam.getWidth (), (int)collisionCam.getHeight ());
     }

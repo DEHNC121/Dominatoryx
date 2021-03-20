@@ -11,7 +11,7 @@ public class Sprite
 
     private BufferedImage SPRITESHEET = null;
     private BufferedImage [][] spriteArray;
-    private final int TILE_SIZE = 32;
+    private final int TILE_SIZE = 64;
     public int w;
     public int h;
     private int wSprite;
@@ -95,14 +95,6 @@ public class Sprite
         return SPRITESHEET.getSubimage(x * w, y * h, w, h);
     }
 
-    public BufferedImage [] getSpriteArray (int i)
-    {
-        return spriteArray [i];
-    }
-    public BufferedImage [][] getSpriteArray2 (int i)
-    {
-        return spriteArray;
-    }
 
 
 

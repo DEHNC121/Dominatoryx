@@ -2,6 +2,8 @@ package main.util.map;
 
 import main.util.map.Object2D;
 import main.util.map.WorldMap;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Hexagon2D extends Object2D {
@@ -34,4 +36,8 @@ public class Hexagon2D extends Object2D {
         return list;
     }
 
+    public void render (Graphics g)
+    {
+
+    }
 }
