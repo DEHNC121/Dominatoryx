@@ -12,6 +12,8 @@ import main.util.map.WorldMap;
 
 public class Camera
 {
+    private int delX;
+    private int delY;
     private Object2D camera;
     private Object2D cameraBoundary; //red rectangle
     final static float zoomScale=1.2f;
@@ -29,10 +31,7 @@ public class Camera
     private int mouseY=-1;
     private boolean scrollUp=false;
     private boolean scrollDown=false;
-    private boolean draggedFlag = true;
     private boolean mouseIsDragged = false;
-    private int mouseBeforeShiftX = -1;
-    private int mouseBeforeShiftY = -1;
 
     public int pause;
     public boolean paused;
@@ -116,14 +115,9 @@ public class Camera
 
     // not working yet
     public void dragged () {
-        if (draggedFlag && mouseIsDragged) {
-            draggedFlag = false;
-            mouseBeforeShiftX = mouseX;
-            mouseBeforeShiftY = mouseY;
-        }
         if (mouseIsDragged) {
-            camera.x -= (mouseX - mouseBeforeShiftX) * mouseDraggingScale;
-            camera.y -= (mouseY - mouseBeforeShiftY) * mouseDraggingScale;
+            camera.x -= delX * mouseDraggingScale;
+            camera.y -= delY * mouseDraggingScale;
         }
     }
 
@@ -139,7 +133,7 @@ public class Camera
         moveCamera();
         zoomIn();
         zoomOut();
-        //dragged();
+        dragged();
         //
     }
 
@@ -148,14 +142,16 @@ public class Camera
         mouseX=mouse.getX();
         mouseY=mouse.getY();
         mouseIsDragged = mouse.getIsDragged();
-        if (!mouseIsDragged)
-            draggedFlag = true;
-        //swap these if
+        delX = mouse.getDelX();
+        delY = mouse.getDelY();
         if(mouse.getRotation()<0)
             scrollUp=true;
         if(mouse.getRotation()>0)
             scrollDown=true;
         mouse.setRotation(0);
+        mouse.isDragged = false;
+        mouse.setDelX(0);
+        mouse.setDelY(0);
     }
 
 

@@ -6,12 +6,15 @@ import java.awt.event.*;
 
 public class MouseHandler implements MouseListener, MouseMotionListener, MouseWheelListener
 {
-
+    private int delX = 0;
+    private int delY = 0;
+    private int mousePressedX = -1;
+    private int mousePressedY = -1;
     private int mouseX = -1;
     private int mouseY = -1;
     private int mouseB = -1;
     private int mouseRot = 0; //1 - scroll down, -1 - scroll up
-    private boolean isDragged = false;
+    public boolean isDragged = false;
 
     public MouseHandler(GamePanel game)
     {
@@ -41,6 +44,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
     public void setRotation(int mouseRot) { this.mouseRot = mouseRot; }
 
+    public int getDelX () { return delX; }
+
+    public int getDelY () { return delY; }
+
+    public void setDelX (int delX) { this.delX = delX; }
+
+    public void setDelY (int delY) { this.delY = delY; }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent)
     {
@@ -50,14 +61,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         mouseB = mouseEvent.getButton();
-        isDragged = true;
+        mousePressedX = mouseEvent.getX();
+        mousePressedY = mouseEvent.getY();
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent)
     {
         mouseB = -1;
-        isDragged = false;
     }
 
     @Override
@@ -77,6 +88,9 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     {
         mouseX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
+        delX = mouseX - mousePressedX;
+        delY = mouseY - mousePressedY;
+        isDragged = true;
     }
 
     @Override
