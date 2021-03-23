@@ -107,9 +107,9 @@ public class Camera
     // not working properly yet
     private void updateCamera () {
         camera.setX(Math.max(camera.getX(), cameraBoundary.getX()));
-        camera.setX(Math.min(camera.getX(), cameraBoundary.getX() + cameraBoundary.getHeight() - camera.getHeight()));
+        camera.setX(Math.min(camera.getX(), cameraBoundary.getX() + maxCameraWidth - camera.getWidth()));
         camera.setY(Math.max(camera.getY(), cameraBoundary.getY()));
-        camera.setY(Math.min(camera.getY(), cameraBoundary.getY() + cameraBoundary.getWidth() - camera.getWidth()));
+        camera.setY(Math.min(camera.getY(), cameraBoundary.getY() + maxCameraHeight - camera.getHeight()));
     }
 
 
@@ -161,8 +161,8 @@ public class Camera
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
             float scaleWidth = (float) GamePanel.width / camera.width; //this is currently wrong
             float scaleHeight = (float) GamePanel.height / camera.height;
-            float x = (hexagon2D.x - camera.x) * scaleHeight;
-            float y = (hexagon2D.y - camera.y) * scaleWidth;
+            float x = (hexagon2D.x - camera.x) * scaleWidth;
+            float y = (hexagon2D.y - camera.y) * scaleHeight;
             float width = hexagon2D.width * scaleWidth;
             float height = hexagon2D.height * scaleHeight;
             hexagon2D.render(g,sprite.getSprite(0,0),(int) x,(int) y,(int)width,(int)height);
