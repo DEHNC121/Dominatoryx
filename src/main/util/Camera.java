@@ -15,6 +15,7 @@ public class Camera
     private Object2D camera;
     private Object2D cameraBoundary; //red rectangle
     final static float zoomScale=1.2f;
+    private final float mouseDraggingScale = 0.3f;
     private Sprite sprite;
 
     final private float maxCameraWidth=WorldMap.Parts[WorldMap.hexagonPartsInRow-2].getX();
@@ -28,6 +29,10 @@ public class Camera
     private int mouseY=-1;
     private boolean scrollUp=false;
     private boolean scrollDown=false;
+    private boolean draggedFlag = true;
+    private boolean mouseIsDragged = false;
+    private int mouseBeforeShiftX = -1;
+    private int mouseBeforeShiftY = -1;
 
     public int pause;
     public boolean paused;
@@ -37,22 +42,28 @@ public class Camera
     public Camera ()
     {
         //camera has to be created AFTER WorldMap
+        System.out.println(WorldMap.Parts[0].getWidth() + " " + WorldMap.Parts[0].getHeight());
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
-        cameraBoundary=new Object2D(camera.getX(),camera.getY(),0f,0f);
+        cameraBoundary=new Object2D(camera.getX(),camera.getY(), maxCameraWidth, maxCameraHeight);
         sprite=new Sprite("map/HexagonMap.png");
     }
 
-    public void updateCameraBoundary(){
-        cameraBoundary.setWidth(maxCameraWidth-camera.getWidth());
-        cameraBoundary.setHeight(maxCameraHeight-camera.getHeight());
-    }
+//    public void updateCameraBoundary(){
+//        cameraBoundary.setWidth(maxCameraWidth-camera.getWidth());
+//        cameraBoundary.setHeight(maxCameraHeight-camera.getHeight());
+//    }
 
     public void zoomIn(){
         if(scrollUp){
             scrollUp=false;
-            camera.setWidth(Math.max(camera.getWidth()/zoomScale,minCameraWidth));
-            camera.setHeight(Math.max(camera.getHeight()/zoomScale,minCameraHeight));
-            updateCameraBoundary();
+            float wOld = camera.getWidth();
+            float hOld = camera.getHeight();
+            float wNew = Math.max(camera.getWidth()/zoomScale,minCameraWidth);
+            float hNew = Math.max(camera.getHeight()/zoomScale,minCameraHeight);
+            camera.setWidth(wNew);
+            camera.setHeight(hNew);
+            camera.setX(camera.x + (hOld - hNew) / 2);
+            camera.setY(camera.y + (wOld - wNew) / 2);
         }
 
     }
@@ -60,9 +71,16 @@ public class Camera
     public void zoomOut(){
         if(scrollDown){
             scrollDown=false;
-            camera.setWidth(Math.min(camera.getWidth()*zoomScale,maxCameraWidth));
-            camera.setHeight(Math.min(camera.getHeight()*zoomScale,maxCameraHeight));
-            updateCameraBoundary();
+            float wOld = camera.getWidth();
+            float hOld = camera.getHeight();
+            float wNew = Math.min(camera.getWidth()*zoomScale,maxCameraWidth);
+            float hNew = Math.min(camera.getHeight()*zoomScale,maxCameraHeight);
+            camera.setWidth(wNew);
+            camera.setHeight(hNew);
+            camera.setX(camera.x + (hOld - hNew) / 2);
+            camera.setY(camera.y + (wOld - wNew) / 2);
+
+//            updateCameraBoundary();
             //when zooming out if colliding,then it ,might be necessary to change x,y
 //            if(camera.getX()>cameraBoundary.getX()+cameraBoundary.getWidth())
 //                camera.setX(cameraBoundary.getX()+cameraBoundary.getWidth());
@@ -87,11 +105,32 @@ public class Camera
 //        }
 
     }
+    // not working properly yet
+    private void updateCamera () {
+        camera.setX(Math.max(camera.getX(), cameraBoundary.getX()));
+        camera.setX(Math.min(camera.getX(), cameraBoundary.getX() + cameraBoundary.getHeight() - camera.getHeight()));
+        camera.setY(Math.max(camera.getY(), cameraBoundary.getY()));
+        camera.setY(Math.min(camera.getY(), cameraBoundary.getY() + cameraBoundary.getWidth() - camera.getWidth()));
+    }
 
+
+    // not working yet
+    public void dragged () {
+        if (draggedFlag && mouseIsDragged) {
+            draggedFlag = false;
+            mouseBeforeShiftX = mouseX;
+            mouseBeforeShiftY = mouseY;
+        }
+        if (mouseIsDragged) {
+            camera.x -= (mouseX - mouseBeforeShiftX) * mouseDraggingScale;
+            camera.y -= (mouseY - mouseBeforeShiftY) * mouseDraggingScale;
+        }
+    }
 
     public void update ()
     {
         move ();
+        updateCamera();
 
     }
 
@@ -100,6 +139,7 @@ public class Camera
         moveCamera();
         zoomIn();
         zoomOut();
+        //dragged();
         //
     }
 
@@ -107,7 +147,9 @@ public class Camera
     {
         mouseX=mouse.getX();
         mouseY=mouse.getY();
-
+        mouseIsDragged = mouse.getIsDragged();
+        if (!mouseIsDragged)
+            draggedFlag = true;
         //swap these if
         if(mouse.getRotation()<0)
             scrollUp=true;
@@ -121,8 +163,8 @@ public class Camera
     public void render (Graphics g)
     {
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
-            float scaleWidth = GamePanel.width / camera.width; //this is currently wrong
-            float scaleHeight = GamePanel.height / camera.height;
+            float scaleWidth = (float) GamePanel.width / camera.width; //this is currently wrong
+            float scaleHeight = (float) GamePanel.height / camera.height;
             float x = (hexagon2D.x - camera.x) * scaleHeight;
             float y = (hexagon2D.y - camera.y) * scaleWidth;
             float width = hexagon2D.width * scaleWidth;

@@ -11,6 +11,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     private int mouseY = -1;
     private int mouseB = -1;
     private int mouseRot = 0; //1 - scroll down, -1 - scroll up
+    private boolean isDragged = false;
 
     public MouseHandler(GamePanel game)
     {
@@ -36,6 +37,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
     public int getRotation () { return mouseRot; }
 
+    public boolean getIsDragged () { return isDragged; }
+
     public void setRotation(int mouseRot) { this.mouseRot = mouseRot; }
 
     @Override
@@ -45,15 +48,16 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent)
-    {
+    public void mousePressed(MouseEvent mouseEvent) {
         mouseB = mouseEvent.getButton();
+        isDragged = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent)
     {
         mouseB = -1;
+        isDragged = false;
     }
 
     @Override
