@@ -10,6 +10,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     private int delY = 0;
     private int mousePressedX = -1;
     private int mousePressedY = -1;
+    private int mouseXFromLastDragged=0;
+    private int mouseYFromLastDragged=0;
     private int mouseX = -1;
     private int mouseY = -1;
     private int mouseB = -1;
@@ -63,6 +65,10 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
         mouseB = mouseEvent.getButton();
         mousePressedX = mouseEvent.getX();
         mousePressedY = mouseEvent.getY();
+        delX=0;
+        delY=0;
+        mouseXFromLastDragged=mousePressedX;
+        mouseYFromLastDragged=mousePressedY;
     }
 
     @Override
@@ -88,8 +94,10 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     {
         mouseX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
-        delX = mouseX - mousePressedX;
-        delY = mouseY - mousePressedY;
+        delX += mouseX - mouseXFromLastDragged;
+        delY += mouseY - mouseYFromLastDragged;
+        mouseXFromLastDragged=mouseX;
+        mouseYFromLastDragged=mouseY;
         isDragged = true;
     }
 
