@@ -11,7 +11,8 @@ public class Sprite
 
     private BufferedImage SPRITESHEET = null;
     private BufferedImage [][] spriteArray;
-    private final int TILE_SIZE = 256;
+    private final int HEXAGONHIGHT = 256;
+    private final int HEXAGONWIDTH = 221;
     public int w;
     public int h;
     private int wSprite;
@@ -19,8 +20,8 @@ public class Sprite
 
     public Sprite (String file)
     {
-        w = TILE_SIZE;
-        h = TILE_SIZE;
+        w = HEXAGONHIGHT;
+        h = HEXAGONWIDTH;
 
         System.out.println("Loading: " + file + "...");
         SPRITESHEET = loadSprite (file);

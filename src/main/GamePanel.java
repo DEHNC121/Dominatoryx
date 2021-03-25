@@ -146,10 +146,10 @@ public class GamePanel extends JPanel implements Runnable
 
     public void render (int t)
     {
-        //System.out.println("rend"+t);
+        System.out.println("rend"+t);
         if (graphics2D != null)
         {
-            graphics2D.setColor(new Color (0, 175, 255));
+            graphics2D.setColor(new Color (0, 0, 0));
             graphics2D.fillRect(0, 0, width, height);
             gsm.render(graphics2D);
         }

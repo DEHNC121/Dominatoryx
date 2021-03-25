@@ -155,8 +155,7 @@ public class Camera
     }
 
 
-    int a=0;
-    int b=1;
+
     public void render (Graphics g)
     {
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
@@ -166,8 +165,8 @@ public class Camera
             float y = (hexagon2D.y - camera.y) * scaleHeight;
             float width = hexagon2D.width * scaleWidth;
             float height = hexagon2D.height * scaleHeight;
-            hexagon2D.render(g, sprite.getSprite(a, b), (int) x, (int) y, (int) width + 2, (int) height + 2);
-            b=1-b;
+            hexagon2D.render(g,sprite.getSprite(0,0),(int) x,(int) y,(int)width+1,(int)height+1);
         }
+        g.setColor (Color.blue);
     }
 }
