@@ -11,8 +11,8 @@ import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel implements Runnable
 {
-    public static int width;
-    public static int height;
+    public static float width;
+    public static float height;
     public static int oldFrameCount;
 
     private Thread thread;
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable
     {
         running = true;
 
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        image = new BufferedImage((int) width, (int) height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = (Graphics2D) image.getGraphics();
 
         mouse = new MouseHandler(this);
@@ -150,14 +150,14 @@ public class GamePanel extends JPanel implements Runnable
         if (graphics2D != null)
         {
             graphics2D.setColor(new Color (0, 0, 0));
-            graphics2D.fillRect(0, 0, width, height);
+            graphics2D.fillRect(0, 0, (int) width, (int) height);
             gsm.render(graphics2D);
         }
     }
     public void draw ()
     {
         Graphics g2 = (Graphics) this.getGraphics();
-        g2.drawImage(image, 0, 0, width, height, null);
+        g2.drawImage(image, 0, 0, (int) width, (int) height, null);
         g2.dispose();
     }
 

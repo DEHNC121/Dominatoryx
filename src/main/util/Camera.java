@@ -22,11 +22,10 @@ public class Camera
     private final float maxScale=5f;
     private Sprite sprite;
 
-    final private float maxCameraWidth=WorldMap.Parts[WorldMap.hexagonPartsInRow-2].getX();
-    final private float maxCameraHeight=WorldMap.Parts[WorldMap.hexagonPartsInRow*
-            (WorldMap.hexagonPartsInColumn-2)].getY();
-    final private float minCameraWidth=maxCameraWidth/maxScale;
-    final private float minCameraHeight=maxCameraHeight/maxScale;
+     private float maxCameraWidth;
+     private float maxCameraHeight;
+     private float minCameraWidth;
+     private float minCameraHeight;
 
 
     private int mouseX=-1;
@@ -42,6 +41,16 @@ public class Camera
 
     public Camera ()
     {
+        maxCameraWidth=WorldMap.Parts[WorldMap.hexagonPartsInRow-2].getX();
+        maxCameraHeight=WorldMap.Parts[WorldMap.hexagonPartsInRow*
+                (WorldMap.hexagonPartsInColumn-2)].getY();
+        if (maxCameraWidth / maxCameraHeight > GamePanel.width / GamePanel.height)
+            maxCameraWidth = maxCameraHeight *  GamePanel.width /  GamePanel.height;
+        else
+            maxCameraHeight = maxCameraWidth *  GamePanel.height /  GamePanel.width;
+
+        minCameraWidth=maxCameraWidth/maxScale;
+        minCameraHeight=maxCameraHeight/maxScale;
         //camera has to be created AFTER WorldMap
         System.out.println(WorldMap.Parts[0].getWidth() + " " + WorldMap.Parts[0].getHeight());
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
@@ -161,17 +170,28 @@ public class Camera
     }
 
 
+    int a=0;
+    int b=1;
     public void render (Graphics g)
     {
+        int i=0;
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
-            float scaleWidth = (float) GamePanel.width / camera.width; //this is currently wrong
-            float scaleHeight = (float) GamePanel.height / camera.height;
+            float scaleWidth = GamePanel.width / camera.width; //this is currently wrong
+            float scaleHeight = GamePanel.height / camera.height;
             float x = (hexagon2D.x - camera.x) * scaleWidth;
             float y = (hexagon2D.y - camera.y) * scaleHeight;
             float width = hexagon2D.width * scaleWidth;
             float height = hexagon2D.height * scaleHeight;
-            hexagon2D.render(g, sprite.getSprite(0,0), (int) x, (int) y, (int) width , (int) height );
-
+            //if(i==420)
+            if (!(hexagon2D.x + hexagon2D.width < camera.x ||
+                    hexagon2D.x > camera.x + camera.width ||
+                    hexagon2D.y + hexagon2D.height < camera.y ||
+                    hexagon2D.y > camera.y + camera.height)) {
+                hexagon2D.render(g, sprite.getSprite(0, 0), (int) Math.round(x), (int) Math.round(y),
+                        (int) Math.ceil(width), (int) Math.ceil(height));
+            i++;
+            }
         }
+        System.out.println(i);
     }
 }
