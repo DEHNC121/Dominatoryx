@@ -161,11 +161,8 @@ public class Camera
     }
 
 
-    int a=0;
-    int b=1;
     public void render (Graphics g)
     {
-        int i=0;
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
             float scaleWidth = (float) GamePanel.width / camera.width; //this is currently wrong
             float scaleHeight = (float) GamePanel.height / camera.height;
@@ -173,10 +170,8 @@ public class Camera
             float y = (hexagon2D.y - camera.y) * scaleHeight;
             float width = hexagon2D.width * scaleWidth;
             float height = hexagon2D.height * scaleHeight;
-            i++;
-            if(i==420)
-            hexagon2D.render(g, sprite.getSprite(a, b), (int) x, (int) y, (int) width + 2, (int) height + 2);
-            b=1-b;
+            hexagon2D.render(g, sprite.getSprite(0,0), (int) x, (int) y, (int) width , (int) height );
+
         }
     }
 }
