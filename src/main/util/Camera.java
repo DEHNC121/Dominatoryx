@@ -148,7 +148,7 @@ public class Camera
     }
     public void clicked(){
         if(mouseIsClicked){
-            Hexagon2D selected=getHexagon(mouseXOnScreen,mouseYOnScreen);
+            Hexagon2D selected=getHexagon();
             if(selected!=null) selected.isSelected=!selected.isSelected;
             else System.out.println("NULL hexagon selected");
         }
@@ -191,17 +191,8 @@ public class Camera
         mouse.setDelX(0);
         mouse.setDelY(0);
     }
-    public Hexagon2D getHexagon(int x,int y){
-        double doubleX=(double) x;
-        double doubleY=(double) y;
-
-        doubleX=doubleX*camera.getWidth()/maxCameraWidth;
-        doubleY=doubleY*camera.getHeight()/maxCameraHeight;
-        doubleX+=camera.getX();
-        doubleY+=camera.getY();
-        float floatX=(float) doubleX;
-        float floatY=(float) doubleY;
-        return WorldMap.getHexagon(floatX,floatY);
+    public Hexagon2D getHexagon(){
+        return WorldMap.getHexagon(mouseXOnMap,mouseYOnMap);
     }
 
     int a=0;

@@ -12,6 +12,8 @@ public class WorldMap {
     public static int heightHexagonNumber;
     public static int hexagonPartsInRow;
     public static int hexagonPartsInColumn;
+    public static float hexagonPartWidth;
+    public static float hexagonPartHeight;
     public WorldMap(PlayState.GameMapSize gameMapSize) {
 
         //GamePanel.width,GamePanel.height;
@@ -23,8 +25,8 @@ public class WorldMap {
         int hexagonNumber=widthHexagonNumber*heightHexagonNumber;
 
         Parts=new HexagonPart2D[hexagonPartsNumber];
-        float hexagonPartWidth = (float) GamePanel.width / (float) hexagonPartsInRow;
-        float hexagonPartHeight = (float) GamePanel.height / (float) hexagonPartsInColumn;
+        hexagonPartWidth = (float) GamePanel.width / (float) hexagonPartsInRow;
+        hexagonPartHeight = (float) GamePanel.height / (float) hexagonPartsInColumn;
         float hexagonPartWidthDiff = (float) GamePanel.width / (float) hexagonPartsInRow;
         float hexagonPartHeightDiff= (float) GamePanel.height / (float) hexagonPartsInColumn;
         for(int i=0;i<hexagonPartsInRow;i++){
@@ -66,27 +68,9 @@ public class WorldMap {
     }
     static public HexagonPart2D getHexagonPart(float x,float y){
         //returns clicked HexagonPart: O(log(Parts.len()))
-        int lowerBound=0;
-        int upperBound=hexagonPartsInColumn*hexagonPartsInRow-1;
-        while(lowerBound<upperBound){
-            int c=(lowerBound+upperBound)/2;
-            HexagonPart2D part=Parts[c];
-            if(part.isInside(x,y))
-                return part;
-            if(y<part.getY()){
-                upperBound=c;
-                continue;
-            }
-            if(y>part.getY()+part.getWidth()){
-                lowerBound=c+1;
-                continue;
-            }
-            if(x<part.getX())
-                upperBound=c;
-            else
-                lowerBound=c+1;
-        }
-        return Parts[lowerBound];
+        int a=(int) Math.floor(x/hexagonPartWidth);
+        int b=(int) Math.floor(y/hexagonPartHeight);
+        return Parts[a+b*hexagonPartsInRow];
     }
     static public Hexagon2D getHexagon(float x,float y){
         return getHexagonPart(x,y).getHexagon(x,y);
