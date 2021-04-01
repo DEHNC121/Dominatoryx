@@ -11,8 +11,8 @@ public class Sprite
 
     private BufferedImage SPRITESHEET = null;
     private BufferedImage [][] spriteArray;
-    private final int HEXAGONHIGHT = 256;
-    private final int HEXAGONWIDTH = 221;
+    private final int HEXAGONHIGHT = 64;
+    private final int HEXAGONWIDTH = 55;
     public int w;
     public int h;
     private int wSprite;

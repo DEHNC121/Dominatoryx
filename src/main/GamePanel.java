@@ -64,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable
     {
         init();
 
+
         final double GAME_HERTZ = 60.0;
         final double TBU = 1000000000 / GAME_HERTZ; // Time before Update
         final int MUBR = 5; // Must update before render
@@ -76,9 +77,10 @@ public class GamePanel extends JPanel implements Runnable
 
         int frameCount = 0;
         int lastSecondTime = (int) (lastUpdateTime / 1000000000);
-
+        oldFrameCount = 0;
 
         int t=0;
+
         while (running)
         {
             double now = System.nanoTime();
@@ -107,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable
             {
                 if (frameCount != oldFrameCount)
                 {
-                    // System.out.println("NEW SECOND " + thisSecond + " " + frameCount);
+                    //System.out.println("NEW SECOND " + thisSecond + " " + frameCount);
                     oldFrameCount = frameCount;
                 }
                 frameCount = 0;
@@ -123,13 +125,14 @@ public class GamePanel extends JPanel implements Runnable
                 }
                 catch (Exception e)
                 {
-                    System.out.println("ERROR: yielding thread");
+                    System.out.println("ERROR: yealding thread");
                 }
                 now = System.nanoTime();
             }
 
         }
     }
+
 
 
 

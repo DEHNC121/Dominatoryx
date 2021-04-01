@@ -55,7 +55,7 @@ public class Camera
         System.out.println(WorldMap.Parts[0].getWidth() + " " + WorldMap.Parts[0].getHeight());
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
         cameraBoundary=new Object2D(camera.getX(),camera.getY(), maxCameraWidth, maxCameraHeight);
-        sprite=new Sprite("map/HexagonMap.png");
+        sprite=new Sprite("map/HexagonMapV.3.png");
     }
 
 //    public void updateCameraBoundary(){
@@ -182,7 +182,7 @@ public class Camera
             float y = (hexagon2D.y - camera.y) * scaleHeight;
             float width = hexagon2D.width * scaleWidth;
             float height = hexagon2D.height * scaleHeight;
-            //if(i==420)
+
             if (!(hexagon2D.x + hexagon2D.width < camera.x ||
                     hexagon2D.x > camera.x + camera.width ||
                     hexagon2D.y + hexagon2D.height < camera.y ||
