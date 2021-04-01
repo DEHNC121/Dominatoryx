@@ -149,7 +149,7 @@ public class Camera
     {
         move ();
         updateCamera();
-
+        clicked();
     }
 
     public void move ()
@@ -158,7 +158,6 @@ public class Camera
         zoomIn();
         zoomOut();
         dragged();
-        clicked();
         //
     }
 
@@ -176,7 +175,9 @@ public class Camera
             scrollDown=true;
         mouse.setRotation(0);
         mouse.isDragged = false;
-        mouse.isClicked = false;
+        if(mouseIsClicked){
+            mouse.isClicked = false;
+        }
         mouse.setDelX(0);
         mouse.setDelY(0);
     }
