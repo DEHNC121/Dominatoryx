@@ -1,5 +1,6 @@
 package main.states;
 
+import javafx.util.Pair;
 import main.graphics.Sprite;
 import main.util.Camera;
 import main.util.KeyHandler;
@@ -7,7 +8,6 @@ import main.util.MouseHandler;
 import main.util.map.WorldMap;
 
 import java.awt.*;
-import javafx.util.Pair;
 public class PlayState extends GameState
 {
     public static WorldMap worldMap;

@@ -237,11 +237,11 @@ public class Camera
     }
 
     public void debug() {
-        System.out.println("mouseXOnMap: " + mouseXOnMap + " mouseYOnMap: " + mouseYOnMap);
-        System.out.println("camera.x: " + camera.x + " camera.y: " + camera.y + " camera.width: " + camera.width +
-                " camera.height: " + camera.height);
-        System.out.println("scale: " + scale);
-        System.out.println("maxCameraHeight: " + maxCameraHeight + " maxCameraWidth: " + maxCameraWidth);
+//        System.out.println("mouseXOnMap: " + mouseXOnMap + " mouseYOnMap: " + mouseYOnMap);
+//        System.out.println("camera.x: " + camera.x + " camera.y: " + camera.y + " camera.width: " + camera.width +
+//                " camera.height: " + camera.height);
+//        System.out.println("scale: " + scale);
+//        System.out.println("maxCameraHeight: " + maxCameraHeight + " maxCameraWidth: " + maxCameraWidth);
 
     }
 }
