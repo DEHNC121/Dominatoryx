@@ -11,6 +11,7 @@ import java.util.*;
 public class Hexagon2D extends Object2D {
     int positionInWorldMapArray;
     public boolean border=false;
+    public boolean isSelected=false;
     public Hexagon2D(){
         super();
     }
@@ -21,6 +22,10 @@ public class Hexagon2D extends Object2D {
         positionInWorldMapArray=i;
         return this;
     }
+
+    public int getIndex(){ return positionInWorldMapArray; }
+
+
 
     public void setBorder(boolean border) {
         this.border = border;

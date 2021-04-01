@@ -34,6 +34,7 @@ public class Camera
     private boolean scrollUp=false;
     private boolean scrollDown=false;
     private boolean mouseIsDragged = false;
+    private boolean mouseIsClicked = false;
 
     public int pause;
     public boolean paused;
@@ -137,7 +138,13 @@ public class Camera
             camera.y -= delY * mouseDraggingScale;
         }
     }
-
+    public void clicked(){
+        if(mouseIsClicked){
+            Hexagon2D selected=getHexagon(mouseX,mouseY);
+            if(selected!=null) selected.isSelected=!selected.isSelected;
+            else System.out.println("NULL hexagon selected");
+        }
+    }
     public void update ()
     {
         move ();
@@ -151,6 +158,7 @@ public class Camera
         zoomIn();
         zoomOut();
         dragged();
+        clicked();
         //
     }
 
@@ -159,6 +167,7 @@ public class Camera
         mouseX=mouse.getX();
         mouseY=mouse.getY();
         mouseIsDragged = mouse.getIsDragged();
+        mouseIsClicked = mouse.getIsClicked();
         delX = mouse.getDelX();
         delY = mouse.getDelY();
         if(mouse.getRotation()<0)
@@ -167,10 +176,22 @@ public class Camera
             scrollDown=true;
         mouse.setRotation(0);
         mouse.isDragged = false;
+        mouse.isClicked = false;
         mouse.setDelX(0);
         mouse.setDelY(0);
     }
+    public Hexagon2D getHexagon(int x,int y){
+        double doubleX=(double) x;
+        double doubleY=(double) y;
 
+        doubleX=doubleX*camera.getWidth()/maxCameraWidth;
+        doubleY=doubleY*camera.getHeight()/maxCameraHeight;
+        doubleX+=camera.getX();
+        doubleY+=camera.getY();
+        float floatX=(float) doubleX;
+        float floatY=(float) doubleY;
+        return WorldMap.getHexagon(floatX,floatY);
+    }
 
     int a=0;
     int b=1;
@@ -187,8 +208,12 @@ public class Camera
                     hexagon2D.x > camera.x + camera.width ||
                     hexagon2D.y + hexagon2D.height < camera.y ||
                     hexagon2D.y > camera.y + camera.height)) {
+                if(!hexagon2D.isSelected)
                 hexagon2D.render(g, sprite.getSprite(0, 0), (int) Math.round(x), (int) Math.round(y),
                         (int) Math.ceil(width), (int) Math.ceil(height));
+                else
+                    hexagon2D.render(g, sprite.getSprite(1, 0), (int) Math.round(x), (int) Math.round(y),
+                            (int) Math.ceil(width), (int) Math.ceil(height));
             }
         }
     }
