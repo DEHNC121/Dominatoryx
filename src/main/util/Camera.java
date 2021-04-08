@@ -47,6 +47,7 @@ public class Camera
         maxCameraWidth=WorldMap.Parts[WorldMap.hexagonPartsInRow-2].getX();
         maxCameraHeight=WorldMap.Parts[WorldMap.hexagonPartsInRow*
                 (WorldMap.hexagonPartsInColumn-2)].getY();
+        cameraBoundary=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(), maxCameraWidth, maxCameraHeight);
         if (maxCameraWidth / maxCameraHeight > GamePanel.width / GamePanel.height)
             maxCameraWidth = maxCameraHeight *  GamePanel.width /  GamePanel.height;
         else
@@ -57,8 +58,7 @@ public class Camera
         //camera has to be created AFTER WorldMap
         System.out.println(WorldMap.Parts[0].getWidth() + " " + WorldMap.Parts[0].getHeight());
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
-        cameraBoundary=new Object2D(camera.getX(),camera.getY(), maxCameraWidth, maxCameraHeight);
-        sprite=new Sprite("map/HexagonMapV.3.png");
+        sprite=new Sprite("map/HexagonMapV.4.png");
         scale = GamePanel.width / camera.width;
     }
 
