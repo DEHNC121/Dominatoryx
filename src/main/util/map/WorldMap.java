@@ -107,6 +107,7 @@ public class WorldMap {
             lands++;
         }
     }
+
     static public Set<Hexagon2D> getSelectedSet(){
         HashSet<Hexagon2D> set=new HashSet<>();
         if(selectedHexagon==null)
