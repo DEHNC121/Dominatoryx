@@ -52,6 +52,9 @@ public class Object2D {
         this.width = width;
     }
 
+    public float getCenterX () { return x + width / 2;}
+    public float getCenterY () { return y + height / 2;}
+
     public boolean isInside(float x,float y){
         return (x>=this.x && x<= this.x+width && y>=this.y && y<=this.y+height );
     }

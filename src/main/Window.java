@@ -9,7 +9,7 @@ public class Window extends JFrame
     public Window () {
         Dimension ekran=Toolkit.getDefaultToolkit().getScreenSize();
         setUndecorated(true);
-
+        System.out.println("debug: " + ekran.getHeight() + " " + ekran.getWidth());
         setTitle ("Dominatoryx");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
