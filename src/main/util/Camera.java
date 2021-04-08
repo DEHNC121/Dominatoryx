@@ -7,7 +7,10 @@ import main.util.map.Hexagon2D;
 import main.util.map.Object2D;
 
 import java.awt.*;
+import java.util.Set;
+
 import main.util.map.WorldMap;
+
 
 public class Camera
 {
@@ -149,8 +152,10 @@ public class Camera
     public void clicked(){
         if(mouseIsClicked){
             Hexagon2D selected=getHexagon();
-            if(selected!=null) selected.isSelected=!selected.isSelected;
+            if(selected!=null) WorldMap.selectHexagon(selected);
             else System.out.println("NULL hexagon selected");
+            //System.out.println(WorldMap.neighborsOfSelected.size());
+            //System.out.println(WorldMap.getSelectedSet().size());
         }
     }
     public void update ()
@@ -206,6 +211,7 @@ public class Camera
         if (c % 10 == 0)
             debug();
         int i=0;
+        Set<Hexagon2D> set=WorldMap.getSelectedSet();
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
             float x = (hexagon2D.x - camera.x) * scale;
             float y = (hexagon2D.y - camera.y) * scale;
@@ -217,14 +223,15 @@ public class Camera
                     hexagon2D.x > camera.x + camera.width ||
                     hexagon2D.y + hexagon2D.height < camera.y ||
                     hexagon2D.y > camera.y + camera.height)) {
-                if(!hexagon2D.isSelected)
-                hexagon2D.render(g, sprite.getSprite(0, 0), (int) Math.round(x), (int) Math.round(y),
-                        (int) Math.ceil(width), (int) Math.ceil(height));
-                else
-                    hexagon2D.render(g, sprite.getSprite(1, 0), (int) Math.round(x), (int) Math.round(y),
+                if(set.contains(hexagon2D) && WorldMap.selectedHexagon!=null)
+                    hexagon2D.renderSelected(g, sprite, (int) Math.round(x), (int) Math.round(y),
                             (int) Math.ceil(width), (int) Math.ceil(height));
+                else
+                    hexagon2D.render(g, sprite, (int) Math.round(x), (int) Math.round(y),
+                        (int) Math.ceil(width), (int) Math.ceil(height));
             }
         }
+
     }
 
     public void debug() {

@@ -4,6 +4,10 @@ import javafx.util.Pair;
 import main.GamePanel;
 import main.states.PlayState;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 public class WorldMap {
 
     public static Hexagon2D[] hexagonMap;
@@ -14,8 +18,11 @@ public class WorldMap {
     public static int hexagonPartsInColumn;
     public static float hexagonPartWidth;
     public static float hexagonPartHeight;
+    public static Hexagon2D selectedHexagon;
+    public static ArrayList<Pair<Hexagon2D,Integer>> neighborsOfSelected;
     public WorldMap(PlayState.GameMapSize gameMapSize) {
-
+        selectedHexagon=null;
+        neighborsOfSelected=new ArrayList<>();
         //GamePanel.width,GamePanel.height;
         widthHexagonNumber=gameMapSize.size.getValue();
         heightHexagonNumber=gameMapSize.size.getKey();
@@ -67,12 +74,29 @@ public class WorldMap {
         Parts[firstPartIndex+hexagonPartsInRow+3].setLeftHexagon(hexagon).setUpperHexagon(hexagon);
     }
     static public HexagonPart2D getHexagonPart(float x,float y){
-        //returns clicked HexagonPart: O(log(Parts.len()))
+        //returns clicked HexagonPart: O(1)!!!
         int a=(int) Math.floor(x/hexagonPartWidth);
         int b=(int) Math.floor(y/hexagonPartHeight);
         return Parts[a+b*hexagonPartsInRow];
     }
     static public Hexagon2D getHexagon(float x,float y){
         return getHexagonPart(x,y).getHexagon(x,y);
+    }
+    static public void selectHexagon(Hexagon2D hexagon){
+        if(hexagon.border || hexagon==selectedHexagon){
+            selectedHexagon=null;
+            return;
+        }
+        selectedHexagon=hexagon;
+        neighborsOfSelected= selectedHexagon.getNeighbors(3);
+    }
+    static public Set<Hexagon2D> getSelectedSet(){
+        HashSet<Hexagon2D> set=new HashSet<>();
+        if(selectedHexagon==null)
+            return set;
+        for(Pair<Hexagon2D,Integer> pair: neighborsOfSelected){
+            set.add(pair.getKey());
+        }
+        return set;
     }
 }
