@@ -12,6 +12,7 @@ import java.util.*;
 public class Hexagon2D extends Object2D {
     int positionInWorldMapArray;
     public boolean border=false;
+    public boolean water=true;
     public Hexagon2D(){
         super();
     }
@@ -31,14 +32,14 @@ public class Hexagon2D extends Object2D {
         this.border = border;
     }
 
-    private void getNeighborsLoop(int maxDistance, ArrayList<Pair<Hexagon2D,Integer>> list, boolean[] isVisited,
+    private void getNeighborsLoop(int maxDistance, Map<Hexagon2D,Integer> list, boolean[] isVisited,
                                   Queue<Pair<Hexagon2D,Integer>> queue){
         while(!queue.isEmpty()){
             Pair<Hexagon2D,Integer> pair=queue.poll();
             isVisited[pair.getKey().positionInWorldMapArray]=true;
             if(pair.getKey().border)
                 continue;
-            list.add(pair);
+            list.put(pair.getKey(), pair.getValue());
             if(pair.getValue()==maxDistance)
                 continue;
 
@@ -76,12 +77,12 @@ public class Hexagon2D extends Object2D {
 
 
     }
-    public ArrayList<Pair<Hexagon2D,Integer>> getNeighbors(int distance){
-        ArrayList<Pair<Hexagon2D,Integer>> list=new ArrayList<>();
+    public HashMap<Hexagon2D,Integer> getNeighbors(int distance){
+        HashMap<Hexagon2D,Integer> map=new HashMap<>();
         if(border)
-            return list;
+            return map;
         if(distance==0)
-            return list;
+            return map;
         Queue<Pair<Hexagon2D,Integer>> queue=new LinkedList<>();
         boolean[] isVisited=new boolean[WorldMap.widthHexagonNumber*WorldMap.heightHexagonNumber];
         int len=isVisited.length;
@@ -89,17 +90,17 @@ public class Hexagon2D extends Object2D {
             isVisited[i]=false;
         }
         queue.offer(new Pair<>(this,0));
-        getNeighborsLoop(distance,list,isVisited, queue);
-        list.remove(new Pair<>(this,0));
-        return list;
+        getNeighborsLoop(distance,map,isVisited, queue);
+        map.remove(this);
+        return map;
     }
 
     public void render(Graphics g, Sprite sprite, int x, int y, int width, int height)
     {
         if(this.equals(WorldMap.selectedHexagon))
             g.drawImage(sprite.getSprite(1,0),x,y,width,height,null);
-        else if(border)
-            g.drawImage(sprite.getSprite(3,0),x,y,width,height,null);
+        else if(water){}
+            //g.drawImage(sprite.getSprite(2,1 ),x,y,width,height,null);
         else
             g.drawImage(sprite.getSprite(0,0),x,y,width,height,null);
     }

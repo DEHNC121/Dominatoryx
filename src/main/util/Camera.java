@@ -192,6 +192,7 @@ public class Camera
     int c = 0;
     public void render (Graphics g)
     {
+        
         c++;
         if (c > 10000000)
             c = 0;

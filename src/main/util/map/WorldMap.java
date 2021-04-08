@@ -4,9 +4,7 @@ import javafx.util.Pair;
 import main.GamePanel;
 import main.states.PlayState;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class WorldMap {
 
@@ -19,10 +17,10 @@ public class WorldMap {
     public static float hexagonPartWidth;
     public static float hexagonPartHeight;
     public static Hexagon2D selectedHexagon;
-    public static ArrayList<Pair<Hexagon2D,Integer>> neighborsOfSelected;
+    public static HashMap<Hexagon2D,Integer> neighborsOfSelected;
     public WorldMap(PlayState.GameMapSize gameMapSize) {
         selectedHexagon=null;
-        neighborsOfSelected=new ArrayList<>();
+        neighborsOfSelected=new HashMap();
         //GamePanel.width,GamePanel.height;
         widthHexagonNumber=gameMapSize.size.getValue();
         heightHexagonNumber=gameMapSize.size.getKey();
@@ -60,7 +58,7 @@ public class WorldMap {
                     hexagonMap[i+j*widthHexagonNumber].setBorder(true);
             }
         }
-
+        generate();
     }
     static private void setPartsInHexagon(Hexagon2D hexagon,int firstPartIndex){
         //used in constructor
@@ -90,12 +88,31 @@ public class WorldMap {
         selectedHexagon=hexagon;
         neighborsOfSelected= selectedHexagon.getNeighbors(3);
     }
+    static public void generate(){generate(new Random().nextLong());}
+    static public void generate(long seed){
+        Random rng=new Random(seed);
+        int lands=0;
+        float landFraction=0.45f;
+        LinkedList<Hexagon2D> list=new LinkedList<>();
+        list.add(hexagonMap[(widthHexagonNumber)*(heightHexagonNumber+1)/2]);
+        while(lands<landFraction*widthHexagonNumber*heightHexagonNumber){
+            int chosenOne=rng.nextInt(list.size());
+            Hexagon2D chosenHexagon= list.get(chosenOne);
+            list.remove(chosenOne);
+            chosenHexagon.water=false;
+            for(Hexagon2D i: chosenHexagon.getNeighbors(1).keySet()){
+                if(i.water)
+                    list.add(i);
+            }
+            lands++;
+        }
+    }
     static public Set<Hexagon2D> getSelectedSet(){
         HashSet<Hexagon2D> set=new HashSet<>();
         if(selectedHexagon==null)
             return set;
-        for(Pair<Hexagon2D,Integer> pair: neighborsOfSelected){
-            set.add(pair.getKey());
+        for(Hexagon2D i: neighborsOfSelected.keySet()){
+            set.add(i);
         }
         return set;
     }
