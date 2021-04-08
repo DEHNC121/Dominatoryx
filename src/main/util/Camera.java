@@ -65,7 +65,7 @@ public class Camera
         //camera has to be created AFTER WorldMap
 
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
-        mapSprite =new Sprite("map/HexagonMapV.4.png");
+        mapSprite =new Sprite("map/HexagonMapV.5.png");
 
         scale = GamePanel.width / camera.width;
         scrollScale = 1.0f;
