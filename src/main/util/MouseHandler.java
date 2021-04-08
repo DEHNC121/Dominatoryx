@@ -36,10 +36,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
         return mouseY;
     }
 
-    public int getButton ()
-    {
-        return mouseB;
-    }
+    public int getButton (){ return mouseB; }
 
     public int getRotation () { return mouseRot; }
 
@@ -77,22 +74,13 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     }
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent)
-    {
-        mouseB = -1;
-    }
+    public void mouseReleased(MouseEvent mouseEvent){ mouseB = -1; }
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent)
-    {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent){}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent)
-    {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent){ }
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent)
@@ -111,6 +99,9 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     {
         mouseX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
+
+        mousePressedX = -1;
+        mousePressedY = -1;
     }
 
     @Override

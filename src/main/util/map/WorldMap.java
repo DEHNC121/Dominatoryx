@@ -30,10 +30,10 @@ public class WorldMap {
         int hexagonNumber=widthHexagonNumber*heightHexagonNumber;
 
         Parts=new HexagonPart2D[hexagonPartsNumber];
-        hexagonPartWidth = (float) GamePanel.width / (float) hexagonPartsInRow;
-        hexagonPartHeight = (float) GamePanel.height / (float) hexagonPartsInColumn;
-        float hexagonPartWidthDiff = (float) GamePanel.width / (float) hexagonPartsInRow;
-        float hexagonPartHeightDiff= (float) GamePanel.height / (float) hexagonPartsInColumn;
+        hexagonPartWidth = GamePanel.width / (float) hexagonPartsInRow;
+        hexagonPartHeight = GamePanel.height / (float) hexagonPartsInColumn;
+        float hexagonPartWidthDiff = GamePanel.width / (float) hexagonPartsInRow;
+        float hexagonPartHeightDiff = GamePanel.height / (float) hexagonPartsInColumn;
         for(int i=0;i<hexagonPartsInRow;i++){
             for(int j=0;j<hexagonPartsInColumn;j++){
                 Parts[j*hexagonPartsInRow+i]=

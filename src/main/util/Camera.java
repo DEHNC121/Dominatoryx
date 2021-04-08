@@ -16,21 +16,23 @@ public class Camera
 {
     private int delX;
     private int delY;
-    private Object2D camera;
-    private Object2D cameraBoundary; //red rectangle
+
+    private final Object2D camera;
+    private final Object2D cameraBoundary; //red rectangle
+
     final static float zoomScale=1.2f;
-    private float mouseDraggingScale = 1f;
     private final float minScale=1f;
     private final float maxScale=5f;
-    private Sprite sprite;
+    private float mouseDraggingScale = 1f;
+
+    float minCameraWidth;
+    float minCameraHeight;
+    float maxCameraWidth;
+    float maxCameraHeight;
+
+    private final Sprite mapSprite;
     private float scale;
     private float scrollScale;
-
-     private float maxCameraWidth;
-     private float maxCameraHeight;
-     private float minCameraWidth;
-     private float minCameraHeight;
-
 
     private float mouseXOnMap=-1;
     private float mouseYOnMap =-1;
@@ -49,22 +51,22 @@ public class Camera
     public Camera ()
     {
         maxCameraWidth=WorldMap.Parts[WorldMap.hexagonPartsInRow-2].getX();
-        maxCameraHeight=WorldMap.Parts[WorldMap.hexagonPartsInRow*
-                (WorldMap.hexagonPartsInColumn-2)].getY();
+        maxCameraHeight=WorldMap.Parts[WorldMap.hexagonPartsInRow*(WorldMap.hexagonPartsInColumn-2)].getY();
+
         cameraBoundary=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(), maxCameraWidth, maxCameraHeight);
-        //if (maxCameraWidth / maxCameraHeight > GamePanel.width / GamePanel.height)
-        System.out.println(maxCameraHeight + " " + maxCameraWidth);
+
         if (maxCameraWidth * GamePanel.height > maxCameraHeight * GamePanel.width)
             maxCameraWidth = maxCameraHeight *  GamePanel.width /  GamePanel.height;
         else
             maxCameraHeight = maxCameraWidth *  GamePanel.height /  GamePanel.width;
-        System.out.println(maxCameraHeight + " " + maxCameraWidth);
+
         minCameraWidth=maxCameraWidth/maxScale;
         minCameraHeight=maxCameraHeight/maxScale;
         //camera has to be created AFTER WorldMap
-        System.out.println(WorldMap.Parts[0].getWidth() + " " + WorldMap.Parts[0].getHeight());
+
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
-        sprite=new Sprite("map/HexagonMapV.4.png");
+        mapSprite =new Sprite("map/HexagonMapV.4.png");
+
         scale = GamePanel.width / camera.width;
         scrollScale = 1.0f;
     }
@@ -212,10 +214,10 @@ public class Camera
                     hexagon2D.y + hexagon2D.height < camera.y ||
                     hexagon2D.y > camera.y + camera.height)) {
                 if(set.contains(hexagon2D) && WorldMap.selectedHexagon!=null)
-                    hexagon2D.renderSelected(g, sprite, (int) Math.round(x), (int) Math.round(y),
+                    hexagon2D.renderSelected(g, mapSprite, (int) Math.round(x), (int) Math.round(y),
                             (int) Math.ceil(width), (int) Math.ceil(height));
                 else
-                    hexagon2D.render(g, sprite, (int) Math.round(x), (int) Math.round(y),
+                    hexagon2D.render(g, mapSprite, (int) Math.round(x), (int) Math.round(y),
                         (int) Math.ceil(width), (int) Math.ceil(height));
             }
         }
