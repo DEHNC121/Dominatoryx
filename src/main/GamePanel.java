@@ -133,9 +133,6 @@ public class GamePanel extends JPanel implements Runnable
         }
     }
 
-
-
-
     public void update ()
     {
         gsm.update();
@@ -152,7 +149,7 @@ public class GamePanel extends JPanel implements Runnable
         //System.out.println("rend"+t);
         if (graphics2D != null)
         {
-            graphics2D.setColor(new Color (0, 0, 0));
+            graphics2D.setColor(new Color (36, 179, 215));
             graphics2D.fillRect(0, 0, (int) width, (int) height);
             gsm.render(graphics2D);
         }

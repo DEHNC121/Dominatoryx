@@ -97,6 +97,7 @@ public class Hexagon2D extends Object2D {
 
     public void render(Graphics g, Sprite sprite, int x, int y, int width, int height)
     {
+
         if(this.equals(WorldMap.selectedHexagon))
             g.drawImage(sprite.getSprite(1,0),x,y,width,height,null);
         else if(water){}
