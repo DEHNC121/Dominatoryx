@@ -63,6 +63,7 @@ public class KeyHandler implements KeyListener
     public KeyHandler (GamePanel game)
     {
         game.addKeyListener(this);
+        keys.add(up);
     }
 
     public void releaseAll ()
