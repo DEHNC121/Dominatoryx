@@ -3,6 +3,7 @@ package main;
 import main.states.GameStateManager;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
+import sounds.Sound;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -56,8 +57,7 @@ public class GamePanel extends JPanel implements Runnable
         keyHandler = new KeyHandler(this);
 
         gsm = new GameStateManager();
-
-    }
+            }
 
     @Override
     public void run()

@@ -1,5 +1,7 @@
 package main;
 
+import sounds.Sound;
+
 public class GameLauncher
 {
 
@@ -11,6 +13,7 @@ public class GameLauncher
 
     public static void main(String[] args)
     {
+
         new GameLauncher();
     }
 }

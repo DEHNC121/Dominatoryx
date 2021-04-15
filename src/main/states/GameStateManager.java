@@ -13,7 +13,8 @@ public class GameStateManager
 
 
     public GameStateManager () {
-        currentState=new PlayState(this);
+        currentState = new InitialState(this);
+        //currentState=new PlayState(this);
     }
 
     public void set(GameState g){

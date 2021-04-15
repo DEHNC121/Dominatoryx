@@ -3,6 +3,7 @@ package main.util.map;
 import javafx.util.Pair;
 import main.GamePanel;
 import main.states.PlayState;
+import sounds.Sound;
 
 import java.util.*;
 
@@ -81,6 +82,7 @@ public class WorldMap {
         return getHexagonPart(x,y).getHexagon(x,y);
     }
     static public void selectHexagon(Hexagon2D hexagon){
+        //Sound.playSelectUnitMusic();
         if(hexagon.border || hexagon==selectedHexagon){
             selectedHexagon=null;
             return;

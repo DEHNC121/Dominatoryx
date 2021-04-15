@@ -1,6 +1,7 @@
 package main.states;
 
 import javafx.util.Pair;
+import main.graphics.Icon;
 import main.graphics.Sprite;
 import main.util.Camera;
 import main.util.KeyHandler;
@@ -15,6 +16,7 @@ public class PlayState extends GameState
     public static RoundManager roundManager;
     Sprite sprite;
     Camera camera;
+    Icon menuIcon;
     public enum GameMapSize{
         SMALL,
         MEDIUM,
@@ -27,7 +29,7 @@ public class PlayState extends GameState
         }
 
     }
-    public GameMapSize gameMapSize=GameMapSize.SMALL;
+    public GameMapSize gameMapSize=GameMapSize.LARGE;
 
 
 

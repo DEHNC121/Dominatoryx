@@ -1,6 +1,8 @@
 package main.graphics;
 
 
+import main.util.MouseHandler;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -63,6 +65,8 @@ public class Sprite
     public int getWidth () { return w; }
     public int getHeight () { return h; }
 
+    public BufferedImage getBufferedImage () { return SPRITESHEET; }
+
     private BufferedImage loadSprite (String file)
     {
         BufferedImage sprite = null;
@@ -96,6 +100,10 @@ public class Sprite
         return SPRITESHEET.getSubimage(x * w, y * h, w, h);
     }
 
+    public void renderAtPoint (Graphics g, int x, int y) {
+        g.drawImage(SPRITESHEET, x - wSprite / 2, y - hSprite / 2, null);
+
+    }
 
 
 

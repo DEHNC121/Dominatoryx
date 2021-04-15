@@ -180,7 +180,7 @@ public class Camera
         mouse.setRotation(0);
         mouse.isDragged = false;
         if(mouseIsClicked){
-            mouse.isClicked = false;
+            mouse.setIsClicked(false);
         }
         mouse.setDelX(0);
         mouse.setDelY(0);

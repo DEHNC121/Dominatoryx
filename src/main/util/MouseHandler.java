@@ -54,6 +54,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
     public void setDelY (int delY) { this.delY = delY; }
 
+    public void setIsClicked (boolean isClicked) { this.isClicked = isClicked; }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent)
     {
