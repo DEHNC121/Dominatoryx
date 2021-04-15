@@ -12,10 +12,8 @@ public class InitialState extends GameState {
     Icon playIcon;
     Icon settingsIcon;
     Icon shutDownIcon;
-    GameStateManager gsm;
     public InitialState (GameStateManager gsm) {
         super(gsm);
-        this.gsm = gsm;
         playIcon = new Icon("initial/play_button.png");
         settingsIcon = new Icon("initial/settings_icon.png");
         shutDownIcon = new Icon("initial/shut_down.png");
@@ -30,9 +28,11 @@ public class InitialState extends GameState {
 
     @Override
     public void input (MouseHandler mouse, KeyHandler key) {
-        if (mouse.isClicked) {
+        if (mouse.getIsClicked()) {
             if (playIcon.mouseOnIcon(mouse)) {
-                gsm.set(new PlayState(gsm));
+                GameState g = new PlayState(gsm);
+                gsm.setPlayState(g);
+                gsm.set(g);
             }
             if (shutDownIcon.mouseOnIcon(mouse)) {
                 System.exit(0); //should be written differently

@@ -5,6 +5,8 @@ import sounds.Sound;
 
 import javax.swing.JFrame;
 import java.awt.*;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Window extends JFrame
 {
@@ -17,6 +19,7 @@ public class Window extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setContentPane (new GamePanel ((int)ekran.getWidth(), (int)ekran.getHeight()));
+
         pack();
 
 

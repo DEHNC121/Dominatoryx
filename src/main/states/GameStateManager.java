@@ -10,6 +10,7 @@ public class GameStateManager
 {
 
     private GameState currentState;
+    private GameState playState = null;
 
 
     public GameStateManager () {
@@ -17,9 +18,12 @@ public class GameStateManager
         //currentState=new PlayState(this);
     }
 
+    public GameState getPlayState () { return playState; }
+
     public void set(GameState g){
         currentState=g;
     }
+    public void setPlayState (GameState playState) { this.playState = playState; }
 
     public void update ()
     {

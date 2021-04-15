@@ -1,6 +1,7 @@
 package main.states;
 
 import javafx.util.Pair;
+import main.GamePanel;
 import main.graphics.Icon;
 import main.graphics.Sprite;
 import main.util.Camera;
@@ -29,7 +30,7 @@ public class PlayState extends GameState
         }
 
     }
-    public GameMapSize gameMapSize=GameMapSize.LARGE;
+    public GameMapSize gameMapSize=GameMapSize.SMALL;
 
 
 
@@ -38,6 +39,17 @@ public class PlayState extends GameState
         worldMap= new WorldMap(gameMapSize);
         roundManager=new RoundManager(4);
         camera=new Camera();
+        loadIcons();
+        setIcons();
+    }
+
+    public void loadIcons () {
+        menuIcon = new Icon("gameicons/menu_icon.png");
+    }
+
+    public void setIcons () {
+        menuIcon.setPosition((int) GamePanel.width - menuIcon.getWidth(), 0);
+
     }
 
     @Override
@@ -48,13 +60,20 @@ public class PlayState extends GameState
 
     @Override
     public void input(MouseHandler mouse, KeyHandler key) {
+        if (mouse.getIsClicked()) {
+            if (menuIcon.mouseOnIcon(mouse)) {
+                gsm.set(new PauseState(gsm));
+            }
+        }
         camera.input(mouse, key);
         RoundManager.input(mouse, key);
+        mouse.setIsClicked(false);
     }
 
     @Override
     public void render(Graphics2D g) {
         camera.render(g);
+        menuIcon.render(g);
 
 
     }

@@ -3,8 +3,10 @@ package main.graphics;
 import main.util.MouseHandler;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Objects;
 
 public class Icon {
@@ -15,6 +17,7 @@ public class Icon {
     private int positionY;
     private int positionCenterX;
     private int positionCenterY;
+    private String label = null;
 
     public Icon (String file) {
         loadImage(file);
@@ -30,6 +33,12 @@ public class Icon {
         this.positionCenterY = positionCenterY;
         setPositionFromCenter();
     }
+
+    public void setLabel (String s) {
+        label = s;
+    }
+
+    public String getLabel () { return label; }
 
     public void setPosition (int positionX, int positionY) {
         this.positionX = positionX;
@@ -60,7 +69,14 @@ public class Icon {
     public int getHeight () { return height; }
 
     public void render (Graphics g) {
+
         g.drawImage(image, positionX, positionY, null);
+        if (label != null) {
+            Font currentFont = g.getFont();
+            Font newFont = currentFont.deriveFont(60.0f);
+            g.setFont(newFont);
+            g.drawString(label, positionX + width / 2 - 80, positionY + height / 2);
+        }
     }
 
     public boolean mouseOnIcon (MouseHandler mouse) {

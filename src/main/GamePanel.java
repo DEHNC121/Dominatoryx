@@ -8,6 +8,9 @@ import sounds.Sound;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 
 public class GamePanel extends JPanel implements Runnable
@@ -34,7 +37,9 @@ public class GamePanel extends JPanel implements Runnable
         setPreferredSize(new Dimension(width, height));
         setFocusable(true);
         requestFocus();
+
     }
+
 
     public void addNotify ()
     {
@@ -53,11 +58,25 @@ public class GamePanel extends JPanel implements Runnable
         image = new BufferedImage((int) width, (int) height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = (Graphics2D) image.getGraphics();
 
+        try {
+            Font f = Font.createFont(Font.TRUETYPE_FONT,
+                    Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("fonts/font.otf")));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(f);
+            for (String s : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
+                System.out.println(s);
+            }
+            graphics2D.setFont(f);
+        } catch (IOException |FontFormatException e) {
+            e.printStackTrace();
+        }
+
         mouse = new MouseHandler(this);
         keyHandler = new KeyHandler(this);
 
         gsm = new GameStateManager();
-            }
+
+    }
 
     @Override
     public void run()
