@@ -2,8 +2,10 @@ package main.util.map;
 
 import javafx.util.Pair;
 import main.graphics.Sprite;
+import main.util.Player;
 import main.util.map.Object2D;
 import main.util.map.WorldMap;
+import main.util.units.Unit;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,6 +15,8 @@ public class Hexagon2D extends Object2D {
     int positionInWorldMapArray;
     public boolean border=false;
     public boolean water=true;
+    public Player owner=null;
+    public Unit unit=null;
     public Hexagon2D(){
         super();
     }
@@ -104,10 +108,14 @@ public class Hexagon2D extends Object2D {
             //g.drawImage(sprite.getSprite(2,1 ),x,y,width,height,null);
         else
             g.drawImage(sprite.getSprite(0,0),x,y,width,height,null);
+        if(unit!=null)
+            unit.render();
     }
     public void renderSelected(Graphics g, Sprite sprite, int x, int y, int width, int height)
     {
         g.drawImage(sprite.getSprite(2,0),x,y,width,height,null);
+        if(unit!=null)
+            unit.render();
     }
 
     @Override
@@ -121,5 +129,22 @@ public class Hexagon2D extends Object2D {
     @Override
     public int hashCode() {
         return Objects.hash(positionInWorldMapArray);
+    }
+
+    public int getIncome(){
+        //to be expanded later with addition of buildings/
+        return 1;
+    }
+    public void abandonField(){
+        if(owner!=null){
+            owner.controlledFields--;
+            owner.deathCheck();
+        }
+        unit=null;
+    }
+    public void newOwner(Player pl){
+        abandonField();
+        owner=pl;
+        pl.controlledFields++;
     }
 }

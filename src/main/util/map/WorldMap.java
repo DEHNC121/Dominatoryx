@@ -8,7 +8,7 @@ import sounds.Sound;
 import java.util.*;
 
 public class WorldMap {
-
+    public static long seed;
     public static Hexagon2D[] hexagonMap;
     public static HexagonPart2D[] Parts;
     public static int widthHexagonNumber;
@@ -90,8 +90,15 @@ public class WorldMap {
         selectedHexagon=hexagon;
         neighborsOfSelected= selectedHexagon.getNeighbors(3);
     }
-    static public void generate(){generate(new Random().nextLong());}
+    static public void generate(){
+        generate(new Random().nextLong());
+        //generating players on map
+
+        for(int i=0;i<widthHexagonNumber*heightHexagonNumber;i++)
+            if(hexagonMap[i].water){hexagonMap[i].border=true;}
+    }
     static public void generate(long seed){
+        WorldMap.seed=seed;
         Random rng=new Random(seed);
         int lands=0;
         float landFraction=0.45f;
@@ -118,5 +125,11 @@ public class WorldMap {
             set.add(i);
         }
         return set;
+    }
+    static public void generateIncome(){
+        for(Hexagon2D hex: hexagonMap){
+            if(hex.owner!=null)
+                hex.owner.money+=hex.getIncome();
+        }
     }
 }

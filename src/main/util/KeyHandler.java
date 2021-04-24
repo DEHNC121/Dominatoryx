@@ -48,7 +48,7 @@ public class KeyHandler implements KeyListener
 
 
     public Key up = new Key();
-//    public Key down = new Key();
+    public Key down = new Key();
 //    public Key left = new Key();
 //    public Key right = new Key();
 //    public Key attack = new Key();
@@ -72,7 +72,10 @@ public class KeyHandler implements KeyListener
             key.down = false;
         }
     }
-
+    /*
+    TODO: make somewhere clock that ticks, because it is not easy to
+        debug using just down values
+     */
     public void tick ()
     {
         for (Key key : keys) {
@@ -82,8 +85,8 @@ public class KeyHandler implements KeyListener
 
     public void toggle (KeyEvent e, boolean pressed)
     {
-        if (e.getKeyCode() == KeyEvent.VK_W) up.toggle(pressed);
-//        if (e.getKeyCode() == KeyEvent.VK_S) down.toggle(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_UP) up.toggle(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) down.toggle(pressed);
 //        if (e.getKeyCode() == KeyEvent.VK_A) left.toggle(pressed);
 //        if (e.getKeyCode() == KeyEvent.VK_D) right.toggle(pressed);
 //        if (e.getKeyCode() == KeyEvent.VK_SPACE) attack.toggle(pressed);
