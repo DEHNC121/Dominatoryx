@@ -101,19 +101,18 @@ public class Hexagon2D extends Object2D {
 
     public void render(Graphics g, Sprite sprite, int x, int y, int width, int height)
     {
+        int textureX=0;
+        int textureY=0;
 
-        if(this.equals(WorldMap.selectedHexagon))
-            g.drawImage(sprite.getSprite(1,0),x,y,width,height,null);
-        else if(water){}
-            //g.drawImage(sprite.getSprite(2,1 ),x,y,width,height,null);
-        else
-            g.drawImage(sprite.getSprite(0,0),x,y,width,height,null);
-        if(unit!=null)
-            unit.render();
-    }
-    public void renderSelected(Graphics g, Sprite sprite, int x, int y, int width, int height)
-    {
-        g.drawImage(sprite.getSprite(2,0),x,y,width,height,null);
+        if(this.equals(WorldMap.selectedHexagon)){
+            textureY=2;
+        }else if(WorldMap.getSelectedSet().contains(this) && WorldMap.selectedHexagon!=null){
+            textureY=1;
+        }
+
+        if(!water){
+            g.drawImage(sprite.getSprite(textureX,textureY),x,y,width,height,null);
+        }
         if(unit!=null)
             unit.render();
     }

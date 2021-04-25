@@ -89,6 +89,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     {
         mouseX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
+//        System.out.println(mouseX+" , "+mouseY);
         delX += mouseX - mouseXFromLastDragged;
         delY += mouseY - mouseYFromLastDragged;
         mouseXFromLastDragged=mouseX;

@@ -65,7 +65,7 @@ public class Camera
         //camera has to be created AFTER WorldMap
 
         camera=new Object2D(WorldMap.Parts[0].getWidth(),WorldMap.Parts[0].getHeight(),maxCameraWidth, maxCameraHeight);
-        mapSprite =new Sprite("map/HexagonMapV.6.png");
+        mapSprite =new Sprite("map/HexagonMapV.7.png");
 
         scale = GamePanel.width / camera.width;
         scrollScale = 1.0f;
@@ -89,14 +89,19 @@ public class Camera
 
     public void zoomIn(){
         if(scrollUp) {
+
             scrollUp = false;
             float wOld = camera.getWidth();
             float hOld = camera.getHeight();
+
             float wNew = Math.max(camera.getWidth() / zoomScale, minCameraWidth);
             float hNew = Math.max(camera.getHeight() / zoomScale, minCameraHeight);
+
             camera.setWidth(wNew);
             camera.setHeight(hNew);
+
             mouseDraggingScale = Math.max(mouseDraggingScale / zoomScale, 1 / maxScale);
+
             if (wOld != minCameraWidth && hOld != minCameraHeight) {
                 updateScale();
                 setCameraZoomIn(wOld / wNew);
@@ -128,14 +133,13 @@ public class Camera
         camera.setY(Math.min(camera.getY(), cameraBoundary.getY() + cameraBoundary.getHeight() - camera.getHeight()));
     }
 
-
-    // not working yet
     public void dragged () {
         if (mouseIsDragged) {
             camera.x -= delX * mouseDraggingScale;
             camera.y -= delY * mouseDraggingScale;
         }
     }
+
     public void clicked(){
         if(mouseIsClicked){
             Hexagon2D selected=getHexagon();
@@ -164,6 +168,7 @@ public class Camera
         mouseXOnMap = camera.x + (float) mouseXOnScreen / scale; // + (int) cameraBoundary.getX();
         mouseYOnMap = camera.y + (float) mouseYOnScreen / scale; // + (int) cameraBoundary.getY();
     }
+
     public void input (MouseHandler mouse, KeyHandler key)
     {
         mouseXOnScreen = mouse.getX();
@@ -189,37 +194,20 @@ public class Camera
         return WorldMap.getHexagon(mouseXOnMap,mouseYOnMap);
     }
 
-    int a=0;
-    int b=1;
-    int c = 0;
     public void render (Graphics g)
     {
-        
-        c++;
-        if (c > 10000000)
-            c = 0;
-        if (c % 10 == 0);
-            //debug();
-        int i=0;
-        Set<Hexagon2D> set=WorldMap.getSelectedSet();
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
+
             float x = (hexagon2D.x - camera.x) * scale;
             float y = (hexagon2D.y - camera.y) * scale;
             float width = hexagon2D.width * scale;
             float height = hexagon2D.height * scale;
-            i++;
-            //if(i==420)
-            if (!(hexagon2D.x + hexagon2D.width < camera.x ||
-                    hexagon2D.x > camera.x + camera.width ||
-                    hexagon2D.y + hexagon2D.height < camera.y ||
-                    hexagon2D.y > camera.y + camera.height)) {
-                if(set.contains(hexagon2D) && WorldMap.selectedHexagon!=null)
-                    hexagon2D.renderSelected(g, mapSprite, (int) Math.round(x), (int) Math.round(y),
-                            (int) Math.ceil(width), (int) Math.ceil(height));
-                else
-                    hexagon2D.render(g, mapSprite, (int) Math.round(x), (int) Math.round(y),
-                        (int) Math.ceil(width), (int) Math.ceil(height));
-            }
+
+//            if (!(hexagon2D.x + hexagon2D.width < camera.x || hexagon2D.x > camera.x + camera.width ||
+//                    hexagon2D.y + hexagon2D.height < camera.y || hexagon2D.y > camera.y + camera.height)) {
+
+                    hexagon2D.render(g, mapSprite,  Math.round(x),  Math.round(y), (int) Math.ceil(width), (int) Math.ceil(height));
+//            }
         }
 
     }
