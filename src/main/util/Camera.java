@@ -3,6 +3,7 @@ package main.util;
 
 import main.GamePanel;
 import main.graphics.Sprite;
+import main.states.PlayState;
 import main.util.map.Hexagon2D;
 import main.util.map.Object2D;
 
@@ -149,7 +150,10 @@ public class Camera
             else System.out.println("NULL hexagon selected");
             //System.out.println(WorldMap.neighborsOfSelected.size());
             //System.out.println(WorldMap.getSelectedSet().size());
+            PlayState.setClicked(!PlayState.isClicked);
         }
+
+
     }
     public void update ()
     {

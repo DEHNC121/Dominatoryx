@@ -11,8 +11,8 @@ import java.util.Objects;
 
 public class Icon {
     private BufferedImage image;
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
     private int positionX;
     private int positionY;
     private int positionCenterX;
@@ -24,7 +24,6 @@ public class Icon {
         width = image.getWidth();
         height = image.getHeight();
     }
-
     public Icon (String file, int positionCenterX, int positionCenterY) {
         loadImage(file);
         width = image.getWidth();
@@ -67,10 +66,16 @@ public class Icon {
     }
     public int getWidth () { return width; }
     public int getHeight () { return height; }
+    public void setWidth (int width) {this.width = width; }
+    public void setHeight (int height) {this.height = height;}
+    public void setSize (int width, int height) {
+        setWidth(width);
+        setHeight(height);
+    }
 
     public void render (Graphics g) {
 
-        g.drawImage(image, positionX, positionY, null);
+        g.drawImage(image, positionX, positionY, width, height, null);
         if (label != null) {
             Font currentFont = g.getFont();
             Font newFont = currentFont.deriveFont(60.0f);
@@ -78,6 +83,7 @@ public class Icon {
             g.drawString(label, positionX + width / 2 - 80, positionY + height / 2);
         }
     }
+
 
     public boolean mouseOnIcon (MouseHandler mouse) {
         int mX = mouse.getX();
