@@ -35,6 +35,7 @@ public abstract class Unit {
         hexagon=newHexagon;
         movement-=neighbors.get(newHexagon);
     }
+
     public void attack(Hexagon2D newHexagon){
         if(attackMovementCost()>movement)
             return;
@@ -44,8 +45,18 @@ public abstract class Unit {
         if(newHexagon.unit==null){
             movement-=attackMovementCost();
             newHexagon.newOwner(owner);
+            hexagon=newHexagon;
+            newHexagon.unit=this;
         } else {//newHexagon.unit!=null
-            //TODO: consult, what should I do in that case
+            //MTG first strike attacker/blocker rules
+            newHexagon.unit.takeDamage(getAttackValue());
+            if(newHexagon.unit==null){
+                hexagon.newOwner(owner);
+                newHexagon.unit=this;
+            }
+            else{
+                takeDamage(newHexagon.unit.getAttackValue());
+            }
         }
     }
     public void takeDamage(int dmg){

@@ -3,6 +3,8 @@ package main.util.map;
 import javafx.util.Pair;
 import main.GamePanel;
 import main.states.PlayState;
+import main.util.Player;
+import main.util.RoundManager;
 import sounds.Sound;
 
 import java.util.*;
@@ -101,7 +103,7 @@ public class WorldMap {
         WorldMap.seed=seed;
         Random rng=new Random(seed);
         int lands=0;
-        float landFraction=0.45f;
+        float landFraction=0.30f;
         LinkedList<Hexagon2D> list=new LinkedList<>();
         list.add(hexagonMap[(widthHexagonNumber)*(heightHexagonNumber+1)/2]);
         while(lands<landFraction*widthHexagonNumber*heightHexagonNumber){
@@ -110,13 +112,46 @@ public class WorldMap {
             list.remove(chosenOne);
             chosenHexagon.water=false;
             for(Hexagon2D i: chosenHexagon.getNeighbors(1).keySet()){
-                if(i.water)
+                if(i.water && !list.contains(i))
                     list.add(i);
             }
             lands++;
         }
+        for(Player pl: RoundManager.players){
+            int chosenOne=rng.nextInt(list.size());
+            Hexagon2D chosenHexagon= list.get(chosenOne);
+            list.remove(chosenOne);
+            chosenHexagon.water=false;
+            chosenHexagon.newOwner(pl);
+            /*
+            TODO: This has a potential(?) to empty list before all players get start hex.
+                Find a fix.
+             */
+            for(Hexagon2D i:chosenHexagon.getNeighbors(5).keySet()){
+                list.remove(i);
+            }
+            lands++;
+        }
     }
+    static public void click(Hexagon2D hexagon2D){
+        if(selectedHexagon==null){
+            System.out.println("==null");
+            if(hexagon2D.owner==null)
+                System.out.println("null owner");
+            if(hexagon2D.owner==RoundManager.getCurrentPlayer()){
+                System.out.println("owner checks out.");
+                selectHexagon(hexagon2D);
+            }
+        }
+        else{ //selectedHexagon!=null
+            if(hexagon2D.equals(selectedHexagon)){
+                selectHexagon(hexagon2D);
+            }
+            else {
 
+            }
+        }
+    }
     static public Set<Hexagon2D> getSelectedSet(){
         HashSet<Hexagon2D> set=new HashSet<>();
         if(selectedHexagon==null)

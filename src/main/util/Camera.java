@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.Set;
 
 import main.util.map.WorldMap;
+import main.util.playStateGUI.GUIManager;
+import main.util.playStateGUI.UnitMenu;
 
 
 public class Camera
@@ -143,7 +145,7 @@ public class Camera
     public void clicked(){
         if(mouseIsClicked){
             Hexagon2D selected=getHexagon();
-            if(selected!=null) WorldMap.selectHexagon(selected);
+            if(selected!=null) WorldMap.click(selected);
             else System.out.println("NULL hexagon selected");
             //System.out.println(WorldMap.neighborsOfSelected.size());
             //System.out.println(WorldMap.getSelectedSet().size());
@@ -209,6 +211,7 @@ public class Camera
                     hexagon2D.render(g, mapSprite,  Math.round(x),  Math.round(y), (int) Math.ceil(width), (int) Math.ceil(height));
 //            }
         }
+        GUIManager.render(g);
 
     }
 

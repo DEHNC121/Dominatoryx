@@ -4,7 +4,7 @@ import main.util.map.Hexagon2D;
 import main.util.map.WorldMap;
 
 public class RoundManager {
-    static Player[] players;
+    public static Player[] players;
     static int currentPlayer;
     static int roundCnt;
     public RoundManager(int count){
@@ -33,7 +33,9 @@ public class RoundManager {
         }
         WorldMap.generateIncome();
     }
+    static public Player getCurrentPlayer(){return players[currentPlayer];}
     static public void postTurnActions(Player pl){
+        WorldMap.selectedHexagon=null;
         System.out.println("Ending Player "+pl.toString());
     }
     static public void preTurnActions(Player pl){

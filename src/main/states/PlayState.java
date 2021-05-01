@@ -36,8 +36,8 @@ public class PlayState extends GameState
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        worldMap= new WorldMap(gameMapSize);
         roundManager=new RoundManager(4);
+        worldMap= new WorldMap(gameMapSize);
         camera=new Camera();
         loadIcons();
         setIcons();
