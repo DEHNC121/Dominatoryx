@@ -6,23 +6,22 @@ import java.awt.*;
 
 public class DrawText
 {
-    private String name;
+    private Font font;
     private String text;
 
-    private int style;
-    private int size;
     private Object2DInt position;
+    private Color color;
 
-    public DrawText(String name, String text, int style, int size, Object2DInt position) {
-        this.name = (name != null) ? name : "Default";
+    public DrawText(String name, String text, int style, int size, Object2DInt position, Color color) {
+
+        this.font = new Font(name, style, size);
         this.text = text;
-        this.style = style;
-        this.size = size;
         this.position = position;
+        this.color = color;
     }
 
     public String getName() {
-        return name;
+        return font.getName();
     }
 
     public String getText() {
@@ -30,11 +29,11 @@ public class DrawText
     }
 
     public int getStyle() {
-        return style;
+        return font.getStyle();
     }
 
     public int getSize() {
-        return size;
+        return font.getSize();
     }
 
     public Object2DInt getPosition() {
@@ -42,7 +41,7 @@ public class DrawText
     }
 
     public void setName(String name) {
-        this.name = name;
+        font=new Font(name, getStyle(),getSize());
     }
 
     public void setText(String text) {
@@ -50,11 +49,19 @@ public class DrawText
     }
 
     public void setStyle(int style) {
-        this.style = style;
+        font=new Font(getName(), style,getSize());
     }
 
     public void setSize(int size) {
-        this.size = size;
+        font=new Font(getName(), getStyle(),size);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public void setPosition(Object2DInt position) {
@@ -63,9 +70,7 @@ public class DrawText
 
     public void render (Graphics g) {
 
-//        g.drawImage(image, position.x, position.y, position.width, position.height, null);
-        Font font = new Font(name, style, size);
-
+        g.setColor(color);
         g.setFont(font);
         g.drawString(text,position.x, position.y);
     }

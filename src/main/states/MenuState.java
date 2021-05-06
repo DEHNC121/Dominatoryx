@@ -51,9 +51,8 @@ public class MenuState extends GameState {
         settingsImage.render(g);
         shutDownImage.render(g);
 
-        g.setColor(new Color (0, 0, 0));
 
-        DrawText dt=new DrawText("TimesRoman","Hello World", Font.PLAIN, 100,new Object2DInt(100,100,0,0));
+        DrawText dt=new DrawText("TimesRoman","Hello World", Font.PLAIN, 100,new Object2DInt(100,100,0,0),new Color(0,0,0,255));
         dt.render(g);
     }
 

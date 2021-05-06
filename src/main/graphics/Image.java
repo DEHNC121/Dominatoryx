@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class Image {
     private BufferedImage image;
-    private Object2DInt rectangle;
+    private final Object2DInt rectangle;
 
     public Image(String file) {
         loadImage(file);

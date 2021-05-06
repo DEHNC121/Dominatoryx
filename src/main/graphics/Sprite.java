@@ -1,30 +1,21 @@
 package main.graphics;
 
-
-import main.util.MouseHandler;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Sprite
 {
 
     private BufferedImage SPRITESHEET = null;
     private BufferedImage [][] spriteArray;
-    private final int HEXAGONHIGHT = 64;
-    private final int HEXAGONWIDTH = 55;
-    public int w;
-    public int h;
+    public int w= 64;
+    public int h= 55;
     private int wSprite;
     private int hSprite;
 
     public Sprite (String file)
     {
-        w = HEXAGONHIGHT;
-        h = HEXAGONWIDTH;
-
         System.out.println("Loading: " + file + "...");
         SPRITESHEET = loadSprite (file);
 
