@@ -2,27 +2,26 @@ package main.states;
 
 import javafx.util.Pair;
 import main.GamePanel;
-import main.graphics.DrawText;
-import main.graphics.Icon;
+import main.graphics.Image;
 import main.graphics.Sprite;
 import main.util.Camera;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.RoundManager;
-import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
 
 import java.awt.*;
+import java.util.HashMap;
+
 public class PlayState extends GameState
 {
+    public static HashMap<String, Image> imageMap = null;
     public static boolean isClicked;
     public static WorldMap worldMap;
     public static RoundManager roundManager;
 
     Sprite sprite;
     Camera camera;
-    Icon menuIcon, undo, end_turn, flag, coin;
-
     public enum GameMapSize{
         SMALL,
         MEDIUM,
@@ -44,41 +43,36 @@ public class PlayState extends GameState
         roundManager=new RoundManager(4);
         worldMap= new WorldMap(gameMapSize);
         camera=new Camera();
+        imageMap = new HashMap<>();
         loadIcons();
         setIconsDefault();
         isClicked = false;
     }
 
     public void loadIcons () {
-        menuIcon = new Icon("gameicons/menu_icon.png");
-        undo = new Icon("gameicons/undo.png");
-        end_turn = new Icon("gameicons/end_turn.png");
-        flag = new Icon ("gameicons/flag.png");
-        coin = new Icon("gameicons/coin.png");
-        menuIcon.setSize(50, 50);
-        undo.setSize(50,50);
-        end_turn.setSize(50, 50);
-        flag.setSize(50, 50);
-        coin.setSize(50, 50);
-
-
-
+        imageMap.put("menuImage", new Image("gameicons/menu_icon.png"));
+        imageMap.put("undo", new Image("gameicons/undo.png"));
+        imageMap.put("end_turn", new Image("gameicons/end_turn.png"));
+        imageMap.put("coin", new Image("gameicons/coin.png"));
+        imageMap.get("menuImage").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
+        imageMap.get("undo").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
+        imageMap.get("end_turn").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
+        imageMap.get("coin").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
     }
 
     public void setIconsDefault () {
-        menuIcon.setPosition((int) GamePanel.width - menuIcon.getWidth(), 0);
-        undo.setPosition(0, ((int) GamePanel.height - undo.getHeight()));
-        end_turn.setPosition((int) GamePanel.width - end_turn.getWidth(),
-                (int) GamePanel.height - end_turn.getHeight());
+        imageMap.get("menuImage").setPosition((int) GamePanel.width -  imageMap.get("menuImage").getWidth(), 0);
+        imageMap.get("undo").setPosition(0, ((int) GamePanel.height - imageMap.get("undo").getHeight()));
+        imageMap.get("end_turn").setPosition((int) GamePanel.width - imageMap.get("end_turn").getWidth(),
+                (int) GamePanel.height - imageMap.get("end_turn").getObject2DInt().getHeight());
     }
 
     public void setIconsClicked () {
-        menuIcon.setPosition((int) GamePanel.width - menuIcon.getWidth(), 0);
-        undo.setPosition(0, ((int) GamePanel.height - undo.getHeight() - 100));
-        end_turn.setPosition(0,
-                (int) GamePanel.height - end_turn.getHeight() - 200);
-        flag.setPosition(0, (int) GamePanel.height - end_turn.getHeight() - 300);
-        coin.setPosition(0,0);
+        imageMap.get("menuImage").setPosition((int) GamePanel.width - imageMap.get("menuImage").getWidth(), 0);
+        imageMap.get("undo").setPosition(0, ((int) GamePanel.height - imageMap.get("undo").getHeight() - 100));
+        imageMap.get("end_turn").setPosition(0,
+                (int) GamePanel.height - imageMap.get("end_turn").getHeight() - 200);
+        imageMap.get("coin").setPosition(0,0);
     }
 
     @Override
@@ -94,7 +88,7 @@ public class PlayState extends GameState
     @Override
     public void input(MouseHandler mouse, KeyHandler key) {
         if (mouse.getIsClicked()) {
-            if (menuIcon.mouseOnIcon(mouse)) {
+            if (imageMap.get("menuImage").mouseOnIcon(mouse)) {
                 gsm.set(new PauseState(gsm));
             }
         }
@@ -106,16 +100,15 @@ public class PlayState extends GameState
     @Override
     public void render(Graphics2D g) {
         camera.render(g);
-        menuIcon.render(g);
+        imageMap.get("menuImage").render(g);
         if (isClicked) {
-            undo.render(g);
-            end_turn.render(g);
-            flag.render(g);
-            coin.render(g);
+            imageMap.get("undo").render(g);
+            imageMap.get("end_turn").render(g);
+            imageMap.get("coin").render(g);
         }
         else {
-            undo.render(g);
-            end_turn.render(g);
+            imageMap.get("undo").render(g);
+            imageMap.get("end_turn").render(g);
         }
 
     }

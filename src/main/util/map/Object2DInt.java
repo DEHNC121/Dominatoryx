@@ -24,6 +24,8 @@ public class Object2DInt {
         this.height=h;
     }
 
+
+
     public int getY() {
         return y;
     }
@@ -54,6 +56,14 @@ public class Object2DInt {
 
     public int getCenterX () { return x + width / 2;}
     public int getCenterY () { return y + height / 2;}
+
+    public void setCenterX (int centerX) {this.x = centerX - width / 2;}
+    public void setCenterY (int centerY) {this.y = centerY - height / 2;}
+
+    public void setCenter (int centerX, int centerY) {
+        setCenterX(centerX);
+        setCenterY(centerY);
+    }
 
     public boolean isInside(int x,int y){
         return (x>=this.x && x<= this.x+width && y>=this.y && y<=this.y+height );
