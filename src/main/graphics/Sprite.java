@@ -1,26 +1,25 @@
 package main.graphics;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class Sprite
 {
-
-    private BufferedImage SPRITESHEET = null;
-    private BufferedImage [][] spriteArray;
+    private final BufferedImage image;
+    private BufferedImage[][] spriteArray;
     public int w= 64;
     public int h= 55;
-    private int wSprite;
-    private int hSprite;
+    private final int wSprite;
+    private final int hSprite;
 
     public Sprite (String file)
     {
         System.out.println("Loading: " + file + "...");
-        SPRITESHEET = loadSprite (file);
+        image = loadSprite (file);
 
-        wSprite = SPRITESHEET.getWidth() / w;
-        hSprite = SPRITESHEET.getHeight() / h;
+        wSprite = image.getWidth() / w;
+        hSprite = image.getHeight() / h;
         loadSpriteArray();
     }
 
@@ -30,41 +29,21 @@ public class Sprite
         this.h = h;
 
         System.out.println("Loading: " + file + "...");
-        SPRITESHEET = loadSprite (file);
+        image = loadSprite (file);
 
-        wSprite = SPRITESHEET.getWidth() / w;
-        hSprite = SPRITESHEET.getHeight() / h;
+        wSprite = image.getWidth() / w;
+        hSprite = image.getHeight() / h;
         loadSpriteArray();
     }
 
-    public void setSize (int width, int height)
-    {
-        setWidth (width);
-        setHeight (height);
-    }
-
-    public void setWidth (int i)
-    {
-        w = i;
-        wSprite = SPRITESHEET.getWidth() / w;
-    }
-
-    public void setHeight (int i)
-    {
-        h = i;
-        hSprite = SPRITESHEET.getHeight() / h;
-    }
-    public int getWidth () { return w; }
-    public int getHeight () { return h; }
-
-    public BufferedImage getBufferedImage () { return SPRITESHEET; }
+    public BufferedImage getBufferedImage () { return image; }
 
     private BufferedImage loadSprite (String file)
     {
         BufferedImage sprite = null;
         try
         {
-            sprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(file));
+            sprite = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(file)));
         }
         catch (Exception e)
         {
@@ -81,23 +60,21 @@ public class Sprite
         {
             for (int x = 0; x < wSprite; x++)
             {
-                spriteArray[y][x] = getSprite(x, y);
+                spriteArray[y][x] = getSpritePart(x, y);
             }
         }
     }
 
-    public BufferedImage getSpriteSheet () { return SPRITESHEET; }
+    public BufferedImage getSpriteSheet () { return image; }
+
+    private BufferedImage getSpritePart (int x, int y)
+    {
+        return image.getSubimage(x * w, y * h, w, h);
+    }
 
     public BufferedImage getSprite (int x, int y)
     {
-        return SPRITESHEET.getSubimage(x * w, y * h, w, h);
+        return spriteArray[x][y];
     }
-
-    public void renderAtPoint (Graphics g, int x, int y) {
-        g.drawImage(SPRITESHEET, x - wSprite / 2, y - hSprite / 2, null);
-
-    }
-
-
 
 }
