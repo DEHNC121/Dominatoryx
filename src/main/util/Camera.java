@@ -8,11 +8,9 @@ import main.util.map.Hexagon2D;
 import main.util.map.Object2D;
 
 import java.awt.*;
-import java.util.Set;
 
 import main.util.map.WorldMap;
 import main.util.playStateGUI.GUIManager;
-import main.util.playStateGUI.UnitMenu;
 
 
 public class Camera
