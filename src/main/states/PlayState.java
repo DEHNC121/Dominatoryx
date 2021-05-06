@@ -2,12 +2,14 @@ package main.states;
 
 import javafx.util.Pair;
 import main.GamePanel;
+import main.graphics.DrawText;
 import main.graphics.Icon;
 import main.graphics.Sprite;
 import main.util.Camera;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.RoundManager;
+import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
 
 import java.awt.*;
@@ -16,9 +18,11 @@ public class PlayState extends GameState
     public static boolean isClicked;
     public static WorldMap worldMap;
     public static RoundManager roundManager;
+
     Sprite sprite;
     Camera camera;
     Icon menuIcon, undo, end_turn, flag, coin;
+
     public enum GameMapSize{
         SMALL,
         MEDIUM,
@@ -31,7 +35,7 @@ public class PlayState extends GameState
         }
 
     }
-    public GameMapSize gameMapSize=GameMapSize.SMALL;
+    public GameMapSize gameMapSize=GameMapSize.LARGE;
 
     public static void setClicked (boolean isClicked) {PlayState.isClicked = isClicked; }
 
@@ -56,6 +60,8 @@ public class PlayState extends GameState
         end_turn.setSize(50, 50);
         flag.setSize(50, 50);
         coin.setSize(50, 50);
+
+
 
     }
 
@@ -111,7 +117,6 @@ public class PlayState extends GameState
             undo.render(g);
             end_turn.render(g);
         }
-
 
     }
 }

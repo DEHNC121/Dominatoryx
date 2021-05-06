@@ -57,6 +57,7 @@ public class Sprite
         w = i;
         wSprite = SPRITESHEET.getWidth() / w;
     }
+
     public void setHeight (int i)
     {
         h = i;
@@ -80,6 +81,7 @@ public class Sprite
         }
         return sprite;
     }
+
     public void loadSpriteArray ()
     {
         spriteArray = new BufferedImage[hSprite][wSprite];

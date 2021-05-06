@@ -135,6 +135,7 @@ public class Hexagon2D extends Object2D {
         //to be expanded later with addition of buildings/
         return 1;
     }
+
     public void abandonField(){
         if(owner!=null){
             owner.controlledFields--;
@@ -142,6 +143,7 @@ public class Hexagon2D extends Object2D {
         }
         unit=null;
     }
+
     public void newOwner(Player pl){
         abandonField();
         owner=pl;

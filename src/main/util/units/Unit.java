@@ -9,6 +9,10 @@ import java.util.Objects;
 public abstract class Unit {
     Player owner;
     Hexagon2D hexagon;
+
+    int health;
+    int movement;
+
     Unit(Player pl,Hexagon2D hex){
         hexagon=hex;
         owner=pl;
@@ -16,14 +20,14 @@ public abstract class Unit {
         movement=0;
     }
 
-    int health;
-    int movement;
     public void refreshMove(){
         movement=getMaxMovement();
     }
+
     public void regenerate(){
         health=Math.min(health+getRegen(),getMaxHealth());
     }
+
     public void move(Hexagon2D newHexagon){
         if(newHexagon.unit!=null || newHexagon.owner!=owner)
             return;
@@ -59,12 +63,12 @@ public abstract class Unit {
             }
         }
     }
+
     public void takeDamage(int dmg){
         health-=dmg;
         if(health<=0){
-            owner.unitList.remove(this);
+            hexagon.unit=null;
         }
-        hexagon.unit=null;
     }
     abstract public int getID();
     abstract public int getMaxHealth();

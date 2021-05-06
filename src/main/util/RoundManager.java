@@ -7,6 +7,7 @@ public class RoundManager {
     public static Player[] players;
     static int currentPlayer;
     static int roundCnt;
+
     public RoundManager(int count){
         currentPlayer=0;
         roundCnt=1;
@@ -14,6 +15,7 @@ public class RoundManager {
         for(int i=0;i<count;i++)
             players[i]=new Player(i+1);
     }
+
     static public void newTurnActions(){
         //mostly for actions, that are good when iterating on WorldMap
         // - income, cleaning players from defeated, etc
@@ -33,15 +35,19 @@ public class RoundManager {
         }
         WorldMap.generateIncome();
     }
+
     static public Player getCurrentPlayer(){return players[currentPlayer];}
+
     static public void postTurnActions(Player pl){
         WorldMap.selectedHexagon=null;
         System.out.println("Ending Player "+pl.toString());
     }
+
     static public void preTurnActions(Player pl){
         pl.refreshAndRegenUnit();
         System.out.println("Starting Player "+pl.toString());
     }
+
     static public void passTurn(){
         postTurnActions(players[currentPlayer]);
         do{

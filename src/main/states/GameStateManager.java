@@ -14,7 +14,7 @@ public class GameStateManager
 
 
     public GameStateManager () {
-        currentState = new InitialState(this);
+        currentState = new MenuState(this);
         //currentState=new PlayState(this);
     }
 

@@ -11,12 +11,15 @@ import java.util.Objects;
 
 public class Icon {
     private BufferedImage image;
+
     private int width;
     private int height;
     private int positionX;
     private int positionY;
+
     private int positionCenterX;
     private int positionCenterY;
+
     private String label = null;
 
     public Icon (String file) {
@@ -24,6 +27,7 @@ public class Icon {
         width = image.getWidth();
         height = image.getHeight();
     }
+
     public Icon (String file, int positionCenterX, int positionCenterY) {
         loadImage(file);
         width = image.getWidth();

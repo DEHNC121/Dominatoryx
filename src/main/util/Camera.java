@@ -207,11 +207,11 @@ public class Camera
             float width = hexagon2D.width * scale;
             float height = hexagon2D.height * scale;
 
-//            if (!(hexagon2D.x + hexagon2D.width < camera.x || hexagon2D.x > camera.x + camera.width ||
-//                    hexagon2D.y + hexagon2D.height < camera.y || hexagon2D.y > camera.y + camera.height)) {
+            if (!(hexagon2D.x + hexagon2D.width < camera.x || hexagon2D.x > camera.x + camera.width ||
+                    hexagon2D.y + hexagon2D.height < camera.y || hexagon2D.y > camera.y + camera.height)) {
 
                     hexagon2D.render(g, mapSprite,  Math.round(x),  Math.round(y), (int) Math.ceil(width), (int) Math.ceil(height));
-//            }
+            }
         }
         GUIManager.render(g);
 

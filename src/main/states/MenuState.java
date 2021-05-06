@@ -1,18 +1,20 @@
 package main.states;
 
+import main.graphics.DrawText;
 import main.graphics.Icon;
 import main.graphics.Sprite;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.GamePanel;
+import main.util.map.Object2DInt;
 
 import java.awt.*;
 
-public class InitialState extends GameState {
+public class MenuState extends GameState {
     Icon playIcon;
     Icon settingsIcon;
     Icon shutDownIcon;
-    public InitialState (GameStateManager gsm) {
+    public MenuState(GameStateManager gsm) {
         super(gsm);
         playIcon = new Icon("initial/play_button.png");
         settingsIcon = new Icon("initial/settings_icon.png");
@@ -49,6 +51,11 @@ public class InitialState extends GameState {
         playIcon.render(g);
         settingsIcon.render(g);
         shutDownIcon.render(g);
+
+        g.setColor(new Color (0, 0, 0));
+
+        DrawText dt=new DrawText("TimesRoman","Hello World", Font.PLAIN, 100,new Object2DInt(100,100,0,0));
+        dt.render(g);
     }
 
 }

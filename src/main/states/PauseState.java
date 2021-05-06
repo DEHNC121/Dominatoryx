@@ -5,7 +5,6 @@ import main.graphics.Icon;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class PauseState extends GameState{
@@ -53,7 +52,7 @@ public class PauseState extends GameState{
 
             }
             if (menu.mouseOnIcon(mouse)) {
-                gsm.set(new InitialState(gsm));
+                gsm.set(new MenuState(gsm));
             }
             mouse.setIsClicked(false);
         }
