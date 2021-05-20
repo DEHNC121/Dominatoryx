@@ -155,6 +155,11 @@ public class Camera
     }
     public void update ()
     {
+        if(GUIManager.capture(mouseXOnScreen,mouseYOnScreen)){
+            GUIManager.update();
+            return;
+        }
+
         updateScale();
         move ();
         updateCamera();
@@ -213,7 +218,6 @@ public class Camera
                     hexagon2D.render(g, mapSprite,  Math.round(x),  Math.round(y), (int) Math.ceil(width), (int) Math.ceil(height));
             }
         }
-        GUIManager.render(g);
 
     }
 

@@ -4,7 +4,7 @@ import main.util.Player;
 import main.util.map.Hexagon2D;
 
 public class Kid extends Unit{
-    Kid(Player pl, Hexagon2D hex) {
+    public Kid(Player pl, Hexagon2D hex) {
         super(pl, hex);
     }
 

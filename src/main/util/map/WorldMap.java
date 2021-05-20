@@ -123,10 +123,6 @@ public class WorldMap {
             list.remove(chosenOne);
             chosenHexagon.water=false;
             chosenHexagon.newOwner(pl);
-            /*
-            TODO: This has a potential(?) to empty list before all players get start hex.
-                Find a fix.
-             */
             for(Hexagon2D i:chosenHexagon.getNeighbors(5).keySet()){
                 list.remove(i);
             }
@@ -135,11 +131,9 @@ public class WorldMap {
     }
     static public void click(Hexagon2D hexagon2D){
         if(selectedHexagon==null){
-            System.out.println("==null");
-            if(hexagon2D.owner==null)
-                System.out.println("null owner");
+            //System.out.println("==null");
             if(hexagon2D.owner==RoundManager.getCurrentPlayer()){
-                System.out.println("owner checks out.");
+               //System.out.println("owner checks out.");
                 selectHexagon(hexagon2D);
             }
         }

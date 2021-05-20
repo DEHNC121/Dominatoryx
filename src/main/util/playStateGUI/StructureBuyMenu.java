@@ -4,7 +4,17 @@ import java.awt.*;
 
 public class StructureBuyMenu extends UnitStructureTab{
     @Override
-    public void render(Graphics g) {
+    public void specialRender(Graphics g) {
+
+    }
+
+    @Override
+    public Color getColour() {
+        return Color.ORANGE;
+    }
+
+    @Override
+    public void update() {
 
     }
 }

@@ -13,7 +13,7 @@ public abstract class Unit {
     int health;
     int movement;
 
-    Unit(Player pl,Hexagon2D hex){
+    public Unit(Player pl,Hexagon2D hex){
         hexagon=hex;
         owner=pl;
         health=getMaxHealth();

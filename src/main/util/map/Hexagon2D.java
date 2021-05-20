@@ -104,11 +104,11 @@ public class Hexagon2D extends Object2D {
         int textureX=0;
         int textureY=0;
         if(owner!=null)
-            textureX=owner.getColour();
+            textureY=owner.getColour();
         if(this.equals(WorldMap.selectedHexagon)){
-            textureY=2;
+            textureX=2;
         }else if(WorldMap.getSelectedSet().contains(this) && WorldMap.selectedHexagon!=null){
-            textureY=1;
+            textureX=1;
         }
 
         if(!water){

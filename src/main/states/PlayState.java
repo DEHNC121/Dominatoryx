@@ -8,7 +8,9 @@ import main.util.Camera;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.RoundManager;
+import main.util.map.PlayStateWindow;
 import main.util.map.WorldMap;
+import main.util.playStateGUI.GUIManager;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ public class PlayState extends GameState
 
     Sprite sprite;
     Camera camera;
+    PlayStateWindow psWindow;
     public enum GameMapSize{
         SMALL,
         MEDIUM,
@@ -42,7 +45,8 @@ public class PlayState extends GameState
         super(gsm);
         roundManager=new RoundManager(4);
         worldMap= new WorldMap(gameMapSize);
-        camera=new Camera();
+        //camera=new Camera();
+        psWindow=new PlayStateWindow();
         imageMap = new HashMap<>();
         loadIcons();
         setIconsDefault();
@@ -51,34 +55,34 @@ public class PlayState extends GameState
 
     public void loadIcons () {
         imageMap.put("menuImage", new Image("gameicons/menu_icon.png"));
-        imageMap.put("undo", new Image("gameicons/undo.png"));
-        imageMap.put("end_turn", new Image("gameicons/end_turn.png"));
-        imageMap.put("coin", new Image("gameicons/coin.png"));
+        //imageMap.put("undo", new Image("gameicons/undo.png"));
+        //imageMap.put("end_turn", new Image("gameicons/end_turn.png"));
+        //imageMap.put("coin", new Image("gameicons/coin.png"));
         imageMap.get("menuImage").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
-        imageMap.get("undo").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
-        imageMap.get("end_turn").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
-        imageMap.get("coin").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
+        //imageMap.get("undo").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
+        //imageMap.get("end_turn").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
+        // imageMap.get("coin").setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
     }
 
     public void setIconsDefault () {
         imageMap.get("menuImage").setPosition((int) GamePanel.width -  imageMap.get("menuImage").getWidth(), 0);
-        imageMap.get("undo").setPosition(0, ((int) GamePanel.height - imageMap.get("undo").getHeight()));
-        imageMap.get("end_turn").setPosition((int) GamePanel.width - imageMap.get("end_turn").getWidth(),
-                (int) GamePanel.height - imageMap.get("end_turn").getObject2DInt().getHeight());
+        //imageMap.get("undo").setPosition(0, ((int) GamePanel.height - imageMap.get("undo").getHeight()));
+        //imageMap.get("end_turn").setPosition((int) GamePanel.width - imageMap.get("end_turn").getWidth(),
+          //      (int) GamePanel.height - imageMap.get("end_turn").getObject2DInt().getHeight());
     }
 
     public void setIconsClicked () {
         imageMap.get("menuImage").setPosition((int) GamePanel.width - imageMap.get("menuImage").getWidth(), 0);
-        imageMap.get("undo").setPosition(0, ((int) GamePanel.height - imageMap.get("undo").getHeight() - 100));
-        imageMap.get("end_turn").setPosition(0,
-                (int) GamePanel.height - imageMap.get("end_turn").getHeight() - 200);
-        imageMap.get("coin").setPosition(0,0);
+        //imageMap.get("undo").setPosition(0, ((int) GamePanel.height - imageMap.get("undo").getHeight() - 100));
+        //imageMap.get("end_turn").setPosition(0,
+          //      (int) GamePanel.height - imageMap.get("end_turn").getHeight() - 200);
+        //imageMap.get("coin").setPosition(0,0);
     }
 
     @Override
     public void update() {
-        camera.update();
-        RoundManager.update();
+        //camera.update();
+        psWindow.update();
         if (isClicked)
             setIconsClicked();
         else
@@ -92,23 +96,26 @@ public class PlayState extends GameState
                 gsm.set(new PauseState(gsm));
             }
         }
-        camera.input(mouse, key);
-        RoundManager.input(mouse, key);
+        //camera.input(mouse, key);
+        psWindow.input(mouse, key);
+        //GUIManager.input(mouse, key);
         mouse.setIsClicked(false);
     }
 
     @Override
     public void render(Graphics2D g) {
-        camera.render(g);
+        //camera.render(g);
+        //GUIManager.render(g);
+        psWindow.render(g);
         imageMap.get("menuImage").render(g);
         if (isClicked) {
-            imageMap.get("undo").render(g);
-            imageMap.get("end_turn").render(g);
-            imageMap.get("coin").render(g);
+            //imageMap.get("undo").render(g);
+            //imageMap.get("end_turn").render(g);
+            //imageMap.get("coin").render(g);
         }
         else {
-            imageMap.get("undo").render(g);
-            imageMap.get("end_turn").render(g);
+            //imageMap.get("undo").render(g);
+            //imageMap.get("end_turn").render(g);
         }
 
     }

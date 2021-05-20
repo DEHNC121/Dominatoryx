@@ -43,22 +43,25 @@ public class Player {
     }
 
     public boolean buyUnit(Hexagon2D hexagon2D,int unitID){
-        if(hexagon2D.owner!=this ||hexagon2D.unit!=null)
+        if(hexagon2D.owner!=this || hexagon2D.unit!=null)
             return false;
-        if(!UnitMenuList.list.containsKey(unitID))
+        if(!UnitMenuList.list.containsKey(unitID)){
             return false;
+        }
+
         Unit unitExample=UnitMenuList.list.get(unitID);
-        if(unitExample.getCost()<money)
+        if(unitExample.getCost()>money){
             return false;
+        }
+
         try{
-            Object[] args=new Object[2];
-            args[0]=this;
-            args[1]=hexagon2D;
-            Unit newUnit= unitExample.getClass().getConstructor(Player.class,Hexagon2D.class).newInstance(args);
+            Unit newUnit= unitExample.getClass().getConstructor(Player.class,Hexagon2D.class).newInstance(this,hexagon2D);
 //            unitList.add(newUnit);
             hexagon2D.unit=newUnit;
             return true;
-        }catch (Exception ignored){}
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return false;
     }
 
