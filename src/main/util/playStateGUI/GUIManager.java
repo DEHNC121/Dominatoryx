@@ -1,6 +1,8 @@
 package main.util.playStateGUI;
 
 import main.GamePanel;
+import main.states.GameStateManager;
+import main.states.PauseState;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.graphics.Image;
@@ -15,6 +17,7 @@ public class GUIManager {
             ((int) GamePanel.width)*3/20, ((int) GamePanel.height)*17/20);
     static public ArrayList<Button> buttonList;
     static public ArrayList<Image> imageList;
+    static public GameStateManager gsm;
     static public void render(Graphics g){
         unitMenu.render(g);
         for(Button b : buttonList){
@@ -39,12 +42,16 @@ public class GUIManager {
         imageList.add(temp);
 
     }
+    static public void setGsm(GameStateManager gsm1){
+        gsm=gsm1;
+    }
     static public void loadButtons(){
         buttonList=new ArrayList<>();
         Button button=new Button("gameicons/menu_icon.png",
                 (int) GamePanel.width -  (int) (GamePanel.width*0.05f), 0,
                 (int) (GamePanel.width*0.05f),(int) (GamePanel.width*0.05f),()->{
-                //TODO: how to change state in GSM from there???
+                if(gsm!=null)
+                    gsm.set(new PauseState(gsm));
         });
         buttonList.add(button);
         button=new Button("gameicons/end_turn.png",
