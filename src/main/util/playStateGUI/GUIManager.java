@@ -18,6 +18,8 @@ public class GUIManager {
     static public ArrayList<Button> buttonList;
     static public ArrayList<Image> imageList;
     static public GameStateManager gsm;
+    static public TurnIndicator turnIndicator=new TurnIndicator((int)GamePanel.width*4/10,0,
+            (int)(GamePanel.width)/5, (int) (GamePanel.height*0.03f));
     static public void render(Graphics g){
         unitMenu.render(g);
         for(Button b : buttonList){
@@ -26,6 +28,7 @@ public class GUIManager {
         for(Image image : imageList){
             image.render(g);
         }
+        turnIndicator.render(g);
     }
     static public boolean capture(int x,int y){
         for(Button b:buttonList){
@@ -37,7 +40,7 @@ public class GUIManager {
     static public void loadIcons(){
         imageList=new ArrayList<>();
         Image temp=new Image("gameicons/coin.png");
-        temp.setSize((int) (GamePanel.width*0.05f), (int) (GamePanel.width*0.05f));
+        temp.setSize((int) (GamePanel.width*0.03f), (int) (GamePanel.width*0.03f));
         temp.setPosition(0,0);
         imageList.add(temp);
 
@@ -48,22 +51,22 @@ public class GUIManager {
     static public void loadButtons(){
         buttonList=new ArrayList<>();
         Button button=new Button("gameicons/menu_icon.png",
-                (int) GamePanel.width -  (int) (GamePanel.width*0.05f), 0,
-                (int) (GamePanel.width*0.05f),(int) (GamePanel.width*0.05f),()->{
+                (int) GamePanel.width -  (int) (GamePanel.width*0.03f), 0,
+                (int) (GamePanel.width*0.03f),(int) (GamePanel.width*0.03f),()->{
                 if(gsm!=null)
                     gsm.set(new PauseState(gsm));
         });
         buttonList.add(button);
         button=new Button("gameicons/end_turn.png",
-                (int) GamePanel.width -  (int) (GamePanel.width*0.05f),
-                (int) GamePanel.height- (int) (GamePanel.width*0.05f),
-                (int) (GamePanel.width*0.05f),(int) (GamePanel.width*0.05f),()->{
+                (int) GamePanel.width -  (int) (GamePanel.width*0.03f),
+                (int) GamePanel.height- (int) (GamePanel.width*0.03f),
+                (int) (GamePanel.width*0.03f),(int) (GamePanel.width*0.03f),()->{
             RoundManager.passTurn();
         });
         buttonList.add(button);
         button=new Button("gameicons/undo.png",
-                0, (int) GamePanel.height -  (int) (GamePanel.width*0.05f),
-                (int) (GamePanel.width*0.05f),(int) (GamePanel.width*0.05f),()->{
+                0, (int) GamePanel.height -  (int) (GamePanel.width*0.03f),
+                (int) (GamePanel.width*0.03f),(int) (GamePanel.width*0.03f),()->{
             //TODO: implement undo function via stack
         });
         buttonList.add(button);
