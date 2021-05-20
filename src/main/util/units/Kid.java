@@ -13,6 +13,7 @@ public class Kid extends Unit{
             Arrays.asList(  new GameImage("units/kid0.png"),
                             new GameImage("units/kid1.png"),
                             new GameImage("units/kid2.png")) );
+
     public Kid(Player pl, Hexagon2D hex) {
         super(pl, hex);
     }

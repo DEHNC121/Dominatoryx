@@ -11,7 +11,7 @@ public abstract class Structure {
         hexagon2D=hex;
     }
 
-    public abstract GameImage getImage();
+    abstract public GameImage getImages(int i);
 
     public void render(Graphics g, int x, int y, int width, int height, float scale){
         int textureNumb=-1;
@@ -22,6 +22,6 @@ public abstract class Structure {
         }else{
             textureNumb=2;
         }
-//        getImages(textureNumb).render(g,x,y,width,height);
+        getImages(textureNumb).render(g,x,y-(int)(4.5*scale),width,height);
     }
 }

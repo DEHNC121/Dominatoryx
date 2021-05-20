@@ -5,7 +5,6 @@ import main.util.Player;
 import main.util.map.Hexagon2D;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -98,7 +97,7 @@ public abstract class Unit {
         }else{
             textureNumb=2;
         }
-        getImages(textureNumb).render(g,x,y,width,height);
+        getImages(textureNumb).render(g,x+(int)(1.5*scale),y,width,height);
     }
 
 }
