@@ -58,6 +58,7 @@ public class Player {
             Unit newUnit= unitExample.getClass().getConstructor(Player.class,Hexagon2D.class).newInstance(this,hexagon2D);
 //            unitList.add(newUnit);
             hexagon2D.unit=newUnit;
+            money-=newUnit.getCost();
             return true;
         }catch (Exception e){
             e.printStackTrace();
