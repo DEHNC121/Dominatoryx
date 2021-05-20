@@ -52,7 +52,7 @@ public class MenuState extends GameState {
         shutDownImage.render(g);
 
 
-        DrawText dt=new DrawText("TimesRoman","Hello World", Font.PLAIN, 100,new Object2DInt(100,100,0,0),new Color(0,0,0,255));
+        DrawText dt=new DrawText("TimesRoman","Hello World", Font.PLAIN, 100,new Object2DInt(100,100,0,0),new Color(196, 3, 3, 148));
         dt.render(g);
     }
 

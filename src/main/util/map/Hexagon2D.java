@@ -112,7 +112,7 @@ public class Hexagon2D extends Object2D {
         }
 
         if(!water){
-            g.drawImage(sprite.getSprite(textureX,textureY),x,y,width,height,null);
+            g.drawImage(sprite.getSprite(textureX+1,textureY),x,y,width,height,null);
         }
         if(unit!=null)
             unit.render();
