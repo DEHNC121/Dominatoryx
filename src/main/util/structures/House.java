@@ -1,4 +1,4 @@
-package main.util.map.structures;
+package main.util.structures;
 
 import main.graphics.GameImage;
 import main.util.map.Hexagon2D;

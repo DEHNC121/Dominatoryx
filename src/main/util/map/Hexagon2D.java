@@ -5,6 +5,8 @@ import main.graphics.Sprite;
 import main.util.Player;
 import main.util.map.Object2D;
 import main.util.map.WorldMap;
+import main.util.structures.House;
+import main.util.structures.Structure;
 import main.util.units.Kid;
 import main.util.units.Unit;
 
@@ -18,6 +20,7 @@ public class Hexagon2D extends Object2D {
     public boolean water=true;
     public Player owner=null;
     public Unit unit=null;
+    public Structure structure=null;
     public Hexagon2D(){
         super();
     }
@@ -113,6 +116,10 @@ public class Hexagon2D extends Object2D {
         if(!water){
             g.drawImage(sprite.getSprite(textureX,textureY),x,y,width,height,null);
         }
+//        if(structure!=null)
+        if (textureX==2)
+            new House(this).render(g,x,  y,  width,  height, scale);
+
 //        if(unit!=null)
         if (textureX==2)
             new Kid(owner,this).render(g,x,  y,  width,  height, scale);
