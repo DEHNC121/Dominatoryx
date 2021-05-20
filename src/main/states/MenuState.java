@@ -21,6 +21,7 @@ public class MenuState extends GameState {
         playImage = new GameImage("initial/play_button.png");
         settingsImage = new GameImage("initial/settings_icon.png");
         shutDownImage = new GameImage("initial/shut_down.png");
+        gsm.setMenuState(this);
         playImage.setPositionCenter((int) GamePanel.width / 2, (int) GamePanel.height / 2);
         settingsImage.setPosition(20, 20);
         shutDownImage.setPosition((int) GamePanel.width - 20 - shutDownImage.getWidth(),20);
@@ -37,8 +38,7 @@ public class MenuState extends GameState {
     public void input (MouseHandler mouse, KeyHandler key) {
         if (mouse.getIsClicked()) {
             if (playImage.mouseOnIcon(mouse)) {
-                GameState g = new PlayState(gsm);
-                gsm.setPlayState(g);
+                GameState g = new CreateGameState(gsm);
                 gsm.set(g);
             }
             if (shutDownImage.mouseOnIcon(mouse)) {

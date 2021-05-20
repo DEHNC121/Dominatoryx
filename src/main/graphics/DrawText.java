@@ -12,6 +12,26 @@ public class DrawText
     private Object2DInt position;
     private Color color;
 
+    public DrawText(String text, Object2DInt position) {
+        this.font = new Font("Times New Roman", Font.PLAIN, 100);
+        this.text = text;
+        this.position = position;
+        this.color = new Color(0,0,0,255);
+    }
+    public DrawText(String text, Object2DInt position, Color color) {
+        this.font = new Font("Times New Roman", Font.PLAIN, 100);
+        this.text = text;
+        this.position = position;
+        this.color = color;
+    }
+
+    public DrawText(String text, Object2DInt position, int size) {
+        this.font = new Font("Times New Roman", Font.PLAIN, size);
+        this.text = text;
+        this.position = position;
+        this.color = new Color(0,0,0,255);
+    }
+
     public DrawText(String name, String text, int style, int size, Object2DInt position, Color color) {
 
         this.font = new Font(name, style, size);

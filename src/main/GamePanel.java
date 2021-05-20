@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(f);
             for (String s : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
-                System.out.println(s);
+                //System.out.println(s);
             }
             graphics2D.setFont(f);
         } catch (IOException |FontFormatException e) {

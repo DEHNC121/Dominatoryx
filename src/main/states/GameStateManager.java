@@ -11,7 +11,7 @@ public class GameStateManager
 
     private GameState currentState;
     private GameState playState = null;
-
+    private GameState menuState = null;
 
     public GameStateManager () {
         currentState = new MenuState(this);
@@ -19,11 +19,12 @@ public class GameStateManager
     }
 
     public GameState getPlayState () { return playState; }
-
+    public GameState getMenuState () { return menuState; }
     public void set(GameState g){
         currentState=g;
     }
     public void setPlayState (GameState playState) { this.playState = playState; }
+    public void setMenuState (GameState menuState) { this.menuState = menuState; }
 
     public void update ()
     {
@@ -33,6 +34,7 @@ public class GameStateManager
         currentState.input(mouse, key);
     }
     public void render (Graphics2D g) {
+        //System.out.println(currentState);
         currentState.render(g);
     }
 }

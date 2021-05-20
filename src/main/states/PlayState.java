@@ -1,6 +1,7 @@
 package main.states;
 
 import javafx.util.Pair;
+import main.GamePanel;
 import main.graphics.GameImage;
 import main.graphics.Sprite;
 import main.util.Camera;
@@ -12,15 +13,19 @@ import main.util.map.WorldMap;
 import main.util.playStateGUI.GUIManager;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class PlayState extends GameState
 {
     public static HashMap<String, GameImage> imageMap = null;
+    public static int nOfPlayers;
+    public static int size; // 0-L, 1-M, 2-H
     public static boolean isClicked;
     public static WorldMap worldMap;
     public static RoundManager roundManager;
-
+    public GameMapSize gameMapSize;
     Sprite sprite;
     Camera camera;
     PlayStateWindow psWindow;
@@ -36,14 +41,17 @@ public class PlayState extends GameState
         }
 
     }
-    public GameMapSize gameMapSize=GameMapSize.LARGE;
+    public ArrayList<GameMapSize> sizes = new ArrayList<>(Arrays.asList(GameMapSize.SMALL, GameMapSize.MEDIUM, GameMapSize.LARGE));
+
 
     public static void setClicked (boolean isClicked) {PlayState.isClicked = isClicked; }
 
-    public PlayState(GameStateManager gsm) {
+    public PlayState(GameStateManager gsm, int size, int nOfPlayers) {
         super(gsm);
-        roundManager=new RoundManager(4);
-        worldMap= new WorldMap(gameMapSize);
+        PlayState.nOfPlayers = nOfPlayers;
+        PlayState.size = size;
+        roundManager=new RoundManager(nOfPlayers);
+        worldMap= new WorldMap(sizes.get(size));
         psWindow=new PlayStateWindow();
         GUIManager.setGsm(gsm);
         isClicked = false;

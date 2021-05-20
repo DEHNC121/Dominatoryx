@@ -44,7 +44,7 @@ public class PauseState extends GameState{
                 gsm.set(gsm.getPlayState());
             }
             if (restart.mouseOnIcon(mouse)) {
-                GameState g = new PlayState(gsm);
+                GameState g = new PlayState(gsm, PlayState.size, PlayState.nOfPlayers);
                 gsm.setPlayState(g);
                 gsm.set(g);
             }

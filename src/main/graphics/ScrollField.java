@@ -15,6 +15,24 @@ public class ScrollField {
     DrawText textUp, textMiddle, textBottom;
     int upIndex, middleIndex, bottomIndex;
     boolean scrollUp, scrollDown;
+    public ScrollField(Object2DInt field, ArrayList<String> entries, Color color) {
+        this.field = field;
+        this.entries = entries;
+        wholeField = new Object2DInt(field.getX(), field.getY(), field.getWidth(), 3 * field.getHeight());
+        middleIndex = 0;
+        bottomIndex = -1;
+        upIndex = (entries.size() > 1) ? 1 : -1;
+        textUp = new DrawText(stringFromIndex(upIndex),
+                new Object2DInt(field.getX(), field.getY() + field.getHeight(), field.getWidth(), field.getHeight()),
+                new Color(color.getRed(),color.getGreen(),color.getBlue(),40));
+        textMiddle = new DrawText(stringFromIndex(middleIndex),
+                new Object2DInt(field.getX(), field.getY() + 2*field.getHeight(), field.getWidth(), field.getHeight()),
+                new Color(color.getRed(),color.getGreen(),color.getBlue(),255));
+        textBottom = new DrawText(stringFromIndex(upIndex),
+                new Object2DInt(field.getX(), field.getY() + 3 * field.getHeight(), field.getWidth(), field.getHeight()),
+                new Color(color.getRed(),color.getGreen(),color.getBlue(),40));
+        entry = stringFromIndex(middleIndex);
+    }
     public ScrollField(Object2DInt field, ArrayList<String> entries, String name, int style, int size, Color color) {
         this.field = field;
         this.entries = entries;
@@ -35,6 +53,15 @@ public class ScrollField {
     }
     public String getEntry () {
         return this.entry;
+    }
+
+    public void setArray (ArrayList<String> entries) {
+        if (this.entries != entries) {
+            this.entries = entries;
+            middleIndex = 0;
+            bottomIndex = -1;
+            upIndex = (entries.size() > 1) ? 1 : -1;
+        }
     }
     public String stringFromIndex (int i) {
         if (i == -1)
@@ -64,7 +91,6 @@ public class ScrollField {
             if (mouse.getRotation() > 0)
             scrollDown = true;
         }
-        mouse.setRotation(0);
     }
     public void render (Graphics g) {
         g.setColor(Color.GRAY);
