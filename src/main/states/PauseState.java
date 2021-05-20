@@ -1,7 +1,7 @@
 package main.states;
 
 import main.GamePanel;
-import main.graphics.Image;
+import main.graphics.GameImage;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 
@@ -9,17 +9,17 @@ import java.awt.*;
 
 public class PauseState extends GameState{
 
-    Image resume;
-    Image restart;
-    Image save;
-    Image menu;
+    GameImage resume;
+    GameImage restart;
+    GameImage save;
+    GameImage menu;
 
     public PauseState (GameStateManager gsm) {
         super(gsm);
-        resume = new Image("pauseicons/back_icon.png");
-        restart = new Image("pauseicons/back_icon.png");
-        save = new Image("pauseicons/back_icon.png");
-        menu = new Image("pauseicons/back_icon.png");
+        resume = new GameImage("pauseicons/back_icon.png");
+        restart = new GameImage("pauseicons/back_icon.png");
+        save = new GameImage("pauseicons/back_icon.png");
+        menu = new GameImage("pauseicons/back_icon.png");
         int w = resume.getHeight();
         resume.setPositionCenter((int) GamePanel.width / 2, (int) GamePanel.height / 2 - 3 * w / 2);
         restart.setPositionCenter((int) GamePanel.width / 2, (int) GamePanel.height / 2 - w / 2);

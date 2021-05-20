@@ -5,6 +5,7 @@ import main.graphics.Sprite;
 import main.util.Player;
 import main.util.map.Object2D;
 import main.util.map.WorldMap;
+import main.util.units.Kid;
 import main.util.units.Unit;
 
 import java.awt.*;
@@ -29,8 +30,6 @@ public class Hexagon2D extends Object2D {
     }
 
     public int getIndex(){ return positionInWorldMapArray; }
-
-
 
     public void setBorder(boolean border) {
         this.border = border;
@@ -99,7 +98,7 @@ public class Hexagon2D extends Object2D {
         return map;
     }
 
-    public void render(Graphics g, Sprite sprite, int x, int y, int width, int height)
+    public void render(Graphics g, Sprite sprite, int x, int y, int width, int height,float scale)
     {
         int textureX=0;
         int textureY=0;
@@ -114,8 +113,9 @@ public class Hexagon2D extends Object2D {
         if(!water){
             g.drawImage(sprite.getSprite(textureX,textureY),x,y,width,height,null);
         }
-        if(unit!=null)
-            unit.render();
+//        if(unit!=null)
+        if (textureX==2)
+            new Kid(owner,this).render(g,x,  y,  width,  height, scale);
     }
 
     @Override

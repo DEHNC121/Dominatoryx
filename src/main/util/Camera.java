@@ -215,7 +215,7 @@ public class Camera
             if (!(hexagon2D.x + hexagon2D.width < camera.x || hexagon2D.x > camera.x + camera.width ||
                     hexagon2D.y + hexagon2D.height < camera.y || hexagon2D.y > camera.y + camera.height)) {
 
-                    hexagon2D.render(g, mapSprite,  Math.round(x),  Math.round(y), (int) Math.ceil(width), (int) Math.ceil(height));
+                    hexagon2D.render(g, mapSprite,  Math.round(x),  Math.round(y), (int) Math.ceil(width), (int) Math.ceil(height),scale);
             }
         }
 

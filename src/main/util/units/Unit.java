@@ -1,8 +1,11 @@
 package main.util.units;
 
+import main.graphics.GameImage;
 import main.util.Player;
 import main.util.map.Hexagon2D;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -77,6 +80,7 @@ public abstract class Unit {
     abstract public int getRegen();
     abstract public int getAttackValue();
     abstract public int getCost();
+    abstract public GameImage getImages(int i);
 
     @Override
     public boolean equals(Object o) {
@@ -85,8 +89,16 @@ public abstract class Unit {
         Unit unit = (Unit) o;
         return Objects.equals(hexagon, unit.hexagon);
     }
-    public void render(){
-
+    public void render(Graphics g, int x, int y, int width, int height, float scale){
+        int textureNumb=-1;
+        if (scale<=2){
+            textureNumb=0;
+        }else if (2<scale && scale<4){
+            textureNumb=1;
+        }else{
+            textureNumb=2;
+        }
+        getImages(textureNumb).render(g,x,y,width,height);
     }
 
 }

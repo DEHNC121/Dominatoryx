@@ -1,8 +1,7 @@
 package main.states;
 
 import javafx.util.Pair;
-import main.GamePanel;
-import main.graphics.Image;
+import main.graphics.GameImage;
 import main.graphics.Sprite;
 import main.util.Camera;
 import main.util.KeyHandler;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 
 public class PlayState extends GameState
 {
-    public static HashMap<String, Image> imageMap = null;
+    public static HashMap<String, GameImage> imageMap = null;
     public static boolean isClicked;
     public static WorldMap worldMap;
     public static RoundManager roundManager;

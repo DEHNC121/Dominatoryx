@@ -24,8 +24,6 @@ public class Object2DInt {
         this.height=h;
     }
 
-
-
     public int getY() {
         return y;
     }

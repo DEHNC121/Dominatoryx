@@ -11,15 +11,15 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.util.Objects;
 
-public class Image {
+public class GameImage {
     private BufferedImage image;
     private final Object2DInt rectangle;
 
-    public Image(String file) {
+    public GameImage(String file) {
         loadImage(file);
         rectangle = new Object2DInt(0,0, image.getWidth(), image.getHeight());
     }
-    public Image(String file, int x, int y) {
+    public GameImage(String file, int x, int y) {
         loadImage(file);
         rectangle = new Object2DInt(x, y, image.getWidth(), image.getHeight());
     }
@@ -58,6 +58,9 @@ public class Image {
                 rectangle.getWidth(), rectangle.getHeight(), null);
     }
 
+    public void render (Graphics g,int x, int y, int width, int height) {
+        g.drawImage(image, x, y, width, height, null);
+    }
     public boolean mouseOnIcon (MouseHandler mouse) {
         return rectangle.isInside(mouse.getX(), mouse.getY());
     }

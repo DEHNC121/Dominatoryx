@@ -1,7 +1,7 @@
 package main.states;
 
 import main.graphics.DrawText;
-import main.graphics.Image;
+import main.graphics.GameImage;
 import main.graphics.ScrollField;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
@@ -11,16 +11,16 @@ import java.util.*;
 import java.awt.*;
 
 public class MenuState extends GameState {
-    Image playImage;
-    Image settingsImage;
-    Image shutDownImage;
+    GameImage playImage;
+    GameImage settingsImage;
+    GameImage shutDownImage;
     ScrollField sf;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        playImage = new Image("initial/play_button.png");
-        settingsImage = new Image("initial/settings_icon.png");
-        shutDownImage = new Image("initial/shut_down.png");
+        playImage = new GameImage("initial/play_button.png");
+        settingsImage = new GameImage("initial/settings_icon.png");
+        shutDownImage = new GameImage("initial/shut_down.png");
         playImage.setPositionCenter((int) GamePanel.width / 2, (int) GamePanel.height / 2);
         settingsImage.setPosition(20, 20);
         shutDownImage.setPosition((int) GamePanel.width - 20 - shutDownImage.getWidth(),20);

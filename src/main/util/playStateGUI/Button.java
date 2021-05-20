@@ -1,11 +1,11 @@
 package main.util.playStateGUI;
 
-import main.graphics.Image;
+import main.graphics.GameImage;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.Procedure;
 
-public class Button extends Image{
+public class Button extends GameImage {
     Procedure procedure;
     int mouseX=0;
     int mouseY=0;
