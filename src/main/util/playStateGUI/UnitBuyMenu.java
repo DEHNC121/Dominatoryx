@@ -1,7 +1,10 @@
 package main.util.playStateGUI;
 
 import main.GamePanel;
+import main.graphics.DrawText;
+import main.graphics.GameImage;
 import main.util.RoundManager;
+import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
 import main.util.units.Unit;
 import main.util.units.UnitMenuList;
@@ -11,6 +14,8 @@ import java.awt.*;
 public class UnitBuyMenu extends UnitStructureTab{
     int unitFieldHeight= ((int)GamePanel.height)/10;
     int unitFieldYSeparator=0;
+    int fontSize=20;
+    int textHeight=unitFieldHeight/4;
     public UnitBuyMenu(){
         super();
     }
@@ -32,14 +37,26 @@ public class UnitBuyMenu extends UnitStructureTab{
             else{
                 g.setColor(Color.PINK);
             }
-
-            g.fillRect(x,y+unitFieldYSeparator+
-                    i*(unitFieldYSeparator+unitFieldHeight),width,unitFieldHeight);
+            int tempX=x;
+            int tempY=y+unitFieldYSeparator+
+                    i*(unitFieldYSeparator+unitFieldHeight);
+            g.fillRect(tempX,tempY,width,unitFieldHeight);
             g.setColor(Color.BLACK);
             g.drawRect(x,y+unitFieldYSeparator+
                     i*(unitFieldYSeparator+unitFieldHeight),width,unitFieldHeight);
-
-
+            GameImage image= unit.getImages(2);
+            image.setPosition(tempX,tempY);
+            image.setWidth(unitFieldHeight);
+            image.setHeight(unitFieldHeight);
+            image.render(g);
+            DrawText drawText=new DrawText(""+unit.getClass().getSimpleName(),
+                    new Object2DInt(tempX+unitFieldHeight,tempY+1*textHeight,width,textHeight));
+            drawText.setSize(fontSize);
+            drawText.render(g);
+            drawText= new DrawText("Cost: "+unit.getCost()+"$",
+                    new Object2DInt(tempX+unitFieldHeight,tempY+2*textHeight,width,textHeight));
+            drawText.setSize(fontSize);
+            drawText.render(g);
             //place for unit info to render
         }
     }
