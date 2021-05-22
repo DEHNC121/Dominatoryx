@@ -2,6 +2,7 @@ package main.util;
 
 import main.GamePanel;
 
+import javax.swing.*;
 import java.awt.event.*;
 
 public class MouseHandler implements MouseListener, MouseMotionListener, MouseWheelListener
@@ -17,7 +18,9 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     private int mouseB = -1;
     private int mouseRot = 0; //1 - scroll down, -1 - scroll up
     public boolean isDragged = false;
-    public boolean isClicked = false;
+    //public boolean isClicked = false;
+    public boolean isLClicked=false;
+    public boolean isRClicked=false;
 
     public MouseHandler(GamePanel game)
     {
@@ -42,7 +45,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
     public boolean getIsDragged () { return isDragged; }
 
-    public boolean getIsClicked() { return isClicked; }
+    public boolean getIsClicked() { return isLClicked || isRClicked; }
 
     public void setRotation(int mouseRot) { this.mouseRot = mouseRot; }
 
@@ -54,14 +57,23 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
     public void setDelY (int delY) { this.delY = delY; }
 
-    public void setIsClicked (boolean isClicked) { this.isClicked = isClicked; }
+    public void setIsLClicked (boolean isClicked) { this.isLClicked = isClicked; }
+    public void setIsRClicked (boolean isClicked) {isRClicked=isClicked;}
+    public void setIsClicked(boolean isClicked){
+        setIsRClicked(isClicked);
+        setIsLClicked(isClicked);
+    }
+
+    public boolean getIsLClicked() { return isLClicked; }
+    public boolean getIsRClicked() { return isRClicked; }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent)
     {
         mouseX=mouseEvent.getX();
         mouseY=mouseEvent.getY();
-        isClicked=true;
+        isLClicked= SwingUtilities.isLeftMouseButton(mouseEvent);
+        isRClicked= SwingUtilities.isRightMouseButton(mouseEvent);
     }
 
     @Override

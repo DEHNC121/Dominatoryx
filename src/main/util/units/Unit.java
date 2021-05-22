@@ -2,6 +2,7 @@ package main.util.units;
 
 import main.graphics.GameImage;
 import main.util.Player;
+import main.util.RoundManager;
 import main.util.map.Hexagon2D;
 
 import java.awt.*;
@@ -21,7 +22,7 @@ public abstract class Unit {
         health=getMaxHealth();
         movement=0;
     }
-
+    public int getMovement(){return movement;}
     public void refreshMove(){
         movement=getMaxMovement();
     }
@@ -31,11 +32,20 @@ public abstract class Unit {
     }
 
     public void move(Hexagon2D newHexagon){
-        if(newHexagon.unit!=null || newHexagon.owner!=owner)
+        System.out.println("Move initialized");
+        if(newHexagon.unit!=null || newHexagon.owner!=owner){
+            System.out.println("Owner check");
             return;
-        Map<Hexagon2D,Integer> neighbors=hexagon.getNeighbors(movement);
-        if(!neighbors.containsKey(hexagon))
+
+        }
+
+        Map<Hexagon2D,Integer> neighbors=hexagon.getSpecialNeighbors(movement,
+                hex->hex.owner == RoundManager.getCurrentPlayer());
+        if(!neighbors.containsKey(newHexagon)){
+            System.out.println("Range check");
             return;
+        }
+
         hexagon.unit=null;
         newHexagon.unit=this;
         hexagon=newHexagon;
@@ -43,22 +53,33 @@ public abstract class Unit {
     }
 
     public void attack(Hexagon2D newHexagon){
-        if(attackMovementCost()>movement)
+        System.out.println("Attack initialized");
+        if(attackMovementCost()>movement){
+            System.out.println("movement: "+movement);//debug
             return;
+        }
+
         Map<Hexagon2D,Integer> neighbors=hexagon.getNeighbors(1);
-        if(!neighbors.containsKey(newHexagon))
+        if(!neighbors.containsKey(newHexagon)){
+            System.out.println("neighbors");
             return;
+        }
+        movement-=attackMovementCost();
         if(newHexagon.unit==null){
-            movement-=attackMovementCost();
+            hexagon.unit=null;
             newHexagon.newOwner(owner);
             hexagon=newHexagon;
             newHexagon.unit=this;
         } else {//newHexagon.unit!=null
             //MTG first strike attacker/blocker rules
+            System.out.println("Fight");
             newHexagon.unit.takeDamage(getAttackValue());
             if(newHexagon.unit==null){
-                hexagon.newOwner(owner);
+                System.out.println("He dead");
+                newHexagon.newOwner(owner);
+                hexagon.unit=null;
                 newHexagon.unit=this;
+                hexagon=newHexagon;
             }
             else{
                 takeDamage(newHexagon.unit.getAttackValue());
@@ -70,6 +91,7 @@ public abstract class Unit {
         health-=dmg;
         if(health<=0){
             hexagon.unit=null;
+            hexagon=null;
         }
     }
     abstract public int getID();

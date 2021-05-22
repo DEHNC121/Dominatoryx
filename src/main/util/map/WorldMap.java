@@ -21,9 +21,11 @@ public class WorldMap {
     public static float hexagonPartHeight;
     public static Hexagon2D selectedHexagon;
     public static HashMap<Hexagon2D,Integer> neighborsOfSelected;
+    public static Set<Hexagon2D> neighborEnemies;
     public WorldMap(PlayState.GameMapSize gameMapSize) {
         selectedHexagon=null;
         neighborsOfSelected=new HashMap();
+        neighborEnemies=new HashSet<>();
         //GamePanel.width,GamePanel.height;
         widthHexagonNumber=gameMapSize.size.getValue();
         heightHexagonNumber=gameMapSize.size.getKey();
@@ -90,7 +92,22 @@ public class WorldMap {
             return;
         }
         selectedHexagon=hexagon;
-        neighborsOfSelected= selectedHexagon.getNeighbors(3);
+        if(hexagon.unit==null){
+            neighborEnemies=new HashSet<>();
+            neighborsOfSelected=new HashMap<>();
+            return;
+        }
+        neighborsOfSelected= selectedHexagon.getSpecialNeighbors(hexagon.unit.getMovement(),
+                (hex)->hex.owner==RoundManager.getCurrentPlayer());
+        if(hexagon.unit.getMovement()>=hexagon.unit.attackMovementCost()){
+            neighborEnemies=selectedHexagon.getSpecialNeighbors(1,
+                    (hex)->hex.owner!=RoundManager.getCurrentPlayer()).keySet();
+            System.out.println("Enemies: "+neighborEnemies.size());
+        }
+        else{
+            neighborEnemies=new HashSet<>();
+        }
+
     }
     static public void generate(){
         generate(new Random().nextLong());
@@ -130,19 +147,32 @@ public class WorldMap {
         }
     }
     static public void click(Hexagon2D hexagon2D){
+        if(hexagon2D.owner==RoundManager.getCurrentPlayer()){
+            //System.out.println("owner checks out.");
+            selectHexagon(hexagon2D);
+        }
+    }
+    static public void target(Hexagon2D hexagon2D){
         if(selectedHexagon==null){
-            //System.out.println("==null");
-            if(hexagon2D.owner==RoundManager.getCurrentPlayer()){
-               //System.out.println("owner checks out.");
-                selectHexagon(hexagon2D);
-            }
+            return;
+        }
+        if(selectedHexagon.unit==null){
+            return;
         }
         else{ //selectedHexagon!=null
-            if(hexagon2D.equals(selectedHexagon)){
-                selectHexagon(hexagon2D);
+            if(!getSelectedSet().contains(hexagon2D)){
+                return;
             }
             else {
-
+                if(neighborEnemies.contains(hexagon2D)){
+                    selectedHexagon.unit.attack(hexagon2D);
+                }
+                else{//in neighborsOfSelected.KeySet
+                    selectedHexagon.unit.move(hexagon2D);
+                }
+                Hexagon2D tempHexagon=selectedHexagon;
+                selectHexagon(tempHexagon);
+                selectHexagon(tempHexagon);
             }
         }
     }
@@ -153,12 +183,22 @@ public class WorldMap {
         for(Hexagon2D i: neighborsOfSelected.keySet()){
             set.add(i);
         }
+        set.addAll(neighborEnemies);
         return set;
     }
     static public void generateIncome(){
         for(Hexagon2D hex: hexagonMap){
             if(hex.owner!=null)
                 hex.owner.money+=hex.getIncome();
+        }
+    }
+    static public void refreshAndRegen(){
+        for(Hexagon2D hex: hexagonMap){
+            if(hex.unit!=null){
+                hex.unit.regenerate();
+                hex.unit.refreshMove();
+            }
+
         }
     }
 }

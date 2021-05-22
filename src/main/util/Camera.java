@@ -42,7 +42,8 @@ public class Camera
     private boolean scrollUp=false;
     private boolean scrollDown=false;
     private boolean mouseIsDragged = false;
-    private boolean mouseIsClicked = false;
+    private boolean mouseIsLClicked = false;
+    private boolean mouseIsRClicked = false;
 
     public int pause;
     public boolean paused;
@@ -142,7 +143,7 @@ public class Camera
     }
 
     public void clicked(){
-        if(mouseIsClicked){
+        if(mouseIsLClicked){
             Hexagon2D selected=getHexagon();
             if(selected!=null) WorldMap.click(selected);
             else System.out.println("NULL hexagon selected");
@@ -150,7 +151,15 @@ public class Camera
             //System.out.println(WorldMap.getSelectedSet().size());
             PlayState.setClicked(!PlayState.isClicked);
         }
-
+        if(mouseIsRClicked){
+            Hexagon2D target=getHexagon();
+            System.out.println("RClick initiated");
+            if(target!=null) WorldMap.target(target);
+            else System.out.println("NULL hexagon targeted");
+            //System.out.println(WorldMap.neighborsOfSelected.size());
+            //System.out.println(WorldMap.getSelectedSet().size());
+            PlayState.setClicked(!PlayState.isClicked);
+        }
 
     }
     public void update ()
@@ -184,7 +193,8 @@ public class Camera
         mouseYOnScreen = mouse.getY();
         computeMouseOnMap();
         mouseIsDragged = mouse.getIsDragged();
-        mouseIsClicked = mouse.getIsClicked();
+        mouseIsLClicked = mouse.getIsLClicked();
+        mouseIsRClicked=mouse.getIsRClicked();
         delX = mouse.getDelX();
         delY = mouse.getDelY();
         if(mouse.getRotation()<0)
@@ -193,9 +203,12 @@ public class Camera
             scrollDown=true;
         mouse.setRotation(0);
         mouse.isDragged = false;
+        /*
         if(mouseIsClicked){
             mouse.setIsClicked(false);
         }
+
+         */
         mouse.setDelX(0);
         mouse.setDelY(0);
     }

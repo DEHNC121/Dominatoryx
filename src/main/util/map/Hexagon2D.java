@@ -13,6 +13,7 @@ import main.util.units.Unit;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Hexagon2D extends Object2D {
     int positionInWorldMapArray;
@@ -39,10 +40,12 @@ public class Hexagon2D extends Object2D {
     }
 
     private void getNeighborsLoop(int maxDistance, Map<Hexagon2D,Integer> list, boolean[] isVisited,
-                                  Queue<Pair<Hexagon2D,Integer>> queue){
+                                  Queue<Pair<Hexagon2D,Integer>> queue,Predicate<Hexagon2D> test){
         while(!queue.isEmpty()){
             Pair<Hexagon2D,Integer> pair=queue.poll();
             isVisited[pair.getKey().positionInWorldMapArray]=true;
+            if(pair.getValue()>0 && !test.test(pair.getKey()))
+                continue;
             if(pair.getKey().border)
                 continue;
             list.put(pair.getKey(), pair.getValue());
@@ -83,7 +86,12 @@ public class Hexagon2D extends Object2D {
 
 
     }
+
     public HashMap<Hexagon2D,Integer> getNeighbors(int distance){
+        return getSpecialNeighbors(distance,(hex)->true);
+    }
+
+    public HashMap<Hexagon2D,Integer> getSpecialNeighbors(int distance, Predicate<Hexagon2D> test){
         HashMap<Hexagon2D,Integer> map=new HashMap<>();
         if(border)
             return map;
@@ -96,10 +104,11 @@ public class Hexagon2D extends Object2D {
             isVisited[i]=false;
         }
         queue.offer(new Pair<>(this,0));
-        getNeighborsLoop(distance,map,isVisited, queue);
+        getNeighborsLoop(distance,map,isVisited, queue,test);
         map.remove(this);
         return map;
     }
+
 
     public void render(Graphics g, Sprite sprite, int x, int y, int width, int height,float scale)
     {
@@ -117,12 +126,14 @@ public class Hexagon2D extends Object2D {
             g.drawImage(sprite.getSprite(textureX,textureY),x,y,width,height,null);
         }
 //        if(structure!=null)
+        /*
         if (textureX==2)
             new House(this).render(g,x,  y,  width,  height, scale);
 
-//        if(unit!=null)
-        if (textureX==2)
-            new Kid(owner,this).render(g,x,  y,  width,  height, scale);
+         */
+
+        if(unit!=null)
+            unit.render(g,x,  y,  width,  height, scale);
     }
 
     @Override

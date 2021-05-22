@@ -34,6 +34,7 @@ public class RoundManager {
             players=newPlayers;
         }
         WorldMap.generateIncome();
+        WorldMap.refreshAndRegen();
     }
 
     static public Player getCurrentPlayer(){return players[currentPlayer];}
