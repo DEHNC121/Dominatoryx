@@ -5,6 +5,7 @@ import main.GamePanel;
 import main.states.PlayState;
 import main.util.Player;
 import main.util.RoundManager;
+import main.util.events.Move;
 import sounds.Sound;
 
 import java.util.*;
@@ -164,6 +165,7 @@ public class WorldMap {
                 return;
             }
             else {
+                RoundManager.events.push(new Move(selectedHexagon, hexagon2D));
                 if(neighborEnemies.contains(hexagon2D)){
                     selectedHexagon.unit.attack(hexagon2D);
                 }

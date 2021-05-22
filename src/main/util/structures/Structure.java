@@ -12,7 +12,9 @@ public abstract class Structure {
     }
 
     abstract public GameImage getImages(int i);
-
+    abstract public int getID();
+    public abstract int getIncome ();
+    public abstract int getCost();
     public void render(Graphics g, int x, int y, int width, int height, float scale){
         int textureNumb=-1;
         if (scale<=2){
@@ -24,4 +26,5 @@ public abstract class Structure {
         }
         getImages(textureNumb).render(g,x,y-(int)(4.5*scale),width,height);
     }
+
 }

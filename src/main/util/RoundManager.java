@@ -1,17 +1,21 @@
 package main.util;
 
+import main.util.events.Event;
 import main.util.map.Hexagon2D;
 import main.util.map.WorldMap;
+
+import java.util.Stack;
 
 public class RoundManager {
     public static Player[] players;
     static int currentPlayer;
     static int roundCnt;
-
+    public static Stack<Event> events;
     public RoundManager(int count){
         currentPlayer=0;
         roundCnt=1;
         players=new Player[count];
+        events = new Stack<>();
         for(int i=0;i<count;i++)
             players[i]=new Player(i+1);
     }
@@ -50,6 +54,7 @@ public class RoundManager {
     }
 
     static public void passTurn(){
+        events.clear();
         postTurnActions(players[currentPlayer]);
         do{
             currentPlayer++;
@@ -61,6 +66,12 @@ public class RoundManager {
         }while (players[currentPlayer].isDefeated);
 
 
+    }
+
+    public static void goBack() {
+        if (!events.isEmpty()) {
+            events.pop().goBack();
+        }
     }
     public void buyUnit(Hexagon2D hexagon2D,int id){
         players[currentPlayer].buyUnit(hexagon2D,id);

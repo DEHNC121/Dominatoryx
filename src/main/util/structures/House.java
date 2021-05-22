@@ -18,8 +18,19 @@ public class House extends Structure{
     }
 
     @Override
+    public int getID() { return 0; }
+
+    @Override
+    public int getCost() { return 10; }
+
+    @Override
     public GameImage getImages(int i) {
         return gameImages.get(i);
+    }
+
+    @Override
+    public int getIncome() {
+        return 2;
     }
 
 }

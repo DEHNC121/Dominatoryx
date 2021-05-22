@@ -75,6 +75,7 @@ public class GUIManager {
         button=new Button("gameicons/undo.png",
                 0, (int) GamePanel.height -  buttonSize,
                 buttonSize,buttonSize,()->{
+            RoundManager.goBack();
             //TODO: implement undo function via stack
         });
         buttonList.add(button);

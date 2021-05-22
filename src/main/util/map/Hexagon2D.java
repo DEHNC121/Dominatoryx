@@ -32,7 +32,12 @@ public class Hexagon2D extends Object2D {
         positionInWorldMapArray=i;
         return this;
     }
-
+    public Player getOwner () { return owner; }
+    public Unit getUnit () { return unit; }
+    public Structure getStructure () { return structure; }
+    public void setOwner (Player owner) { this.owner = owner; }
+    public void setUnit (Unit unit) { this.unit = unit; }
+    public void setStructure (Structure structure) { this.structure = structure; }
     public int getIndex(){ return positionInWorldMapArray; }
 
     public void setBorder(boolean border) {
@@ -151,7 +156,12 @@ public class Hexagon2D extends Object2D {
 
     public int getIncome(){
         //to be expanded later with addition of buildings/
-        return 1;
+        int income = 1;
+        if (structure != null)
+            income += structure.getIncome();
+        if (unit != null)
+            income += unit.getIncome();
+        return income;
     }
 
     public void abandonField(){

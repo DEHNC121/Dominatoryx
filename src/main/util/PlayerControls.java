@@ -4,6 +4,7 @@ public class PlayerControls {
     Player player;
     boolean passTurn=false;
     boolean surrender=false;
+    boolean goBack = false;
     PlayerControls(Player pl){
         player=pl;
     }
@@ -14,6 +15,7 @@ public class PlayerControls {
     public void setToDefaults(){
         passTurn=false;
         surrender=false;
+        goBack = false;
     }
     public void update(){
         if(passTurn){
@@ -21,6 +23,9 @@ public class PlayerControls {
         }
         if(surrender){
             player.surrender();
+        }
+        if (goBack) {
+            RoundManager.goBack(); //should be here?
         }
         setToDefaults();
     }

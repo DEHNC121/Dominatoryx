@@ -1,7 +1,6 @@
 package main.util.units;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class UnitMenuList {
     static public Map<Integer,Unit> list;

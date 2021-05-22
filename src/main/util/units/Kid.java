@@ -30,7 +30,7 @@ public class Kid extends Unit{
 
     @Override
     public int getMaxMovement() {
-        return 2;
+        return 50;
     }
 
     @Override
@@ -47,10 +47,14 @@ public class Kid extends Unit{
     public int getAttackValue() {
         return 1;
     }
+
     @Override
     public int getCost(){
         return 8;
     }
+
+    @Override
+    public int getIncome() { return 0; }
 
     @Override
     public GameImage getImages(int i) {

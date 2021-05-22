@@ -4,6 +4,7 @@ import main.graphics.GameImage;
 import main.util.Player;
 import main.util.RoundManager;
 import main.util.map.Hexagon2D;
+import main.util.map.WorldMap;
 
 import java.awt.*;
 import java.util.Map;
@@ -23,6 +24,10 @@ public abstract class Unit {
         movement=0;
     }
     public int getMovement(){return movement;}
+    public void setHealth(int health) { this.health = health; }
+    public void setMovement(int movement) { this. movement = movement; }
+    public void setHexagon(Hexagon2D hexagon) {this.hexagon = hexagon; }
+    public void setOwner(Player owner) { this.owner = owner; }
     public void refreshMove(){
         movement=getMaxMovement();
     }
@@ -50,6 +55,7 @@ public abstract class Unit {
         newHexagon.unit=this;
         hexagon=newHexagon;
         movement-=neighbors.get(newHexagon);
+        WorldMap.selectHexagon(newHexagon);
     }
 
     public void attack(Hexagon2D newHexagon){
@@ -70,6 +76,7 @@ public abstract class Unit {
             newHexagon.newOwner(owner);
             hexagon=newHexagon;
             newHexagon.unit=this;
+            WorldMap.selectHexagon(newHexagon);
         } else {//newHexagon.unit!=null
             //MTG first strike attacker/blocker rules
             System.out.println("Fight");
@@ -80,6 +87,7 @@ public abstract class Unit {
                 hexagon.unit=null;
                 newHexagon.unit=this;
                 hexagon=newHexagon;
+                WorldMap.selectHexagon(newHexagon);
             }
             else{
                 takeDamage(newHexagon.unit.getAttackValue());
@@ -91,7 +99,7 @@ public abstract class Unit {
         health-=dmg;
         if(health<=0){
             hexagon.unit=null;
-            hexagon=null;
+            //hexagon = null;
         }
     }
     public int getHealth(){return health;}
@@ -102,6 +110,7 @@ public abstract class Unit {
     abstract public int getRegen();
     abstract public int getAttackValue();
     abstract public int getCost();
+    abstract public int getIncome();
     abstract public GameImage getImages(int i);
 
     @Override
