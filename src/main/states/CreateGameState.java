@@ -67,15 +67,11 @@ public class CreateGameState extends GameState{
     public void input(MouseHandler mouse, KeyHandler key) {
         if (mouse.getIsClicked()) {
             if (backObject.isInside(mouse.getX(), mouse.getY())) {
-                System.out.println("yo");
-                GameState g = gsm.getMenuState();
-                System.out.println(g);
-                gsm.set(g);
+                gsm.set(GameStateManager.STATES.MENU);
             }
             if (playObject.isInside(mouse.getX(), mouse.getY())) {
-                GameState g = new PlayState(gsm, size(mapSizeSF.getEntry()), Integer.parseInt(playersSF.getEntry()));
-                gsm.setPlayState(g);
-                gsm.set(g);
+                gsm.setNew(GameStateManager.STATES.PLAY,
+                        new PlayState(gsm, size(mapSizeSF.getEntry()), Integer.parseInt(playersSF.getEntry())));
             }
             mouse.setIsClicked(false);
         }

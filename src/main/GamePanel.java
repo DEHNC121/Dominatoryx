@@ -37,7 +37,6 @@ public class GamePanel extends JPanel implements Runnable
         setPreferredSize(new Dimension(width, height));
         setFocusable(true);
         requestFocus();
-
     }
 
 
@@ -98,8 +97,6 @@ public class GamePanel extends JPanel implements Runnable
         int lastSecondTime = (int) (lastUpdateTime / 1000000000);
         oldFrameCount = 0;
 
-        int t=0;
-
         while (running)
         {
             double now = System.nanoTime();
@@ -118,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable
             }
 
             input (mouse, keyHandler);
-            render (t++);
+            render ();
             draw ();
             lastRenderTime = now;
             frameCount++;
@@ -159,13 +156,11 @@ public class GamePanel extends JPanel implements Runnable
 
     public void input (MouseHandler mouse, KeyHandler key)
     {
-        //System.out.println(mouse.getX()+", "+mouse.getY());
         gsm.input(mouse, key);
     }
 
-    public void render (int t)
+    public void render ()
     {
-        //System.out.println("rend"+t);
         if (graphics2D != null)
         {
             graphics2D.setColor(new Color (36, 179, 215));
@@ -175,7 +170,7 @@ public class GamePanel extends JPanel implements Runnable
     }
     public void draw ()
     {
-        Graphics g2 = (Graphics) this.getGraphics();
+        Graphics g2 = this.getGraphics();
         g2.drawImage(image, 0, 0, (int) width, (int) height, null);
         g2.dispose();
     }

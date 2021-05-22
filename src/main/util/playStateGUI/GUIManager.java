@@ -61,7 +61,7 @@ public class GUIManager {
                 (int) GamePanel.width -  (int) (GamePanel.width*0.03f), 0,
                 (int) (GamePanel.width*0.03f),(int) (GamePanel.width*0.03f),()->{
             if(gsm!=null)
-                gsm.set(new PauseState(gsm));
+                gsm.set(GameStateManager.STATES.PAUSE);
         });
         buttonList.add(button);
         button=new Button("gameicons/end_turn.png",

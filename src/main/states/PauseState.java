@@ -41,18 +41,18 @@ public class PauseState extends GameState{
     public void input (MouseHandler mouse, KeyHandler key) {
         if (mouse.getIsClicked()) {
             if (resume.mouseOnIcon(mouse)) {
-                gsm.set(gsm.getPlayState());
+                gsm.set(GameStateManager.STATES.PLAY);
             }
             if (restart.mouseOnIcon(mouse)) {
-                GameState g = new PlayState(gsm, PlayState.size, PlayState.nOfPlayers);
-                gsm.setPlayState(g);
-                gsm.set(g);
+                gsm.setNew(GameStateManager.STATES.PLAY,
+                        new PlayState(gsm, PlayState.size, PlayState.nOfPlayers));
             }
             if (save.mouseOnIcon(mouse)) {
+                //todo save
 
             }
             if (menu.mouseOnIcon(mouse)) {
-                gsm.set(new MenuState(gsm));
+                gsm.set(GameStateManager.STATES.MENU);
             }
             mouse.setIsClicked(false);
         }
