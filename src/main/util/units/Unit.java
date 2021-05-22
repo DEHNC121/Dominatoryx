@@ -94,6 +94,7 @@ public abstract class Unit {
             hexagon=null;
         }
     }
+    public int getHealth(){return health;}
     abstract public int getID();
     abstract public int getMaxHealth();
     abstract public int getMaxMovement();
