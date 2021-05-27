@@ -165,16 +165,11 @@ public class Hexagon2D extends Object2D {
     }
 
     public void abandonField(){
-        if(owner!=null){
-            owner.controlledFields--;
-            owner.deathCheck();
-        }
         unit=null;
     }
 
     public void newOwner(Player pl){
         abandonField();
         owner=pl;
-        pl.controlledFields++;
     }
 }

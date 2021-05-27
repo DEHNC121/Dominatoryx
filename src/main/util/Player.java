@@ -13,14 +13,11 @@ import java.util.List;
 
 public class Player {
 
-    public boolean isDefeated;
-    public int controlledFields;
     private int colour;
     public int money=10;
     PlayerControls controls;
 
     public Player(int colour){
-        isDefeated=false;
         this.colour=colour;
         controls=new PlayerControls(this);
     }
@@ -30,22 +27,13 @@ public class Player {
     public void setMoney (int money) { this.money = money; }
 
     public boolean deathCheck(){
-        if(controlledFields==0){
-            die();
-            return true;
+        for(Hexagon2D hex:WorldMap.hexagonMap){
+            if(hex.owner==this)
+                return false;
         }
-        return false;
+        return true;
     }
 
-    public void die(){
-        isDefeated=true;
-//        unitList.clear();
-    }
-
-    public void surrender(){
-        die();
-        RoundManager.passTurn();
-    }
 
     public boolean buyUnit(Hexagon2D hexagon2D,int unitID) {
         if(hexagon2D.owner!=this || hexagon2D.unit!=null)
@@ -107,4 +95,7 @@ public class Player {
     }
 
     public void update(){controls.update();}
+    public void surrender(){
+
+    }
 }

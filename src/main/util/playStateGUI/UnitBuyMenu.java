@@ -68,6 +68,8 @@ public class UnitBuyMenu extends UnitStructureTab{
     @Override
     public void update() {
         if(isClicked){
+            if(!isInside(mouseX,mouseY))
+                return;
             int realX=mouseX-x;
             int realY=mouseY-y;
             if(realX>width)

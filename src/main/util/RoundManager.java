@@ -30,7 +30,7 @@ public class RoundManager {
             Player[] newPlayers=new Player[players.length-defeatedPlayers];
             int i=0;
             for(Player pl: players){
-                if(!pl.isDefeated){
+                if(!pl.deathCheck()){
                     newPlayers[i]=pl;
                     i++;
                 }
@@ -63,7 +63,7 @@ public class RoundManager {
                 newTurnActions();
             }
             preTurnActions(players[currentPlayer]);
-        }while (players[currentPlayer].isDefeated);
+        }while (players[currentPlayer].deathCheck());
 
 
     }
@@ -80,7 +80,7 @@ public class RoundManager {
     public static int getDefeatedPlayers(){
         int i=0;
         for(Player pl:players){
-            if(pl.isDefeated)
+            if(pl.deathCheck())
                 i++;
         }
         return i;
