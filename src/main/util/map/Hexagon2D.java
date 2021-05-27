@@ -136,7 +136,8 @@ public class Hexagon2D extends Object2D {
             new House(this).render(g,x,  y,  width,  height, scale);
 
          */
-
+        if (structure != null)
+            structure.render(g, x, y, width, height, scale);
         if(unit!=null)
             unit.render(g,x,  y,  width,  height, scale);
     }

@@ -15,8 +15,8 @@ import main.util.playStateGUI.GUIManager;
 
 public class Camera
 {
-    private int delX;
-    private int delY;
+    private float delX;
+    private float delY;
 
     private final Object2D camera;
     private final Object2D cameraBoundary; //red rectangle
@@ -215,7 +215,7 @@ public class Camera
     public Hexagon2D getHexagon(){
         return WorldMap.getHexagon(mouseXOnMap,mouseYOnMap);
     }
-
+    public int d = 0;
     public void render (Graphics g)
     {
         for (Hexagon2D hexagon2D:WorldMap.hexagonMap) {
@@ -231,7 +231,6 @@ public class Camera
                     hexagon2D.render(g, mapSprite,  Math.round(x),  Math.round(y), (int) Math.ceil(width), (int) Math.ceil(height),scale);
             }
         }
-
     }
 
     public void debug() {
@@ -240,6 +239,7 @@ public class Camera
         System.out.println("camera.x: " + camera.x + " camera.y: " + camera.y + " camera.width: " + camera.width +
                 " camera.height: " + camera.height);
         System.out.println("scale: " + scale);
+        System.out.println("mouseDraggingScale: " + mouseDraggingScale);
         System.out.println("scrollScale: " + scrollScale);
         System.out.println("maxCameraHeight: " + maxCameraHeight + " maxCameraWidth: " + maxCameraWidth);
 

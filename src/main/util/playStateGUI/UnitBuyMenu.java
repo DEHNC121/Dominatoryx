@@ -59,6 +59,7 @@ public class UnitBuyMenu extends UnitStructureTab{
             drawText.render(g);
             //place for unit info to render
         }
+
     }
 
     @Override
