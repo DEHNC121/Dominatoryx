@@ -1,9 +1,12 @@
 package main.states;
 
+import main.GamePanel;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +21,17 @@ public class GameStateManager
     }
     private final Map<STATES,GameState> states;
     private GameState currentState;
+    private GameStyle gameStyle;
 
     public GameStateManager () {
         states=new HashMap<>(STATES.values().length);
+        gameStyle=new GameStyle(new ArrayList<>(Arrays.asList(
+                new Color(2, 23, 52),
+                new Color(4, 52, 72),
+                new Color(14, 101, 98),
+                new Color(202, 180, 129),
+                new Color(230, 221, 205)
+                )));
         InitializeStates();
         set(STATES.MENU);
     }
@@ -29,6 +40,10 @@ public class GameStateManager
         states.put(STATES.MENU,new MenuState(this));
         states.put(STATES.CREATE,new CreateGameState(this));
         states.put(STATES.PAUSE,new PauseState(this));
+    }
+
+    public GameStyle getGameStyle() {
+        return gameStyle;
     }
 
     public void set(STATES state){
@@ -54,6 +69,9 @@ public class GameStateManager
     }
 
     public void render (Graphics2D g) {
+
+        g.setColor(gameStyle.get(GameStyle.PALETTE.BACKGROUND));
+        g.fillRect(0, 0, (int) GamePanel.width, (int) GamePanel.height);
         currentState.render(g);
     }
 

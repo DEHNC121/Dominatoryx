@@ -7,6 +7,7 @@ import java.awt.*;
 public class DrawText
 {
     private Font font;
+    public static String fontName;
     private String text;
 
     private Object2DInt position;
@@ -18,6 +19,7 @@ public class DrawText
         this.position = position;
         this.color = new Color(0,0,0,255);
     }
+
     public DrawText(String text, Object2DInt position, Color color) {
         this.font = new Font("Times New Roman", Font.PLAIN, 100);
         this.text = text;
@@ -38,6 +40,17 @@ public class DrawText
         this.text = text;
         this.position = position;
         this.color = color;
+    }
+    public DrawText( String text, int style, int size, Object2DInt position, Color color) {
+
+        this.font = new Font(fontName, style, size);
+        this.text = text;
+        this.position = position;
+        this.color = color;
+    }
+
+    public static void setFontName(String fontName) {
+        DrawText.fontName = fontName;
     }
 
     public String getName() {

@@ -1,65 +1,81 @@
 package main.states;
 
-import main.graphics.DrawText;
-import main.graphics.GameImage;
-import main.graphics.ScrollField;
+import main.graphics.DrawButton;
+import main.graphics.NewDrawText;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.GamePanel;
-import main.util.map.Object2DInt;
-import java.util.*;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MenuState extends GameState {
-    GameImage playImage;
-    GameImage settingsImage;
-    GameImage shutDownImage;
-    ScrollField sf;
+
+    ArrayList<NewDrawText> textFields;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        playImage = new GameImage("initial/play_button.png");
-        settingsImage = new GameImage("initial/settings_icon.png");
-        shutDownImage = new GameImage("initial/shut_down.png");
-        playImage.setPositionCenter((int) GamePanel.width / 2, (int) GamePanel.height / 2);
-        settingsImage.setPosition(20, 20);
-        shutDownImage.setPosition((int) GamePanel.width - 20 - shutDownImage.getWidth(),20);
-        sf = new ScrollField(new Object2DInt(0, (int) GamePanel.height / 2, 100, 100),
-                new ArrayList<String>(Arrays.asList("1","2","3","4","5","6","7","8")), "TimesRoman", Font.PLAIN, 100,
-                new Color(0,0,0));
+
+        textFields=new ArrayList<>();
+
+        float start= 0.25f;
+        float heightStep =0.16f;
+
+        ArrayList<String> text=new ArrayList<>(Arrays.asList("Dominatoryx","New game","Load","Settings","Exit"));
+
+        NewDrawText.setFontName("OpenSans");
+
+
+        textFields.add(
+                new NewDrawText(text.get(textFields.size()),
+                        new Rectangle(0, (int) (GamePanel.height*0.15), (int) GamePanel.width,0),
+                (int)(GamePanel.height*0.3),
+                        gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)));
+
+        while (textFields.size()< text.size()){
+
+            textFields.add(
+                    new DrawButton(text.get(textFields.size()),
+                            new Rectangle(0, (int) (GamePanel.height*(start+heightStep*textFields.size())), (int) GamePanel.width,0),
+                            (int)(GamePanel.height*0.15),
+                            gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT)));
+        }
+
     }
     @Override
     public void update () {
-        sf.update();
+        if (((DrawButton)textFields.get(1)).mouseClick) {
+            gsm.set(GameStateManager.STATES.CREATE);
+            ((DrawButton)textFields.get(1)).mouseClick=false;
+        }
+        if (((DrawButton)textFields.get(3)).mouseClick) {
+            gsm.set(GameStateManager.STATES.SETTINGS);
+            ((DrawButton)textFields.get(3)).mouseClick=false;
+        }
+        if (((DrawButton)textFields.get(4)).mouseClick) {
+            System.exit(0); //todo should be written differently
+            ((DrawButton)textFields.get(4)).mouseClick=false;
+        }
     }
 
     @Override
     public void input (MouseHandler mouse, KeyHandler key) {
-        if (mouse.getIsClicked()) {
-            if (playImage.mouseOnIcon(mouse)) {
-                gsm.set(GameStateManager.STATES.CREATE);
+
+        for (NewDrawText dt:textFields){
+            if (dt instanceof DrawButton){
+                ((DrawButton)dt).input(mouse);
             }
-            if (shutDownImage.mouseOnIcon(mouse)) {
-                System.exit(0); //todo should be written differently
-            }
-            if (settingsImage.mouseOnIcon(mouse)) {
-                gsm.set(GameStateManager.STATES.SETTINGS);
-            }
-            mouse.setIsClicked(false);
         }
-        sf.input(mouse, key);
     }
 
     @Override
     public void render (Graphics2D g) {
-        playImage.render(g);
-        settingsImage.render(g);
-        shutDownImage.render(g);
 
+        for (NewDrawText dt:textFields){
+            dt.render(g);
+        }
 
-        DrawText dt=new DrawText("TimesRoman","Hello World", Font.PLAIN, 100,new Object2DInt(100,100,0,0),new Color(0,0,0,255));
-        dt.render(g);
-        sf.render(g);
     }
 
 }
