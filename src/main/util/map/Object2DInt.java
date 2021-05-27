@@ -24,6 +24,14 @@ public class Object2DInt {
         this.height=h;
     }
 
+    public Object2DInt(int x, int y){
+        this.x=x;
+        this.y=y;
+
+        this.width=0;
+        this.height=0;
+    }
+
     public int getY() {
         return y;
     }

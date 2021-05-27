@@ -4,12 +4,10 @@ import main.GamePanel;
 import main.graphics.DrawText;
 import main.graphics.GameImage;
 import main.states.GameStateManager;
-import main.states.PauseState;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.RoundManager;
 import main.util.map.Object2DInt;
-import main.util.map.WorldMap;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,11 +20,14 @@ public class GUIManager {
     static public GameStateManager gsm;
     static public TurnIndicator turnIndicator=new TurnIndicator((int)GamePanel.width*4/10,0,
             (int)(GamePanel.width)/5, (int) (GamePanel.height*0.03f));
+
     static public DrawText money=new DrawText("Arial",""+RoundManager.getCurrentPlayer().money,
             Font.PLAIN,24,new Object2DInt((int) (GamePanel.width*0.03f),
-            (int) (GamePanel.width*0.02f),(int) (GamePanel.width*0.15f),(int) (GamePanel.width*0.03f)),Color.BLACK);
+
+            (int) (GamePanel.width*0.02f),(int) (GamePanel.width*0.15f),(int) (GamePanel.width*0.03f)),Color.white);
     static public final int coinSize=(int)(GamePanel.width*0.03f);
     static public final int buttonSize=(int)(GamePanel.width*0.05f);
+
     static public void render(Graphics g){
         unitMenu.render(g);
         for(Button b : buttonList){
@@ -38,6 +39,7 @@ public class GUIManager {
         turnIndicator.render(g);
         money.render(g);
     }
+
     static public boolean capture(int x,int y){
         for(Button b:buttonList){
             if(b.isInside(x,y))
@@ -45,6 +47,7 @@ public class GUIManager {
         }
         return unitMenu.isInside(x,y);
     }
+
     static public void loadIcons(){
         imageList=new ArrayList<>();
         GameImage temp=new GameImage("gameicons/coin.png");

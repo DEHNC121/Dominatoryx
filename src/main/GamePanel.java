@@ -3,12 +3,10 @@ package main;
 import main.states.GameStateManager;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
-import sounds.Sound;
 
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -161,12 +159,7 @@ public class GamePanel extends JPanel implements Runnable
 
     public void render ()
     {
-        if (graphics2D != null)
-        {
-            graphics2D.setColor(new Color (36, 179, 215));
-            graphics2D.fillRect(0, 0, (int) width, (int) height);
-            gsm.render(graphics2D);
-        }
+        gsm.render(graphics2D);
     }
     public void draw ()
     {

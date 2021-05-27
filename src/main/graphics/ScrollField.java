@@ -40,9 +40,11 @@ public class ScrollField {
         middleIndex = 0;
         bottomIndex = -1;
         upIndex = (entries.size() > 1) ? 1 : -1;
+
         textUp = new DrawText(name,stringFromIndex(upIndex), style, size,
                 new Object2DInt(field.getX(), field.getY() + field.getHeight(), field.getWidth(), field.getHeight()),
                 new Color(color.getRed(),color.getGreen(),color.getBlue(),40));
+
         textMiddle = new DrawText(name,stringFromIndex(middleIndex), style, size,
                 new Object2DInt(field.getX(), field.getY() + 2*field.getHeight(), field.getWidth(), field.getHeight()),
                 new Color(color.getRed(),color.getGreen(),color.getBlue(),255));
