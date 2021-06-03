@@ -9,14 +9,14 @@ public class DrawButton extends NewDrawText{
 
     private Point mousePosition;
     float inWidth;
-    public boolean mouseClick;
+    public int mouseClick;
 
     Rectangle work;
 
     private void initButton(){
         mousePosition =new Point(-1,-1);
         inWidth=0.4f;
-        mouseClick=false;
+        mouseClick=-1;
         work=null;
     }
 
@@ -39,7 +39,11 @@ public class DrawButton extends NewDrawText{
         mousePosition.x=mouse.getX();
         mousePosition.y=mouse.getY();
         if (work!=null && work.contains(mousePosition)){
-            mouseClick=mouse.isLClicked;
+            if (mouseClick==-1 && mouse.getButton()==1){
+                mouseClick=1;
+            }else if (mouseClick==1 && mouse.getButton()==-1){
+                mouseClick=2;
+            }
 
         }
     }
