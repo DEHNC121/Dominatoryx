@@ -3,13 +3,14 @@ package main.util;
 import main.util.events.Event;
 import main.util.map.Hexagon2D;
 import main.util.map.WorldMap;
+import main.util.saveLoad.DataRoundManager;
 
 import java.util.Stack;
 
 public class RoundManager {
     public static Player[] players;
-    static int currentPlayer;
-    static int roundCnt;
+    static public int currentPlayer;
+    static public int roundCnt;
     public static Stack<Event> events;
     public RoundManager(int count){
         currentPlayer=0;
@@ -90,5 +91,21 @@ public class RoundManager {
     }
     public static void update(){
         players[currentPlayer].update();
+    }
+    static public Player getFromColour(int col){
+        for(Player pl:players){
+            if(pl.getColour()==col)
+                return pl;
+        }
+        return null;
+    }
+    static public void loadData(DataRoundManager drm){
+        players=new Player[drm.players.length];
+        currentPlayer=drm.current;
+        roundCnt=drm.roundCount;
+        for(int i=0;i<players.length;i++){
+            players[i]= new Player(drm.players[i]);
+        }
+        events=new Stack<>();
     }
 }

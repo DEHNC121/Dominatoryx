@@ -3,8 +3,12 @@ package main.util.map;
 import javafx.util.Pair;
 import main.graphics.Sprite;
 import main.util.Player;
+import main.util.RoundManager;
 import main.util.map.Object2D;
 import main.util.map.WorldMap;
+import main.util.saveLoad.DataHex;
+import main.util.saveLoad.DataStructure;
+import main.util.saveLoad.DataUnit;
 import main.util.structures.House;
 import main.util.structures.Structure;
 import main.util.units.Kid;
@@ -27,6 +31,16 @@ public class Hexagon2D extends Object2D {
     }
     public Hexagon2D(float x,float y,float w,float h){
         super(x, y, w, h);
+    }
+    public Hexagon2D(float x, float y, float w, float h, DataHex dh){
+        this(x,y,w,h);
+        border= dh.water;
+        water=dh.water;
+        if(dh.hasOwner)
+            owner= RoundManager.getFromColour(dh.playerColour);
+        positionInWorldMapArray=dh.position;
+        unit= DataUnit.unpackUnit(dh.unit);
+        structure= DataStructure.unpackStructure(dh.structure);
     }
     public Hexagon2D setPosition(int i){
         positionInWorldMapArray=i;

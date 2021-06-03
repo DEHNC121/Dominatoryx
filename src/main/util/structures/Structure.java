@@ -15,6 +15,8 @@ public abstract class Structure {
     abstract public int getID();
     public abstract int getIncome ();
     public abstract int getCost();
+    public Hexagon2D getHex(){return hexagon2D;}
+    public void setHex(Hexagon2D h){hexagon2D=h;}
     public void render(Graphics g, int x, int y, int width, int height, float scale){
         int textureNumb=-1;
         if (scale<=2){

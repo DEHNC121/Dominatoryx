@@ -3,6 +3,7 @@ package main.util.units;
 import main.graphics.GameImage;
 import main.util.Player;
 import main.util.map.Hexagon2D;
+import main.util.saveLoad.DataUnit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class Kid extends Unit{
     public Kid(Player pl, Hexagon2D hex) {
         super(pl, hex);
     }
+    public Kid(DataUnit du){ super(du); }
 
     @Override
     public int getID() {

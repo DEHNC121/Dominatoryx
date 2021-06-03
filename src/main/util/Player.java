@@ -3,6 +3,7 @@ package main.util;
 import main.util.events.Purchase;
 import main.util.map.Hexagon2D;
 import main.util.map.WorldMap;
+import main.util.saveLoad.DataPlayer;
 import main.util.structures.Structure;
 import main.util.structures.StructureMenuList;
 import main.util.units.Unit;
@@ -21,7 +22,11 @@ public class Player {
         this.colour=colour;
         controls=new PlayerControls(this);
     }
-
+    public Player(DataPlayer dp){
+        colour= dp.colour;
+        money= dp.money;
+        controls=new PlayerControls(this);
+    }
     public int getColour(){return colour;}
     public int getMoney () { return money; }
     public void setMoney (int money) { this.money = money; }

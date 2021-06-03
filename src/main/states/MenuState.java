@@ -49,6 +49,10 @@ public class MenuState extends GameState {
             gsm.set(GameStateManager.STATES.CREATE);
             ((DrawButton)textFields.get(1)).mouseClick=false;
         }
+        if (((DrawButton)textFields.get(2)).mouseClick) {
+            gsm.setNew(GameStateManager.STATES.SAVE_LOAD,new LoadState(gsm, LoadState.Way.LOAD));
+            ((DrawButton)textFields.get(2)).mouseClick=false;
+        }
         if (((DrawButton)textFields.get(3)).mouseClick) {
             gsm.set(GameStateManager.STATES.SETTINGS);
             ((DrawButton)textFields.get(3)).mouseClick=false;

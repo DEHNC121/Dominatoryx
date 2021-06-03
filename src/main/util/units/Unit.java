@@ -5,6 +5,7 @@ import main.util.Player;
 import main.util.RoundManager;
 import main.util.map.Hexagon2D;
 import main.util.map.WorldMap;
+import main.util.saveLoad.DataUnit;
 
 import java.awt.*;
 import java.util.Map;
@@ -23,7 +24,15 @@ public abstract class Unit {
         health=getMaxHealth();
         movement=0;
     }
+    public Unit(DataUnit du){
+        owner=RoundManager.getFromColour(du.playerColour);
+        hexagon=WorldMap.hexagonMap[du.hexNumber];
+        health= du.health;
+        movement= du.movement;
+    }
     public int getMovement(){return movement;}
+    public Player getOwner(){return owner;}
+    public Hexagon2D getHex(){return hexagon;}
     public void setHealth(int health) { this.health = health; }
     public void setMovement(int movement) { this. movement = movement; }
     public void setHexagon(Hexagon2D hexagon) {this.hexagon = hexagon; }
