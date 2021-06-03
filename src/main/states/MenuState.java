@@ -51,8 +51,8 @@ public class MenuState extends GameState {
             if (((DrawButton)textFields.get(i)).mouseClick==2) {
                 switch (i) {
                     case 1 -> gsm.set(GameStateManager.STATES.CREATE);
+                    case 2 ->  gsm.setNew(GameStateManager.STATES.SAVE_LOAD,new LoadState(gsm, LoadState.Way.LOAD));
                     case 4 -> GamePanel.endProgram();
-                    case 5 ->  gsm.setNew(GameStateManager.STATES.SAVE_LOAD,new LoadState(gsm, LoadState.Way.LOAD));
                     default -> System.out.println("No function added");
                 }
 
