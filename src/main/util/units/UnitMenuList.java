@@ -7,6 +7,8 @@ public class UnitMenuList {
     static{
         list=new HashMap<>();
         Unit unit=new Kid(null,null);
+        Man adult = new Man(null, null);
         list.put(unit.getID(),unit);
+        list.put(adult.getID(), adult);
     }
 }

@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Player {
-
+    public boolean isPlayer;
     private int colour;
     public int money=10;
     PlayerControls controls;
@@ -21,6 +21,7 @@ public class Player {
     public Player(int colour){
         this.colour=colour;
         controls=new PlayerControls(this);
+        isPlayer = true;
     }
     public Player(DataPlayer dp){
         colour= dp.colour;

@@ -17,8 +17,13 @@ public class RoundManager {
         roundCnt=1;
         players=new Player[count];
         events = new Stack<>();
-        for(int i=0;i<count;i++)
-            players[i]=new Player(i+1);
+        for(int i=0;i<count;i++) {
+            if (i < count - 1)
+                players[i] = new Player(i + 1);
+            else
+                players[i] = new AI(i+1);
+        }
+        //checkAI();
     }
 
     static public void newTurnActions(){
@@ -66,8 +71,17 @@ public class RoundManager {
             preTurnActions(players[currentPlayer]);
         }while (players[currentPlayer].deathCheck());
 
-
+        //checkAI();
     }
+
+    public static void checkAI () {
+        System.out.println("siema");
+        if (players[currentPlayer] instanceof AI) {
+            System.out.println("AI");
+            ((AI) players[currentPlayer]).play();
+        }
+    }
+
 
     public static void goBack() {
         if (!events.isEmpty()) {

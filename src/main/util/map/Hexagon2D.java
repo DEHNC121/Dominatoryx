@@ -62,7 +62,7 @@ public class Hexagon2D extends Object2D {
                                   Queue<Pair<Hexagon2D,Integer>> queue,Predicate<Hexagon2D> test){
         while(!queue.isEmpty()){
             Pair<Hexagon2D,Integer> pair=queue.poll();
-            isVisited[pair.getKey().positionInWorldMapArray]=true;
+            //isVisited[pair.getKey().positionInWorldMapArray]=true;
             if(pair.getValue()>0 && !test.test(pair.getKey()))
                 continue;
             if(pair.getKey().border)
@@ -71,34 +71,50 @@ public class Hexagon2D extends Object2D {
             if(pair.getValue()==maxDistance)
                 continue;
 
-            if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber])
+            if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber]) {
+                isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber] = true;
                 queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                        +WorldMap.widthHexagonNumber],pair.getValue()+1));
-            if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber])
+                        + WorldMap.widthHexagonNumber], pair.getValue() + 1));
+            }
+            if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber]) {
+                isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber] = true;
                 queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                        -WorldMap.widthHexagonNumber],pair.getValue()+1));
-            if(!isVisited[pair.getKey().positionInWorldMapArray+1])
+                        - WorldMap.widthHexagonNumber], pair.getValue() + 1));
+            }
+            if(!isVisited[pair.getKey().positionInWorldMapArray+1]) {
+                isVisited[pair.getKey().positionInWorldMapArray + 1] = true;
                 queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                        +1],pair.getValue()+1));
-            if(!isVisited[pair.getKey().positionInWorldMapArray-1] )
+                        + 1], pair.getValue() + 1));
+            }
+            if(!isVisited[pair.getKey().positionInWorldMapArray-1] ) {
+                isVisited[pair.getKey().positionInWorldMapArray - 1] = true;
                 queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                        -1],pair.getValue()+1));
+                        - 1], pair.getValue() + 1));
+            }
                 switch (pair.getKey().positionInWorldMapArray%2){
                     case 0:
-                        if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber-1] )
+                        if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber-1] ) {
+                            isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber-1] = true;
                             queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                                    -WorldMap.widthHexagonNumber-1],pair.getValue()+1));
-                        if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber+1] )
+                                    - WorldMap.widthHexagonNumber - 1], pair.getValue() + 1));
+                        }
+                        if(!isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber+1] ) {
+                            isVisited[pair.getKey().positionInWorldMapArray-WorldMap.widthHexagonNumber+1] = true;
                             queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                                    -WorldMap.widthHexagonNumber+1],pair.getValue()+1));
+                                    - WorldMap.widthHexagonNumber + 1], pair.getValue() + 1));
+                        }
                         break;
                     case 1:
-                        if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber-1] )
+                        if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber-1] ) {
+                            isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber-1] = true;
                             queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                                    +WorldMap.widthHexagonNumber-1],pair.getValue()+1));
-                        if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber+1] )
+                                    + WorldMap.widthHexagonNumber - 1], pair.getValue() + 1));
+                        }
+                        if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber+1] ) {
+                            isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber+1] = true;
                             queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
-                                    +WorldMap.widthHexagonNumber+1],pair.getValue()+1));
+                                    + WorldMap.widthHexagonNumber + 1], pair.getValue() + 1));
+                        }
                         break;
                 }
         }
