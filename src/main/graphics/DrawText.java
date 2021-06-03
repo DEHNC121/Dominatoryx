@@ -17,7 +17,7 @@ public class DrawText
         this.font = new Font("Times New Roman", Font.PLAIN, 100);
         this.text = text;
         this.position = position;
-        this.color = new Color(0,0,0,255);
+        this.color = new Color(255, 255, 255,255);
     }
 
     public DrawText(String text, Object2DInt position, Color color) {

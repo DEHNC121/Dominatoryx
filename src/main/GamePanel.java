@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable
     public static int oldFrameCount;
 
     private Thread thread;
-    private boolean running = false;
+    private static boolean running = false;
 
     private MouseHandler mouse;
     private KeyHandler keyHandler;
@@ -145,6 +145,7 @@ public class GamePanel extends JPanel implements Runnable
             }
 
         }
+        System.exit(0);
     }
 
     public void update ()
@@ -166,6 +167,10 @@ public class GamePanel extends JPanel implements Runnable
         Graphics g2 = this.getGraphics();
         g2.drawImage(image, 0, 0, (int) width, (int) height, null);
         g2.dispose();
+    }
+
+    public static void endProgram(){
+        running=false;
     }
 
 }

@@ -43,7 +43,7 @@ public class LoadState extends GameState {
     @Override
     public void update() {
         for(int i=0;i<3;i++){
-            if(slots[i].mouseClick){
+            if(slots[i].mouseClick==2){
                 if(way== Way.LOAD){
                     DataPack pack= SaveManager.load(PATH+i+DATA_PACK);
                     if(pack==null)
@@ -53,7 +53,7 @@ public class LoadState extends GameState {
                 else{
                     SaveManager.save(PATH+i+DATA_PACK);
                 }
-                slots[i].mouseClick=false;
+                slots[i].mouseClick=-1;
             }
         }
     }

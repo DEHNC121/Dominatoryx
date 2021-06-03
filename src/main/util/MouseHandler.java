@@ -22,6 +22,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     public boolean isLClicked=false;
     public boolean isRClicked=false;
 
+    private int leftClickHandler=-1;
+
     public MouseHandler(GamePanel game)
     {
         game.addMouseListener (this);
@@ -88,7 +90,9 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     }
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent){ mouseB = -1; }
+    public void mouseReleased(MouseEvent mouseEvent){
+        mouseB = -1;
+    }
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent){}
@@ -101,7 +105,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     {
         mouseX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
-//        System.out.println(mouseX+" , "+mouseY);
         delX += mouseX - mouseXFromLastDragged;
         delY += mouseY - mouseYFromLastDragged;
         mouseXFromLastDragged=mouseX;

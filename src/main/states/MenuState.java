@@ -45,21 +45,19 @@ public class MenuState extends GameState {
     }
     @Override
     public void update () {
-        if (((DrawButton)textFields.get(1)).mouseClick) {
-            gsm.set(GameStateManager.STATES.CREATE);
-            ((DrawButton)textFields.get(1)).mouseClick=false;
-        }
-        if (((DrawButton)textFields.get(2)).mouseClick) {
-            gsm.setNew(GameStateManager.STATES.SAVE_LOAD,new LoadState(gsm, LoadState.Way.LOAD));
-            ((DrawButton)textFields.get(2)).mouseClick=false;
-        }
-        if (((DrawButton)textFields.get(3)).mouseClick) {
-            gsm.set(GameStateManager.STATES.SETTINGS);
-            ((DrawButton)textFields.get(3)).mouseClick=false;
-        }
-        if (((DrawButton)textFields.get(4)).mouseClick) {
-            System.exit(0); //todo should be written differently
-            ((DrawButton)textFields.get(4)).mouseClick=false;
+
+        for (int i=1;i<textFields.size();i++){
+
+            if (((DrawButton)textFields.get(i)).mouseClick==2) {
+                switch (i) {
+                    case 1 -> gsm.set(GameStateManager.STATES.CREATE);
+                    case 4 -> GamePanel.endProgram();
+                    case 5 ->  gsm.setNew(GameStateManager.STATES.SAVE_LOAD,new LoadState(gsm, LoadState.Way.LOAD));
+                    default -> System.out.println("No function added");
+                }
+
+                ((DrawButton)textFields.get(i)).mouseClick=-1;
+            }
         }
     }
 
