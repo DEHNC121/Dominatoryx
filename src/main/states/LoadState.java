@@ -17,7 +17,7 @@ public class LoadState extends GameState {
     int SLOT_HEIGHT= (int)(GamePanel.height*0.15);
     int SLOT_Y=(int)(GamePanel.height*0.45);
     int SLOT_X=(int)(GamePanel.width*0.35);
-    String PATH="saves/slot";
+    String PATH="rec/saves/slot";
     String DATA_PACK="/DataPack.json";
     int mouseX=0;
     int mouseY=0;
@@ -33,7 +33,11 @@ public class LoadState extends GameState {
                     SLOT_WIDTH,SLOT_HEIGHT),SLOT_HEIGHT);
             new File(PATH+i).mkdirs();
             try{
-                new File(PATH+i+DATA_PACK).createNewFile();
+                File f=new File(PATH+i+DATA_PACK);
+                if(!f.exists()){
+                    f.createNewFile();
+                    SaveManager.saveEmpty(PATH+i+DATA_PACK);
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }

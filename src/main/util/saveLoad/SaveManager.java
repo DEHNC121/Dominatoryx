@@ -21,6 +21,18 @@ public class SaveManager {
             e.printStackTrace();
         }
     }
+    static public void saveEmpty(String path){
+        DataPack pack=null;
+        try{
+            TypeReference<DataPack> reference= new TypeReference<DataPack>() {};
+            ObjectMapper mapper= new ObjectMapper();
+            InputStream stream= new FileInputStream(new File(path));
+            mapper.writeValue(new File(path),pack);
+        }catch (Exception e){
+            System.out.println("Save error");
+            e.printStackTrace();
+        }
+    }
     static public DataPack load(String path){
         try{
             TypeReference<DataPack> reference= new TypeReference<DataPack>() {};
