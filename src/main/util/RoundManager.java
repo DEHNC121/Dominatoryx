@@ -18,9 +18,11 @@ public class RoundManager {
         players=new Player[count];
         events = new Stack<>();
         for(int i=0;i<count;i++) {
-            if (i < count - 1)
+        /*    if (i < count - 1)
                 players[i] = new Player(i + 1);
             else
+
+         */
                 players[i] = new AI(i+1);
         }
         //checkAI();
@@ -71,7 +73,7 @@ public class RoundManager {
             preTurnActions(players[currentPlayer]);
         }while (players[currentPlayer].deathCheck());
 
-        //checkAI();
+        checkAI();
     }
 
     public static void checkAI () {
@@ -104,6 +106,7 @@ public class RoundManager {
         players[currentPlayer].input(mouseHandler,keyHandler);
     }
     public static void update(){
+
         players[currentPlayer].update();
     }
     static public Player getFromColour(int col){

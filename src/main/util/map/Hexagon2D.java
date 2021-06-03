@@ -143,7 +143,31 @@ public class Hexagon2D extends Object2D {
         map.remove(this);
         return map;
     }
+    public Hexagon2D getRandomFromMap (HashMap<Hexagon2D, Integer> map) {
+        if (map.isEmpty())
+            return null;
+        int size = map.keySet().size();
+        int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
+        int i = 0;
+        for(Hexagon2D hex : map.keySet())
+        {
+            if (i == item)
+                return hex;
+            i++;
+        }
+        return null;
+    }
+    public Hexagon2D getRandomNeighbour (int dist) {
+        HashMap<Hexagon2D,Integer> map = getSpecialNeighbors(dist, (hex)->
+                (hex.getOwner() == RoundManager.getCurrentPlayer())
+        );
+        return getRandomFromMap(map);
+    }
 
+    public Hexagon2D getRandomEnemyNeighbour () {
+        HashMap<Hexagon2D,Integer> map = getSpecialNeighbors(1, (hex)->hex.getOwner()!=RoundManager.getCurrentPlayer());
+        return getRandomFromMap(map);
+    }
 
     public void render(Graphics g, Sprite sprite, int x, int y, int width, int height,float scale)
     {

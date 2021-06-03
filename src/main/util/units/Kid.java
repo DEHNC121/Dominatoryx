@@ -32,7 +32,7 @@ public class Kid extends Unit{
 
     @Override
     public int getMaxMovement() {
-        return 50;
+        return 4;
     }
 
     @Override

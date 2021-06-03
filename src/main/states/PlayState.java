@@ -57,6 +57,7 @@ public class PlayState extends GameState
         psWindow=new PlayStateWindow();
         GUIManager.setGsm(gsm);
         isClicked = false;
+        RoundManager.checkAI();
     }
     public PlayState(GameStateManager gsm, DataPack dp){
         super(gsm);
@@ -70,6 +71,7 @@ public class PlayState extends GameState
     @Override
     public void update() {
         psWindow.update();
+        RoundManager.update();
     }
 
     @Override
