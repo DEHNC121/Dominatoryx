@@ -17,7 +17,8 @@ public class GameStateManager
         PLAY,
         CREATE,
         SETTINGS,
-        PAUSE
+        PAUSE,
+        SAVE_LOAD
     }
     private final Map<STATES,GameState> states;
     private GameState currentState;

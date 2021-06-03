@@ -11,6 +11,8 @@ import main.util.RoundManager;
 import main.util.map.PlayStateWindow;
 import main.util.map.WorldMap;
 import main.util.playStateGUI.GUIManager;
+import main.util.saveLoad.DataPack;
+import main.util.saveLoad.DataPlayer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -56,7 +58,14 @@ public class PlayState extends GameState
         GUIManager.setGsm(gsm);
         isClicked = false;
     }
-
+    public PlayState(GameStateManager gsm, DataPack dp){
+        super(gsm);
+        RoundManager.loadData(dp.drm);
+        worldMap=new WorldMap(dp.dm);
+        psWindow=new PlayStateWindow();
+        GUIManager.setGsm(gsm);
+        isClicked=false;
+    }
 
     @Override
     public void update() {

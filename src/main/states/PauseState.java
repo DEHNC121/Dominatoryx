@@ -48,8 +48,8 @@ public class PauseState extends GameState{
                         new PlayState(gsm, PlayState.size, PlayState.nOfPlayers));
             }
             if (save.mouseOnIcon(mouse)) {
-                //todo save
-
+                gsm.setNew(GameStateManager.STATES.SAVE_LOAD,
+                        new LoadState(gsm, LoadState.Way.SAVE));
             }
             if (menu.mouseOnIcon(mouse)) {
                 gsm.set(GameStateManager.STATES.MENU);

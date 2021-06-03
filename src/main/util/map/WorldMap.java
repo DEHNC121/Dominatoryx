@@ -6,6 +6,7 @@ import main.states.PlayState;
 import main.util.Player;
 import main.util.RoundManager;
 import main.util.events.Move;
+import main.util.saveLoad.DataMap;
 import sounds.Sound;
 
 import java.util.*;
@@ -65,6 +66,54 @@ public class WorldMap {
             }
         }
         generate();
+    }
+    public WorldMap(DataMap dm) {
+        selectedHexagon=null;
+        neighborsOfSelected=new HashMap();
+        neighborEnemies=new HashSet<>();
+        //GamePanel.width,GamePanel.height;
+        widthHexagonNumber=dm.widthHexagonNumber;
+        heightHexagonNumber=dm.heightHexagonNumber;
+        hexagonPartsInRow=(3*widthHexagonNumber+1);
+        hexagonPartsInColumn=(2*heightHexagonNumber+1);
+        int hexagonPartsNumber=hexagonPartsInRow*hexagonPartsInColumn;
+        int hexagonNumber=widthHexagonNumber*heightHexagonNumber;
+
+        Parts=new HexagonPart2D[hexagonPartsNumber];
+        hexagonPartWidth = GamePanel.width / (float) hexagonPartsInRow;
+        hexagonPartHeight = GamePanel.height / (float) hexagonPartsInColumn;
+        float hexagonPartWidthDiff = GamePanel.width / (float) hexagonPartsInRow;
+        float hexagonPartHeightDiff = GamePanel.height / (float) hexagonPartsInColumn;
+        for(int i=0;i<hexagonPartsInRow;i++){
+            for(int j=0;j<hexagonPartsInColumn;j++){
+                Parts[j*hexagonPartsInRow+i]=
+                        new HexagonPart2D(i*hexagonPartWidthDiff,j*hexagonPartHeightDiff,
+                                hexagonPartWidth,hexagonPartHeight);
+            }
+        }
+        hexagonMap=new Hexagon2D[hexagonNumber];
+        for(int i=0;i<widthHexagonNumber;i++){
+            for(int j=0;j<heightHexagonNumber;j++){
+                int firstPartRow=2*j;
+                int firstPartColumn=3*i;
+                boolean isEven=(i%2==0);//even are higher
+                if(!isEven)
+                    firstPartRow++;
+                int firstPartIndex=hexagonPartsInRow*firstPartRow+firstPartColumn;
+                hexagonMap[i+j*widthHexagonNumber]=new Hexagon2D(Parts[firstPartIndex].getX(),Parts[firstPartIndex].getY(),
+                        4*hexagonPartWidthDiff,2*hexagonPartHeightDiff,dm.hexagonMap[i+j*widthHexagonNumber])
+                        .setPosition(i+j*widthHexagonNumber);
+                setPartsInHexagon(hexagonMap[i+j*widthHexagonNumber],firstPartIndex);
+                if(i==0 || j==0 || i==widthHexagonNumber-1 ||j==heightHexagonNumber-1)
+                    hexagonMap[i+j*widthHexagonNumber].setBorder(true);
+                if(hexagonMap[i+j*widthHexagonNumber].unit!=null){
+                    hexagonMap[i+j*widthHexagonNumber].unit.setHexagon(hexagonMap[i+j*widthHexagonNumber]);
+                }
+                if(hexagonMap[i+j*widthHexagonNumber].structure!=null){
+                    hexagonMap[i+j*widthHexagonNumber].structure.setHex(hexagonMap[i+j*widthHexagonNumber]);
+                }
+            }
+        }
     }
     static private void setPartsInHexagon(Hexagon2D hexagon,int firstPartIndex){
         //used in constructor
