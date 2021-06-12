@@ -87,7 +87,7 @@ public class AI extends Player {
     public void randomize (roundType round, double p) {
         Random r = new Random();
         if (r.nextDouble() < p) {
-            round = (round == roundType.ATTACK ? roundType.DEFENSE : roundType.ATTACK);
+            this.round = (round == roundType.ATTACK ? roundType.DEFENSE : roundType.ATTACK);
         }
     }
     public int getPriority (Hexagon2D start, Hexagon2D hexagon) {
@@ -239,6 +239,9 @@ public class AI extends Player {
     public void buyStructures (ArrayList<Pair<Hexagon2D, Integer>> AIHexagonsSorted) {
         System.out.println(AIHexagonsSorted);
         for (Pair<Hexagon2D, Integer> p : AIHexagonsSorted) {
+            System.out.println("money: " + money);
+            System.out.println("unitsMoney: " + unitsMoney);
+            System.out.println("structuresMoney: " + structuresMoney);
             Hexagon2D hexagon = p.getKey();
             if (hexagon.getStructure() == null) {
                 ArrayList<Integer> list = new ArrayList<>(StructureMenuList.list.keySet());
@@ -256,6 +259,9 @@ public class AI extends Player {
 
     public void buyUnits (ArrayList<Pair<Hexagon2D, Integer>> AIHexagonsSorted) {
         for (Pair<Hexagon2D, Integer> p : AIHexagonsSorted) {
+            System.out.println("money: " + money);
+            System.out.println("unitsMoney: " + unitsMoney);
+            System.out.println("structuresMoney: " + structuresMoney);
             //System.out.println(AIHexagonsSorted);
             Hexagon2D hexagon = p.getKey();
             if (hexagon.getUnit() == null) {
