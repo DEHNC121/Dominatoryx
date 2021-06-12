@@ -21,7 +21,7 @@ public class House extends Structure{
     public int getID() { return 0; }
 
     @Override
-    public int getCost() { return 10; }
+    public int getCost() { return 4; }
 
     @Override
     public GameImage getImages(int i) {

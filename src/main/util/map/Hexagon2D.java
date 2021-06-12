@@ -58,8 +58,8 @@ public class Hexagon2D extends Object2D {
         this.border = border;
     }
 
-    private void getNeighborsLoop(int maxDistance, Map<Hexagon2D,Integer> list, boolean[] isVisited,
-                                  Queue<Pair<Hexagon2D,Integer>> queue,Predicate<Hexagon2D> test){
+    private Pair<Hexagon2D, Integer> getNeighborsLoop(int maxDistance, Map<Hexagon2D,Integer> list, boolean[] isVisited,
+                                  Queue<Pair<Hexagon2D,Integer>> queue,Predicate<Hexagon2D> test, Predicate<Hexagon2D> stop){
         while(!queue.isEmpty()){
             Pair<Hexagon2D,Integer> pair=queue.poll();
             //isVisited[pair.getKey().positionInWorldMapArray]=true;
@@ -70,7 +70,9 @@ public class Hexagon2D extends Object2D {
             list.put(pair.getKey(), pair.getValue());
             if(pair.getValue()==maxDistance)
                 continue;
-
+            if (stop.test(pair.getKey())) {
+                return pair;
+            }
             if(!isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber]) {
                 isVisited[pair.getKey().positionInWorldMapArray+WorldMap.widthHexagonNumber] = true;
                 queue.offer(new Pair<>(WorldMap.hexagonMap[pair.getKey().positionInWorldMapArray
@@ -118,15 +120,14 @@ public class Hexagon2D extends Object2D {
                         break;
                 }
         }
-
-
+        return null;
     }
 
     public HashMap<Hexagon2D,Integer> getNeighbors(int distance){
-        return getSpecialNeighbors(distance,(hex)->true);
+        return getSpecialNeighbors(distance,(hex)->true, (hex)->false);
     }
 
-    public HashMap<Hexagon2D,Integer> getSpecialNeighbors(int distance, Predicate<Hexagon2D> test){
+    public HashMap<Hexagon2D,Integer> getSpecialNeighbors(int distance, Predicate<Hexagon2D> test, Predicate<Hexagon2D> stop){
         HashMap<Hexagon2D,Integer> map=new HashMap<>();
         if(border)
             return map;
@@ -139,7 +140,12 @@ public class Hexagon2D extends Object2D {
             isVisited[i]=false;
         }
         queue.offer(new Pair<>(this,0));
-        getNeighborsLoop(distance,map,isVisited, queue,test);
+        Pair<Hexagon2D, Integer> pair = getNeighborsLoop(distance,map,isVisited, queue,test, stop);
+        if (pair != null) {
+            HashMap<Hexagon2D, Integer> singleMap = new HashMap<>();
+            singleMap.put(pair.getKey(), pair.getValue());
+            return singleMap;
+        }
         map.remove(this);
         return map;
     }
@@ -159,14 +165,25 @@ public class Hexagon2D extends Object2D {
     }
     public Hexagon2D getRandomNeighbour (int dist) {
         HashMap<Hexagon2D,Integer> map = getSpecialNeighbors(dist, (hex)->
-                (hex.getOwner() == RoundManager.getCurrentPlayer())
+                (hex.getOwner() == RoundManager.getCurrentPlayer()), (hex)->false
         );
+        map.entrySet().removeIf(entry -> entry.getKey().getUnit() != null);
         return getRandomFromMap(map);
     }
 
     public Hexagon2D getRandomEnemyNeighbour () {
-        HashMap<Hexagon2D,Integer> map = getSpecialNeighbors(1, (hex)->hex.getOwner()!=RoundManager.getCurrentPlayer());
-        return getRandomFromMap(map);
+        HashMap<Hexagon2D,Integer> mapEnemies = getSpecialNeighbors(1, (hex)->{
+            return (hex.getOwner()!=RoundManager.getCurrentPlayer() && hex.getOwner() != null);
+        }, (hex)->false);
+        HashMap<Hexagon2D,Integer> mapNotEnemies = getSpecialNeighbors(1, (hex)->{
+            return (hex.getOwner() == null);
+        }, (hex)->false);
+        Hexagon2D ret = getRandomFromMap(mapEnemies);
+        if (ret != null)
+            return ret;
+        else
+            return getRandomFromMap(mapNotEnemies);
+
     }
 
     public void render(Graphics g, Sprite sprite, int x, int y, int width, int height,float scale)

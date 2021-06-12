@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import main.GamePanel;
 import main.states.GameMapSize;
 import main.states.PlayState;
+import main.util.AI;
 import main.util.Player;
 import main.util.RoundManager;
 import main.util.events.Move;
@@ -28,7 +29,7 @@ public class WorldMap {
 
     public WorldMap(GameMapSize gameMapSize) {
         selectedHexagon=null;
-        neighborsOfSelected=new HashMap();
+        neighborsOfSelected=new HashMap<>();
         neighborEnemies=new HashSet<>();
         //GamePanel.width,GamePanel.height;
         widthHexagonNumber=gameMapSize.size.getValue();
@@ -71,7 +72,7 @@ public class WorldMap {
     }
     public WorldMap(DataMap dm) {
         selectedHexagon=null;
-        neighborsOfSelected=new HashMap();
+        neighborsOfSelected=new HashMap<>();
         neighborEnemies=new HashSet<>();
         //GamePanel.width,GamePanel.height;
         widthHexagonNumber=dm.widthHexagonNumber;
@@ -139,6 +140,8 @@ public class WorldMap {
     }
     static public void selectHexagon(Hexagon2D hexagon){
         //Sound.playSelectUnitMusic();
+        if (RoundManager.getCurrentPlayer() instanceof AI)
+            return;
         if(hexagon.border || hexagon==selectedHexagon){
             selectedHexagon=null;
             return;
@@ -150,10 +153,10 @@ public class WorldMap {
             return;
         }
         neighborsOfSelected= selectedHexagon.getSpecialNeighbors(hexagon.unit.getMovement(),
-                (hex)->hex.owner==RoundManager.getCurrentPlayer());
+                (hex)->hex.owner==RoundManager.getCurrentPlayer(), (hex)->false);
         if(hexagon.unit.getMovement()>=hexagon.unit.attackMovementCost()){
             neighborEnemies=selectedHexagon.getSpecialNeighbors(1,
-                    (hex)->hex.owner!=RoundManager.getCurrentPlayer()).keySet();
+                    (hex)->hex.owner!=RoundManager.getCurrentPlayer(), (hex)->false).keySet();
             System.out.println("Enemies: "+neighborEnemies.size());
         }
         else{

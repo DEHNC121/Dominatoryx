@@ -52,7 +52,7 @@ public class Kid extends Unit{
 
     @Override
     public int getCost(){
-        return 8;
+        return 12;
     }
 
     @Override

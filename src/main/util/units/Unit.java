@@ -54,7 +54,7 @@ public abstract class Unit {
         }
 
         Map<Hexagon2D,Integer> neighbors=hexagon.getSpecialNeighbors(movement,
-                hex->hex.owner == RoundManager.getCurrentPlayer());
+                hex->hex.owner == RoundManager.getCurrentPlayer(), (hex)->false);
         if(!neighbors.containsKey(newHexagon)){
             System.out.println("Range check");
             return;

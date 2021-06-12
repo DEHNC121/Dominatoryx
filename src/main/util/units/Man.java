@@ -30,7 +30,7 @@ public class Man extends Unit{
 
     @Override
     public int getMaxMovement() {
-        return 50;
+        return 6;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Man extends Unit{
 
     @Override
     public int getCost(){
-        return 12;
+        return 16;
     }
 
     @Override
