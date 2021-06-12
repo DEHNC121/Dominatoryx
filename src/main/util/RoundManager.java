@@ -119,7 +119,12 @@ public class RoundManager {
         currentPlayer=drm.current;
         roundCnt=drm.roundCount;
         for(int i=0;i<players.length;i++){
-            players[i]= new Player(drm.players[i]);
+            if (drm.isAI[i]) {
+                players[i]=new AI(drm.players[i]);
+            }
+            else {
+                players[i] = new Player(drm.players[i]);
+            }
         }
         events=new Stack<>();
     }

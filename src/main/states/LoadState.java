@@ -76,15 +76,16 @@ public class LoadState extends GameState {
                     if(pack==null)
                         return;
                     gsm.setNew(GameStateManager.STATES.PLAY,new PlayState(gsm,pack));
+
+                }
+                else{
+                    SaveManager.save(PATH+i+DATA_PACK);
                     SaveManager.updateSaveInfo(PATH+i+INFO);
                     SaveInfo info=SaveManager.getSaveInfo(PATH+i+INFO);
                     slots[i]=new DrawButton(info.time,new Rectangle(SLOT_X,SLOT_Y+i*SLOT_HEIGHT,
                             SLOT_WIDTH,SLOT_HEIGHT),SLOT_PRC,0.4f);
                     slots[i].setWork(new Rectangle(SLOT_X,SLOT_Y+i*SLOT_HEIGHT,
                             SLOT_WIDTH,SLOT_HEIGHT));
-                }
-                else{
-                    SaveManager.save(PATH+i+DATA_PACK);
                 }
                 slots[i].mouseClick=-1;
             }

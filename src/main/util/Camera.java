@@ -164,10 +164,6 @@ public class Camera
     }
     public void update ()
     {
-        if(GUIManager.capture(mouseXOnScreen,mouseYOnScreen)){
-            GUIManager.update();
-            return;
-        }
 
         updateScale();
         move ();

@@ -2,6 +2,7 @@ package main.util;
 
 import main.util.map.Hexagon2D;
 import main.util.map.WorldMap;
+import main.util.saveLoad.DataPlayer;
 import main.util.structures.StructureMenuList;
 import main.util.units.UnitMenuList;
 
@@ -13,7 +14,10 @@ public class AI extends Player {
         super(colour);
         isPlayer = false;
     }
-
+    public AI(DataPlayer dp){
+        super(dp);
+        isPlayer = false;
+    }
     public enum moves {
         BUY_STRUCTURE,
         BUY_UNIT,

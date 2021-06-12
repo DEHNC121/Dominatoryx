@@ -33,8 +33,7 @@ public class PlayState extends GameState
     public void init(GameStateManager gsm) {
         roundManager=new RoundManager(PlayState.numberOfPlayers,PlayState.numberOfAi);
         worldMap= new WorldMap(PlayState.gameMapSize);
-        psWindow=new PlayStateWindow();
-        GUIManager.setGsm(gsm);
+        psWindow=new PlayStateWindow(gsm);
         isClicked = false;
         RoundManager.checkAI();
     }
@@ -55,8 +54,7 @@ public class PlayState extends GameState
         super(gsm);
         RoundManager.loadData(dp.drm);
         worldMap=new WorldMap(dp.dm);
-        psWindow=new PlayStateWindow();
-        GUIManager.setGsm(gsm);
+        psWindow=new PlayStateWindow(gsm);
         isClicked=false;
     }
 
