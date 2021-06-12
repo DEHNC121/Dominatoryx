@@ -1,7 +1,5 @@
 package main.states;
 
-import javafx.util.Pair;
-import main.GamePanel;
 import main.graphics.GameImage;
 import main.graphics.Sprite;
 import main.util.Camera;
@@ -12,53 +10,47 @@ import main.util.map.PlayStateWindow;
 import main.util.map.WorldMap;
 import main.util.playStateGUI.GUIManager;
 import main.util.saveLoad.DataPack;
-import main.util.saveLoad.DataPlayer;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class PlayState extends GameState
 {
     public static HashMap<String, GameImage> imageMap = null;
-    public static int nOfPlayers;
-    public static int size; // 0-L, 1-M, 2-H
+
+    public static int numberOfPlayers;
+    public static int numberOfAi;
+    public static GameMapSize gameMapSize;
+
     public static boolean isClicked;
-    public static WorldMap worldMap;
-    public static RoundManager roundManager;
-    public GameMapSize gameMapSize;
-    Sprite sprite;
-    Camera camera;
+
+    private WorldMap worldMap;
+    private RoundManager roundManager;
     PlayStateWindow psWindow;
-    public enum GameMapSize{
-        SMALL,
-        MEDIUM,
-        LARGE;
-        public Pair<Integer, Integer> size;
-        static {
-            SMALL.size=new Pair<>(20,40);
-            MEDIUM.size=new Pair<>(30,60);
-            LARGE.size=new Pair<>(40,80);
-        }
-
-    }
-    public ArrayList<GameMapSize> sizes = new ArrayList<>(Arrays.asList(GameMapSize.SMALL, GameMapSize.MEDIUM, GameMapSize.LARGE));
-
 
     public static void setClicked (boolean isClicked) {PlayState.isClicked = isClicked; }
 
-    public PlayState(GameStateManager gsm, int size, int nOfPlayers) {
-        super(gsm);
-        PlayState.nOfPlayers = nOfPlayers;
-        PlayState.size = size;
-        roundManager=new RoundManager(nOfPlayers);
-        worldMap= new WorldMap(sizes.get(size));
+    public void init(GameStateManager gsm) {
+        roundManager=new RoundManager(PlayState.numberOfPlayers,PlayState.numberOfAi);
+        worldMap= new WorldMap(PlayState.gameMapSize);
         psWindow=new PlayStateWindow();
         GUIManager.setGsm(gsm);
         isClicked = false;
         RoundManager.checkAI();
     }
+
+    public PlayState(GameStateManager gsm) {
+        super(gsm);
+        init(gsm);
+    }
+    public PlayState(GameStateManager gsm, GameMapSize size, int numberOfPlayers,int numberOfAi) {
+        super(gsm);
+        PlayState.numberOfPlayers = numberOfPlayers;
+        PlayState.numberOfAi = numberOfAi;
+        PlayState.gameMapSize = size;
+        init(gsm);
+    }
+
     public PlayState(GameStateManager gsm, DataPack dp){
         super(gsm);
         RoundManager.loadData(dp.drm);

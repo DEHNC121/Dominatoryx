@@ -35,6 +35,7 @@ public class GameStateManager
                 )));
         InitializeStates();
         set(STATES.MENU);
+//        set(STATES.PAUSE);
     }
 
     private void InitializeStates(){

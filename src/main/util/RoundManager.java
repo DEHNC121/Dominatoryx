@@ -12,18 +12,16 @@ public class RoundManager {
     static public int currentPlayer;
     static public int roundCnt;
     public static Stack<Event> events;
-    public RoundManager(int count){
+    public RoundManager(int count, int aiNumber){
         currentPlayer=0;
         roundCnt=1;
         players=new Player[count];
         events = new Stack<>();
         for(int i=0;i<count;i++) {
-        /*    if (i < count - 1)
-                players[i] = new Player(i + 1);
-            else
-
-         */
+            if (i < aiNumber)
                 players[i] = new AI(i+1);
+            else
+                players[i] = new Player(i + 1);
         }
         //checkAI();
     }

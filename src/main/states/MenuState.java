@@ -17,9 +17,10 @@ public class MenuState extends GameState {
     public MenuState(GameStateManager gsm) {
         super(gsm);
 
+
         textFields=new ArrayList<>();
 
-        float start= 0.25f;
+        float start= 0.15f;
         float heightStep =0.16f;
 
         ArrayList<String> text=new ArrayList<>(Arrays.asList("Dominatoryx","New game","Load","Settings","Exit"));
@@ -29,23 +30,21 @@ public class MenuState extends GameState {
 
         textFields.add(
                 new NewDrawText(text.get(textFields.size()),
-                        new Rectangle(0, (int) (GamePanel.height*0.15), (int) GamePanel.width,0),
-                (int)(GamePanel.height*0.3),
+                        new Rectangle(0, 0, (int) GamePanel.width,(int)(GamePanel.height*0.3)),
+                        1f,
                         gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)));
-
         while (textFields.size()< text.size()){
 
             textFields.add(
                     new DrawButton(text.get(textFields.size()),
-                            new Rectangle(0, (int) (GamePanel.height*(start+heightStep*textFields.size())), (int) GamePanel.width,0),
-                            (int)(GamePanel.height*0.15),
-                            gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT)));
+                            new Rectangle(0, (int) (GamePanel.height*(start+heightStep*textFields.size())), (int) GamePanel.width,(int)(GamePanel.height*0.15)),
+                            1f,
+                            gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.4f));
         }
 
     }
     @Override
     public void update () {
-
         for (int i=1;i<textFields.size();i++){
 
             if (((DrawButton)textFields.get(i)).mouseClick==2) {

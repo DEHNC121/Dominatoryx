@@ -26,7 +26,11 @@ public class GamePanel extends JPanel implements Runnable
     private GameStateManager gsm;
 
     private BufferedImage image;
-    private Graphics2D graphics2D;
+    private static Graphics2D graphics2D;
+
+    public static Graphics2D getGraphics2D() {
+        return graphics2D;
+    }
 
     public GamePanel (int width, int height)
     {

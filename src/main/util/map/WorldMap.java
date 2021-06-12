@@ -2,6 +2,7 @@ package main.util.map;
 
 import javafx.util.Pair;
 import main.GamePanel;
+import main.states.GameMapSize;
 import main.states.PlayState;
 import main.util.Player;
 import main.util.RoundManager;
@@ -24,7 +25,8 @@ public class WorldMap {
     public static Hexagon2D selectedHexagon;
     public static HashMap<Hexagon2D,Integer> neighborsOfSelected;
     public static Set<Hexagon2D> neighborEnemies;
-    public WorldMap(PlayState.GameMapSize gameMapSize) {
+
+    public WorldMap(GameMapSize gameMapSize) {
         selectedHexagon=null;
         neighborsOfSelected=new HashMap();
         neighborEnemies=new HashSet<>();

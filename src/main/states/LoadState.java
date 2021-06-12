@@ -13,24 +13,29 @@ import java.io.File;
 
 
 public class LoadState extends GameState {
+
     int SLOT_WIDTH=(int)(GamePanel.width*0.3);
     int SLOT_HEIGHT= (int)(GamePanel.height*0.15);
     int SLOT_Y=(int)(GamePanel.height*0.45);
     int SLOT_X=(int)(GamePanel.width*0.35);
     String PATH="rec/saves/slot";
     String DATA_PACK="/DataPack.json";
-    int mouseX=0;
-    int mouseY=0;
-    int isClicked=0;
     Way way;
     DrawButton[] slots=new DrawButton[3];
-    public enum Way{LOAD,SAVE}
+
+    public enum Way{
+        LOAD,
+        SAVE
+    }
+
     public LoadState(GameStateManager gsm, Way way){
         super(gsm);
         this.way=way;
         for(int i=0;i<3;i++){
+
             slots[i]=new DrawButton("Slot "+(i+1),new Rectangle(SLOT_X,SLOT_Y+i*SLOT_HEIGHT,
-                    SLOT_WIDTH,SLOT_HEIGHT),SLOT_HEIGHT);
+                    SLOT_WIDTH,SLOT_HEIGHT),SLOT_HEIGHT,0.4f);//todo
+
             new File(PATH+i).mkdirs();
             try{
                 File f=new File(PATH+i+DATA_PACK);
@@ -40,7 +45,7 @@ public class LoadState extends GameState {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-            }
+            }//todo
         }
     }
 

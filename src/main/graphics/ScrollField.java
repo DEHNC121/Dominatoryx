@@ -2,127 +2,118 @@ package main.graphics;
 
 import main.util.KeyHandler;
 import main.util.MouseHandler;
-import main.util.map.Object2DInt;
+
 import java.awt.*;
 
+import java.security.SignedObject;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ScrollField {
-    String entry;
-    ArrayList<String> entries;
-    Object2DInt field;
-    Object2DInt wholeField;
-    DrawText textUp, textMiddle, textBottom;
-    int upIndex, middleIndex, bottomIndex;
-    boolean scrollUp, scrollDown;
-    public ScrollField(Object2DInt field, ArrayList<String> entries, Color color) {
-        this.field = field;
-        this.entries = entries;
-        wholeField = new Object2DInt(field.getX(), field.getY(), field.getWidth(), 3 * field.getHeight());
-        middleIndex = 0;
-        bottomIndex = -1;
-        upIndex = (entries.size() > 1) ? 1 : -1;
-        textUp = new DrawText(stringFromIndex(upIndex),
-                new Object2DInt(field.getX(), field.getY() + field.getHeight(), field.getWidth(), field.getHeight()),
-                new Color(color.getRed(),color.getGreen(),color.getBlue(),40));
-        textMiddle = new DrawText(stringFromIndex(middleIndex),
-                new Object2DInt(field.getX(), field.getY() + 2*field.getHeight(), field.getWidth(), field.getHeight()),
-                new Color(color.getRed(),color.getGreen(),color.getBlue(),255));
-        textBottom = new DrawText(stringFromIndex(upIndex),
-                new Object2DInt(field.getX(), field.getY() + 3 * field.getHeight(), field.getWidth(), field.getHeight()),
-                new Color(color.getRed(),color.getGreen(),color.getBlue(),40));
-        entry = stringFromIndex(middleIndex);
-    }
-    public ScrollField(Object2DInt field, ArrayList<String> entries, String name, int style, int size, Color color) {
-        this.field = field;
-        this.entries = entries;
-        wholeField = new Object2DInt(field.getX(), field.getY(), field.getWidth(), 3 * field.getHeight());
-        middleIndex = 0;
-        bottomIndex = -1;
-        upIndex = (entries.size() > 1) ? 1 : -1;
 
-        textUp = new DrawText(name,stringFromIndex(upIndex), style, size,
-                new Object2DInt(field.getX(), field.getY() + field.getHeight(), field.getWidth(), field.getHeight()),
-                new Color(color.getRed(),color.getGreen(),color.getBlue(),40));
+    ArrayList<String> fields;
 
-        textMiddle = new DrawText(name,stringFromIndex(middleIndex), style, size,
-                new Object2DInt(field.getX(), field.getY() + 2*field.getHeight(), field.getWidth(), field.getHeight()),
-                new Color(color.getRed(),color.getGreen(),color.getBlue(),255));
-        textBottom = new DrawText(name,stringFromIndex(upIndex), style, size,
-                new Object2DInt(field.getX(), field.getY() + 3 * field.getHeight(), field.getWidth(), field.getHeight()),
-                new Color(color.getRed(),color.getGreen(),color.getBlue(),40));
-        entry = stringFromIndex(middleIndex);
+    private Point mousePosition;
+    private int rotation;
+
+    Rectangle outRectangle;
+    Rectangle wholeRectangle;
+
+    ArrayList<NewDrawText> textFields;
+
+    int middleIndex;
+    int showNumber;
+
+    public ScrollField(Rectangle outRectangle, ArrayList<String> fieldsIN, Color color, int showNumberIn) {
+        textFields=new ArrayList<>();
+
+        this.outRectangle = outRectangle;
+        this.fields = fieldsIN;
+        this.showNumber= Math.min(showNumberIn, fields.size());
+        if (showNumber % 2==0){
+            showNumber-=1;
+        }
+
+        wholeRectangle = new Rectangle(outRectangle.x, (int)(outRectangle.y-(outRectangle.height*showNumber/2)), outRectangle.width , outRectangle.height*showNumber);
+
+
+        middleIndex = fieldsIN.size()/2;
+        for (int i=showNumber/2;i>=-showNumber/2 && showNumber>0;i--){
+            int number=i+showNumber/2;
+            textFields.add(
+                    new NewDrawText(fields.get(number),
+                            new Rectangle(outRectangle.x, (int)(outRectangle.y+i*(outRectangle.height*0.7)), outRectangle.width , outRectangle.height),
+                            1f,
+                            new Color(color.getRed(),color.getGreen(),color.getBlue(),255-(Math.abs(i)*80))));
+        }
+
     }
-    public String getEntry () {
-        return this.entry;
+
+
+    public String getMainField() {
+        return fields.get(middleIndex);
     }
 
     public void setArray (ArrayList<String> entries) {
-        if (this.entries != entries) {
-            this.entries = entries;
-            middleIndex = 0;
-            bottomIndex = -1;
-            upIndex = (entries.size() > 1) ? 1 : -1;
+        if (this.fields != entries) {
+            this.fields = entries;
+            if ( middleIndex >entries.size()){
+                middleIndex = entries.size()-1;
+            }
         }
-    }
-    public String stringFromIndex (int i) {
-        if (i == -1)
-            return null;
-        return entries.get(i);
     }
 
     public void update () {
-        if (scrollUp) {
-            scrollUp = false;
-            ifScrollUp();
+        movePosition();
+
+        for (int i=-showNumber/2;i<=showNumber/2 && showNumber>0;i++){
+            if (middleIndex +i>=0 && middleIndex +i<fields.size()){
+                textFields.get(i+showNumber/2).text= fields.get(middleIndex +i);
+            }else {
+                textFields.get(i+showNumber/2).text= "";
+            }
+
         }
-        if (scrollDown) {
-            scrollDown = false;
-            ifScrollDown();
-        }
-        textUp.setText(stringFromIndex(upIndex));
-        textBottom.setText(stringFromIndex(bottomIndex));
-        textMiddle.setText(stringFromIndex(middleIndex));
-        entry = stringFromIndex(middleIndex);
+
     }
 
     public void input (MouseHandler mouse, KeyHandler key) {
-        if (isMouseOn(mouse)) {
-            if (mouse.getRotation() < 0)
-                scrollUp = true;
-            if (mouse.getRotation() > 0)
-            scrollDown = true;
+        mousePosition=new Point(mouse.getX(), mouse.getY());
+        if (rotation==0 && wholeRectangle.contains(mousePosition)){
+            rotation=mouse.getRotation();
         }
+
     }
+
     public void render (Graphics g) {
-        g.setColor(Color.GRAY);
-        if (textUp.getText() != null)
-            textUp.render(g);
-        if (textMiddle.getText() != null)
-            textMiddle.render(g);
-        if (textBottom.getText() != null)
-            textBottom.render(g);
+        for (NewDrawText dt:textFields){
+            dt.render(g);
+        }
     }
 
     public void ifScrollUp () {
-        if (middleIndex < entries.size() - 1) {
-            bottomIndex = middleIndex;
-            middleIndex = upIndex;
-            if (upIndex < (entries.size() - 1))
-                upIndex++;
-            else
-                upIndex = -1;
-        }
-    }
-    public void ifScrollDown () {
-        if (middleIndex > 0) {
-            upIndex = middleIndex;
-            middleIndex = bottomIndex;
-            bottomIndex = bottomIndex - 1;
+        if (middleIndex < fields.size() - 1) {
+            middleIndex++;
         }
     }
 
-    public boolean isMouseOn (MouseHandler mouse) {
-        return wholeField.isInside(mouse.getX(), mouse.getY());
+    public void ifScrollDown () {
+        if (middleIndex > 0) {
+            middleIndex--;
+        }
+    }
+
+    public void movePosition () {
+        if (!wholeRectangle.contains(mousePosition)) {
+            return;
+        }
+
+        if (rotation<0) {
+            ifScrollUp();
+        }else if(rotation>0){
+            ifScrollDown();
+        }
+        rotation=0;
+
     }
 }

@@ -13,26 +13,27 @@ public class DrawButton extends NewDrawText{
 
     Rectangle work;
 
-    private void initButton(){
+    private void initButton(float inWidth){
         mousePosition =new Point(-1,-1);
-        inWidth=0.4f;
+        this.inWidth=inWidth;
         mouseClick=-1;
-        work=null;
+        work= new Rectangle(inRectangle.x- (((int) (GamePanel.width*inWidth)-inRectangle.width)/2),
+                inRectangle.y+(int)(inRectangle.height*0.25), (int) (GamePanel.width*inWidth),inRectangle.height);
     }
 
-    public DrawButton(String text, Rectangle outRectangle, int height) {
-        super(text, outRectangle, height);
-        initButton();
+    public DrawButton(String text, Rectangle outRectangle, float heightPercentages,float inWidth) {
+        super(text, outRectangle, heightPercentages);
+        initButton(inWidth);
     }
 
-    public DrawButton(String text, Rectangle outRectangle, int height, Color textColor) {
-        super(text, outRectangle, height, textColor);
-        initButton();
+    public DrawButton(String text, Rectangle outRectangle, float heightPercentages, Color textColor,float inWidth) {
+        super(text, outRectangle, heightPercentages, textColor);
+        initButton(inWidth);
     }
 
-    public DrawButton(String text, Rectangle outRectangle, int height, Color textColor, String fontName) {
-        super(text, outRectangle, height, textColor, fontName);
-        initButton();
+    public DrawButton(String text, Rectangle outRectangle, float heightPercentages, Color textColor, String fontName,float inWidth) {
+        super(text, outRectangle, heightPercentages, textColor, fontName);
+        initButton(inWidth);
     }
 
     public void input (MouseHandler mouse) {
@@ -50,17 +51,13 @@ public class DrawButton extends NewDrawText{
 
     @Override
     public void render(Graphics g) {
-        if (work!=null && work.contains(mousePosition)){
+        if ( work.contains(mousePosition)){
             g.setColor(inColor);
             g.fillRect(work.x,work.y, work.width,work.height);
 
         }
 
         super.render(g);
-        if (work==null){
-            work= new Rectangle(inRectangle.x- (((int) (GamePanel.width*inWidth)-inRectangle.width)/2),
-                    inRectangle.y+(int)(inRectangle.height*0.25), (int) (GamePanel.width*inWidth),inRectangle.height);
-        }
     }
 }
 

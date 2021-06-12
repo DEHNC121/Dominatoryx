@@ -1,5 +1,7 @@
 package main.graphics;
 
+import main.GamePanel;
+
 import java.awt.*;
 
 public class NewDrawText {
@@ -17,28 +19,30 @@ public class NewDrawText {
     protected Color outColor;
 
 
-    protected void init(String text, Rectangle outRectangle,int height){
+    protected void init(String text, Rectangle outRectangle,float heightPercentages){
 
         this.font = new Font(fontName, Font.PLAIN, -1);
         this.text = text;
         this.outRectangle = outRectangle;
-        this.inRectangle = new Rectangle(0,0,0,height) ;
+        this.inRectangle = new Rectangle(0,0,0,(int)(outRectangle.height*heightPercentages)) ;
         this.textColor = new Color(0,0,0,255);
         this.inColor = new Color(4, 52, 72,255);
         this.outColor = new Color(0,0,0,0);
+
+        setSize(GamePanel.getGraphics2D());
     }
 
-    public NewDrawText(String text, Rectangle outRectangle,int height) {
-        init(text,outRectangle,height);
+    public NewDrawText(String text, Rectangle outRectangle,float heightPercentages) {
+        init(text,outRectangle,heightPercentages);
     }
 
-    public NewDrawText(String text, Rectangle outRectangle,int height, Color textColor) {
-        init(text,outRectangle,height);
+    public NewDrawText(String text, Rectangle outRectangle,float heightPercentages, Color textColor) {
+        init(text,outRectangle,heightPercentages);
         this.textColor = textColor;
     }
 
-    public NewDrawText( String text,Rectangle outRectangle,int height, Color textColor, String fontName) {
-        init(text,outRectangle,height);
+    public NewDrawText( String text,Rectangle outRectangle,float heightPercentages, Color textColor, String fontName) {
+        init(text,outRectangle,heightPercentages);
         this.textColor = textColor;
         this.font = new Font(fontName, Font.PLAIN, -1);
     }
@@ -75,9 +79,9 @@ public class NewDrawText {
 
     public void render (Graphics g) {
 
-        if (font.getSize()==-1){
-            setSize(g);
-        }
+
+//        g.setColor(Color.green);
+//        g.drawRect(inRectangle.x,inRectangle.y,inRectangle.width,inRectangle.height);
 
         g.setColor(textColor);
         g.setFont(font);
