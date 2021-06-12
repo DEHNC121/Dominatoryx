@@ -144,42 +144,8 @@ public class Hexagon2D extends Object2D {
         map.remove(this);
         return map;
     }
-    public Hexagon2D getRandomFromMap (HashMap<Hexagon2D, Integer> map) {
-        if (map.isEmpty())
-            return null;
-        int size = map.keySet().size();
-        int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
-        int i = 0;
-        for(Hexagon2D hex : map.keySet())
-        {
-            if (i == item)
-                return hex;
-            i++;
-        }
-        return null;
-    }
-    public Hexagon2D getRandomNeighbour (int dist) {
-        HashMap<Hexagon2D,Integer> map = getSpecialNeighbors(dist, (hex)->
-                (hex.getOwner() == RoundManager.getCurrentPlayer()), (hex)->false
-        );
-        map.entrySet().removeIf(entry -> entry.getKey().getUnit() != null);
-        return getRandomFromMap(map);
-    }
 
-    public Hexagon2D getRandomEnemyNeighbour () {
-        HashMap<Hexagon2D,Integer> mapEnemies = getSpecialNeighbors(1, (hex)->{
-            return (hex.getOwner()!=RoundManager.getCurrentPlayer() && hex.getOwner() != null);
-        }, (hex)->false);
-        HashMap<Hexagon2D,Integer> mapNotEnemies = getSpecialNeighbors(1, (hex)->{
-            return (hex.getOwner() == null);
-        }, (hex)->false);
-        Hexagon2D ret = getRandomFromMap(mapEnemies);
-        if (ret != null)
-            return ret;
-        else
-            return getRandomFromMap(mapNotEnemies);
 
-    }
 
     public void render(Graphics g, Sprite sprite, int x, int y, int width, int height,float scale)
     {

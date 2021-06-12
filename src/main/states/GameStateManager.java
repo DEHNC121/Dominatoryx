@@ -34,12 +34,13 @@ public class GameStateManager
                 new Color(230, 221, 205)
                 )));
         InitializeStates();
-//        set(STATES.MENU);
+        set(STATES.MENU);
 
-        setNew(GameStateManager.STATES.PLAY,
-                new PlayState(this, GameMapSize.SMALL,
-                        1,
-                        0));
+//        setNew(GameStateManager.STATES.PLAY,
+//                new PlayState(this, GameMapSize.SMALL,
+//                        1,
+//                        2));
+
     }
 
     private void InitializeStates(){

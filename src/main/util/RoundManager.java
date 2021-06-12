@@ -20,6 +20,7 @@ public class RoundManager {
         for(int i=0;i<count;i++) {
             if (i < aiNumber)
                 players[i] = new AI(i+1);
+
             else
                 players[i] = new Player(i + 1);
         }
