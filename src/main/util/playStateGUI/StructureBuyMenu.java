@@ -3,6 +3,8 @@ package main.util.playStateGUI;
 import main.GamePanel;
 import main.graphics.DrawText;
 import main.graphics.GameImage;
+import main.states.GameStateManager;
+import main.states.GameStyle;
 import main.util.RoundManager;
 import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
@@ -63,7 +65,7 @@ public class StructureBuyMenu extends UnitStructureTab{
 
     @Override
     public Color getColour() {
-        return Color.ORANGE;
+        return GameStateManager.gameStyle.get(GameStyle.PALETTE.GROUND);
     }
 
     @Override

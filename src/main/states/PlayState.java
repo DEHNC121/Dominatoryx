@@ -1,5 +1,6 @@
 package main.states;
 
+import main.GamePanel;
 import main.graphics.GameImage;
 import main.graphics.Sprite;
 import main.util.Camera;
@@ -72,6 +73,9 @@ public class PlayState extends GameState
 
     @Override
     public void render(Graphics2D g) {
+
+        g.setColor(new Color	(15,94,156));
+        g.fillRect(0, 0, (int) GamePanel.width, (int) GamePanel.height);
         psWindow.render(g);
 
     }

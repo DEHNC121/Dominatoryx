@@ -10,19 +10,22 @@ import java.awt.*;
 
 
 public class UnitAndStructureMenu {
-    int x,y;
-    int w,h;
+    Rectangle rectangle;
     boolean varRender=false;
     boolean hasUnit=false;
     boolean showTab=true;
+    private int tabNumber;
     UnitStructureTab tab=new UnitBuyMenu();
     MenuMinimalizer minimalizer=new MenuMinimalizer(this);
     TabSwitcher tabSwitcher=new TabSwitcher(this);
+
+    public int getTabNumber() {
+        return tabNumber;
+    }
+
     UnitAndStructureMenu(int x, int y, int width, int height){
-        this.x=x;
-        this.y=y;
-        w=width;
-        h=height;
+        tabNumber=0;
+        rectangle=new Rectangle(x,y,width,height);
         hexagonSelected();
     }
 
@@ -45,30 +48,31 @@ public class UnitAndStructureMenu {
 
 
     }
+
     public void switchToUnit(){
+        tabNumber=0;
+
         if(hasUnit)
             tab=new UnitInfoMenu();
         else
             tab=new UnitBuyMenu();
     }
+
     public void switchToStructure(){
+        tabNumber=1;
+
         tab=new StructureBuyMenu();
     }
+
     public void render(Graphics g){
         //rendering button
         if(!varRender)
             return;
         minimalizer.render(g);
         //rendering tab
-        if(showTab){
+        if(showTab) {
             tabSwitcher.render(g);
             tab.render(g);
-            g.setColor(Color.BLACK);
-            g.drawRect(x,y,w,h);
-        }
-        else{
-            g.setColor(Color.BLACK);
-            g.drawRect(minimalizer.x, minimalizer.y, minimalizer.w, minimalizer.h);
         }
     }
 
@@ -77,7 +81,7 @@ public class UnitAndStructureMenu {
             return false;
         if(!showTab)
             return minimalizer.isInside(x,y);
-        return x>this.x && y>this.y && x<this.x+w && y<this.y+h;
+        return rectangle.contains(x,y);
     }
 
     public void input(MouseHandler mouse, KeyHandler key){

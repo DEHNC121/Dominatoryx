@@ -3,6 +3,8 @@ package main.util.playStateGUI;
 import main.GamePanel;
 import main.graphics.DrawText;
 import main.graphics.GameImage;
+import main.states.GameStateManager;
+import main.states.GameStyle;
 import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
 import main.util.units.Unit;
@@ -15,6 +17,11 @@ public class UnitInfoMenu extends UnitStructureTab{
     int textHeight=height/20;
     int fontSize=20;
     int tabulator=width/10;
+
+    public UnitInfoMenu() {
+        super();
+    }
+
     @Override
     public void specialRender(Graphics g) {
         GameImage image= WorldMap.selectedHexagon.unit.getImages(2);
@@ -55,7 +62,7 @@ public class UnitInfoMenu extends UnitStructureTab{
     }
     @Override
     public Color getColour() {
-        return Color.RED;
+        return GameStateManager.gameStyle.get(GameStyle.PALETTE.GROUND);
     }
     private Unit getCurrUnit(){return WorldMap.selectedHexagon.unit;}
     @Override

@@ -3,6 +3,8 @@ package main.util.playStateGUI;
 import main.GamePanel;
 import main.graphics.DrawText;
 import main.graphics.GameImage;
+import main.states.GameStateManager;
+import main.states.GameStyle;
 import main.util.RoundManager;
 import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
@@ -16,6 +18,7 @@ public class UnitBuyMenu extends UnitStructureTab{
     int unitFieldYSeparator=0;
     int fontSize=20;
     int textHeight=unitFieldHeight/4;
+
     public UnitBuyMenu(){
         super();
     }
@@ -64,7 +67,7 @@ public class UnitBuyMenu extends UnitStructureTab{
 
     @Override
     public Color getColour() {
-        return Color.RED;
+        return GameStateManager.gameStyle.get(GameStyle.PALETTE.GROUND);
     }
     @Override
     public void update() {

@@ -22,7 +22,7 @@ public class GameStateManager
     }
     private final Map<STATES,GameState> states;
     private GameState currentState;
-    private GameStyle gameStyle;
+    public static GameStyle gameStyle;
 
     public GameStateManager () {
         states=new HashMap<>(STATES.values().length);
@@ -34,8 +34,12 @@ public class GameStateManager
                 new Color(230, 221, 205)
                 )));
         InitializeStates();
-        set(STATES.MENU);
-//        set(STATES.PAUSE);
+//        set(STATES.MENU);
+
+        setNew(GameStateManager.STATES.PLAY,
+                new PlayState(this, GameMapSize.SMALL,
+                        2,
+                        0));
     }
 
     private void InitializeStates(){
