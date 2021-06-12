@@ -8,7 +8,7 @@ public class StructureMenuList {
         list=new HashMap<>();
         Structure structure = new House(null);
         list.put(structure.getID(), structure);
-        //structure=new Factory(null);
-        //list.put(structure.getID(),structure);
+        structure=new Factory(null);
+        list.put(structure.getID(),structure);
     }
 }

@@ -8,17 +8,17 @@ import main.util.saveLoad.DataUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Kid extends Unit{
+public class Recruit extends Unit{
 
     static private ArrayList<GameImage> gameImages=new ArrayList<>(
             Arrays.asList(  new GameImage("units/kid0.png"),
                     new GameImage("units/kid1.png"),
                     new GameImage("units/kid2.png")) );
 
-    public Kid(Player pl, Hexagon2D hex) {
+    public Recruit(Player pl, Hexagon2D hex) {
         super(pl, hex);
     }
-    public Kid(DataUnit du){ super(du); }
+    public Recruit(DataUnit du){ super(du); }
 
     @Override
     public int getID() {

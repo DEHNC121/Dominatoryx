@@ -9,9 +9,9 @@ import java.util.Arrays;
 public class House extends Structure{
 
     static private ArrayList<GameImage> gameImages=new ArrayList<>(
-            Arrays.asList(  new GameImage("structures/House0.png"),
-                    new GameImage("structures/House1.png"),
-                    new GameImage("structures/House2.png")) );
+            Arrays.asList(  new GameImage("structures/house0.png"),
+                    new GameImage("structures/house1.png"),
+                    new GameImage("structures/house2.png")) );
 
     public House(Hexagon2D hex){
         super(hex);
@@ -21,7 +21,7 @@ public class House extends Structure{
     public int getID() { return 0; }
 
     @Override
-    public int getCost() { return 4; }
+    public int getCost() { return 12; }
 
     @Override
     public GameImage getImages(int i) {
@@ -30,7 +30,7 @@ public class House extends Structure{
 
     @Override
     public int getIncome() {
-        return 2;
+        return 3;
     }
 
 }

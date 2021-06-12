@@ -4,18 +4,13 @@ import javafx.util.Pair;
 import main.graphics.Sprite;
 import main.util.Player;
 import main.util.RoundManager;
-import main.util.map.Object2D;
-import main.util.map.WorldMap;
 import main.util.saveLoad.DataHex;
 import main.util.saveLoad.DataStructure;
 import main.util.saveLoad.DataUnit;
-import main.util.structures.House;
 import main.util.structures.Structure;
-import main.util.units.Kid;
 import main.util.units.Unit;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.function.Predicate;
 

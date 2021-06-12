@@ -2,16 +2,15 @@ package main.util.structures;
 
 import main.graphics.GameImage;
 import main.util.map.Hexagon2D;
-import main.util.saveLoad.DataStructure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Factory extends Structure {
     static private ArrayList<GameImage> gameImages=new ArrayList<>(
-            Arrays.asList(  new GameImage("structures/House0.png"),
-                    new GameImage("structures/House1.png"),
-                    new GameImage("structures/House2.png")) );
+            Arrays.asList(  new GameImage("structures/factory0.png"),
+                    new GameImage("structures/factory1.png"),
+                    new GameImage("structures/factory2.png")) );
     public Factory(Hexagon2D hex) {
         super(hex);
     }
@@ -23,7 +22,7 @@ public class Factory extends Structure {
 
     @Override
     public int getID() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -33,6 +32,6 @@ public class Factory extends Structure {
 
     @Override
     public int getCost() {
-        return 14;
+        return 28;
     }
 }

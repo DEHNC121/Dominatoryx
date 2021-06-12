@@ -7,14 +7,14 @@ import main.util.map.Hexagon2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Man extends Unit{
+public class Veteran extends Unit{
 
     static private ArrayList<GameImage> gameImages=new ArrayList<>(
             Arrays.asList(  new GameImage("units/man0.png"),
                     new GameImage("units/man1.png"),
                     new GameImage("units/man2.png")) );
 
-    public Man(Player pl, Hexagon2D hex) {
+    public Veteran(Player pl, Hexagon2D hex) {
         super(pl, hex);
     }
 
