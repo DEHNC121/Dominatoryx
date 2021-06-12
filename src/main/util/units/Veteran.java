@@ -54,7 +54,7 @@ public class Veteran extends Unit{
     }
 
     @Override
-    public int getIncome() { return 0; }
+    public int getIncome() { return -2; }
 
     @Override
     public GameImage getImages(int i) {

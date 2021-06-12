@@ -56,7 +56,7 @@ public class Recruit extends Unit{
     }
 
     @Override
-    public int getIncome() { return 0; }
+    public int getIncome() { return -1; }
 
     @Override
     public GameImage getImages(int i) {

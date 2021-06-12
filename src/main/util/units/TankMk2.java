@@ -56,7 +56,7 @@ public class TankMk2 extends Unit{
 
     @Override
     public int getIncome() {
-        return 0;
+        return -6;
     }
 
     @Override
