@@ -40,6 +40,7 @@ public class GameImage {
             image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(file)));
         }
         catch (Exception e) {
+            e.printStackTrace();
             System.out.println("ERROR: could not load file: " + file);
         }
     }

@@ -6,9 +6,10 @@ public class UnitMenuList {
     static public Map<Integer,Unit> list;
     static{
         list=new HashMap<>();
-        Unit unit=new Kid(null,null);
-        Man adult = new Man(null, null);
-        list.put(unit.getID(),unit);
-        list.put(adult.getID(), adult);
+        attach(new Kid(null,null));
+        attach(new Man(null,null));
+        //attach(new Tank(null,null));
+        //attach(new TankMk2(null,null));
     }
+    static void attach(Unit unit){list.put(unit.getID(),unit);}
 }

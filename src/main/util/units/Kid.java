@@ -12,8 +12,8 @@ public class Kid extends Unit{
 
     static private ArrayList<GameImage> gameImages=new ArrayList<>(
             Arrays.asList(  new GameImage("units/kid0.png"),
-                            new GameImage("units/kid1.png"),
-                            new GameImage("units/kid2.png")) );
+                    new GameImage("units/kid1.png"),
+                    new GameImage("units/kid2.png")) );
 
     public Kid(Player pl, Hexagon2D hex) {
         super(pl, hex);
@@ -27,7 +27,7 @@ public class Kid extends Unit{
 
     @Override
     public int getMaxHealth() {
-        return 1;
+        return 4;
     }
 
     @Override
@@ -42,17 +42,17 @@ public class Kid extends Unit{
 
     @Override
     public int getRegen() {
-        return 0;
-    }
-
-    @Override
-    public int getAttackValue() {
         return 1;
     }
 
     @Override
+    public int getAttackValue() {
+        return 2;
+    }
+
+    @Override
     public int getCost(){
-        return 12;
+        return 8;
     }
 
     @Override
