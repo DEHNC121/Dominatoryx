@@ -25,6 +25,11 @@ public class LoadState extends GameState {
     String INFO="/SaveInfo.json";
     Way way;
     DrawButton[] slots=new DrawButton[3];
+    DrawButton back=new DrawButton("BACK",
+            new Rectangle((int)(GamePanel.width*0.01), 0, (int) (GamePanel.width*0.21),(int)(GamePanel.height*0.161)),
+            1f,
+            gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.22f);
+
 
     public enum Way{
         LOAD,
@@ -51,7 +56,7 @@ public class LoadState extends GameState {
                 label=info.time;
             }
             slots[i]=new DrawButton(label,new Rectangle(SLOT_X,SLOT_Y+i*SLOT_HEIGHT,
-                    SLOT_WIDTH,SLOT_HEIGHT),SLOT_PRC,0.4f);
+                    SLOT_WIDTH,SLOT_HEIGHT),SLOT_PRC,gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.4f);
             slots[i].setWork(new Rectangle(SLOT_X,SLOT_Y+i*SLOT_HEIGHT,
                     SLOT_WIDTH,SLOT_HEIGHT));
             new File(PATH+i).mkdirs();
@@ -69,6 +74,14 @@ public class LoadState extends GameState {
 
     @Override
     public void update() {
+        if(back.mouseClick==2){
+            if(way==Way.LOAD){
+                gsm.set(GameStateManager.STATES.MENU);
+            }
+            else {//save
+                gsm.set(GameStateManager.STATES.PAUSE);
+            }
+        }
         for(int i=0;i<3;i++){
             if(slots[i].mouseClick==2){
                 if(way== Way.LOAD){
@@ -83,7 +96,7 @@ public class LoadState extends GameState {
                     SaveManager.updateSaveInfo(PATH+i+INFO);
                     SaveInfo info=SaveManager.getSaveInfo(PATH+i+INFO);
                     slots[i]=new DrawButton(info.time,new Rectangle(SLOT_X,SLOT_Y+i*SLOT_HEIGHT,
-                            SLOT_WIDTH,SLOT_HEIGHT),SLOT_PRC,0.4f);
+                            SLOT_WIDTH,SLOT_HEIGHT),SLOT_PRC,gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.4f);
                     slots[i].setWork(new Rectangle(SLOT_X,SLOT_Y+i*SLOT_HEIGHT,
                             SLOT_WIDTH,SLOT_HEIGHT));
                 }
@@ -97,6 +110,7 @@ public class LoadState extends GameState {
         for(int i=0;i<3;i++){
             slots[i].input(mouse);
         }
+        back.input(mouse);
     }
 
     @Override
@@ -104,5 +118,6 @@ public class LoadState extends GameState {
         for(int i=0;i<3;i++){
             slots[i].render(g);
         }
+        back.render(g);
     }
 }
