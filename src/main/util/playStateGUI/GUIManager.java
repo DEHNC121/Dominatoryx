@@ -37,9 +37,9 @@ public class GUIManager {
         for(Button b : buttonList){
             b.render(g);
 
-            g.setColor(Color.red);
-            g.drawRect(b.getRectangle().x,b.getRectangle().y,
-                    b.getRectangle().width,b.getRectangle().height);
+//            g.setColor(Color.red);
+//            g.drawRect(b.getRectangle().x,b.getRectangle().y,
+//                    b.getRectangle().width,b.getRectangle().height);
         }
         for(GameImage image : imageList){
             image.render(g);
