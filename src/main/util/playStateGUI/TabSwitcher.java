@@ -21,7 +21,7 @@ public class TabSwitcher {
     TabSwitcher(UnitAndStructureMenu menu){
         switcher=new ArrayList<>();
         mouseClick=-1;
-        body =new Rectangle(0,(int) (GamePanel.height*0.1),(int)( GamePanel.width*0.15),(int)( GamePanel.height*0.05));
+        body =new Rectangle(0,(int) (GamePanel.height*0.1),(int)( GamePanel.width*0.16),(int)( GamePanel.height*0.05));
         this.menu=menu;
         float textHeight=0.8f;
 

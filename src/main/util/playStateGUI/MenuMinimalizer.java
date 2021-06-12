@@ -17,7 +17,7 @@ public class MenuMinimalizer {
 
     MenuMinimalizer(UnitAndStructureMenu menu){
         this.menu=menu;
-        body=new Rectangle(0,(int) (GamePanel.height*0.05),(int) (GamePanel.width*0.15),(int) (GamePanel.height*0.05));
+        body=new Rectangle(0,(int) (GamePanel.height*0.05),(int) (GamePanel.width*0.16),(int) (GamePanel.height*0.05));
         name=new NewDrawText("Shop",
                 body,
                 1,

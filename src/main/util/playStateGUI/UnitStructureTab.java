@@ -13,7 +13,7 @@ public abstract class UnitStructureTab extends Object2DInt {
     boolean isClicked=false;
     UnitStructureTab(){
         super(0, ((int)GamePanel.height)*3/20,
-                ((int)GamePanel.width)*3/20,((int) GamePanel.height)*15/20);
+                (int)( GamePanel.width*0.16),((int) GamePanel.height)*15/20);
     }
     public abstract Color getColour();
     public abstract void specialRender(Graphics g);
