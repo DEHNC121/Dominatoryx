@@ -82,12 +82,12 @@ public class AI extends Player {
             round = roundType.ATTACK;
             //round = random.nextBoolean() ? roundType.ATTACK : roundType.DEFENSE;
         }
-        randomize(round, 0.1);
+        randomize(0.1);
     }
-    public void randomize (roundType round, double p) {
+    public void randomize (double p) {
         Random r = new Random();
         if (r.nextDouble() < p) {
-            this.round = (round == roundType.ATTACK ? roundType.DEFENSE : roundType.ATTACK);
+            round = (round == roundType.ATTACK ? roundType.DEFENSE : roundType.ATTACK);
         }
     }
     public int getPriority (Hexagon2D start, Hexagon2D hexagon) {
