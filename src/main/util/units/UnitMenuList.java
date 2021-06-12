@@ -8,8 +8,8 @@ public class UnitMenuList {
         list=new HashMap<>();
         attach(new Kid(null,null));
         attach(new Man(null,null));
-        //attach(new Tank(null,null));
-        //attach(new TankMk2(null,null));
+        attach(new Tank(null,null));
+//        attach(new TankMk2(null,null));
     }
     static void attach(Unit unit){list.put(unit.getID(),unit);}
 }
