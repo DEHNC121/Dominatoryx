@@ -15,6 +15,10 @@ public class GameImage {
     private BufferedImage image;
     private final Object2DInt rectangle;
 
+    public Object2DInt getRectangle() {
+        return rectangle;
+    }
+
     public GameImage(String file) {
         loadImage(file);
         rectangle = new Object2DInt(0,0, image.getWidth(), image.getHeight());

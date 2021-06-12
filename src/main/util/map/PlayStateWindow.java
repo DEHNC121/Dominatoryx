@@ -37,7 +37,7 @@ public class PlayStateWindow {
         else{
             camera.update();
         }
-
+        guiManager.moneyUpdate();
         //I couldn't find better place to put this in
         guiManager.unitMenu.hexagonSelected();
     }

@@ -1,28 +1,28 @@
 package main.util.playStateGUI;
 
 import main.GamePanel;
-import main.graphics.DrawText;
 import main.graphics.GameImage;
+import main.graphics.NewDrawText;
 import main.states.GameStateManager;
 import main.states.GameStyle;
 import main.util.RoundManager;
-import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
 import main.util.structures.Structure;
 import main.util.structures.StructureMenuList;
-import main.util.units.Unit;
-import main.util.units.UnitMenuList;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class StructureBuyMenu extends UnitStructureTab{
-    int structureFieldHeight= ((int) GamePanel.height)/10;
+    private ArrayList<NewDrawText> text;
+
+    int structureFieldHeight= (int)(GamePanel.height*0.1)-2;
     int structureFieldYSeparator=0;
-    int fontSize=20;
-    int textHeight = structureFieldHeight/4;
+    int textHeight=(int)(structureFieldHeight*0.4);
 
     public StructureBuyMenu () {
         super();
+        text=new ArrayList<>();
     }
 
     @Override
@@ -39,27 +39,45 @@ public class StructureBuyMenu extends UnitStructureTab{
             else{
                 g.setColor(Color.PINK);
             }
-            int tempX=x;
+
+            int tempX=x-2;
             int tempY=y+structureFieldYSeparator+
-                    i*(structureFieldYSeparator+structureFieldHeight);
+                    i*(structureFieldYSeparator+structureFieldHeight+1);
+
             g.fillRect(tempX,tempY,width,structureFieldHeight);
-            g.setColor(Color.BLACK);
-            g.drawRect(x,y+structureFieldYSeparator+
-                    i*(structureFieldYSeparator+structureFieldHeight),width,structureFieldHeight);
+
             GameImage image= structure.getImages(2);
             image.setPosition(tempX,tempY);
             image.setWidth(structureFieldHeight);
             image.setHeight(structureFieldHeight);
             image.render(g);
-            DrawText drawText=new DrawText(""+structure.getClass().getSimpleName(),
-                    new Object2DInt(tempX+structureFieldHeight,tempY+1*textHeight,width,textHeight));
-            drawText.setSize(fontSize);
-            drawText.render(g);
-            drawText= new DrawText("Cost: "+structure.getCost()+"$",
-                    new Object2DInt(tempX+structureFieldHeight,tempY+2*textHeight,width,textHeight));
-            drawText.setSize(fontSize);
-            drawText.render(g);
-            //place for unit info to render
+
+
+
+            if (text.size()<(i+1)*3){
+                text.add(new NewDrawText(""+structure.getClass().getSimpleName(),
+                        new Rectangle(tempX+structureFieldHeight,tempY+textHeight/4,width-structureFieldHeight,textHeight),
+                        1f,
+                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                ));
+
+                text.add(new NewDrawText("Cost: ",
+                        new Rectangle(tempX+structureFieldHeight,tempY+(int)(1.25*textHeight),(int)((width-structureFieldHeight)*0.5),textHeight),
+                        1f,
+                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                ));
+                text.add(new NewDrawText(structure.getCost()+"$",
+                        new Rectangle(tempX+structureFieldHeight+(int)((width-structureFieldHeight)*0.5),tempY+(int)(1.25*textHeight),(int)((width-structureFieldHeight)*0.5),textHeight),
+                        1f,
+                        new Color(14, 101, 98)
+                ));
+            }
+
+            for (NewDrawText dt:text){
+                dt.render(g);
+            }
+
+            //place for structure info to render
         }
     }
 

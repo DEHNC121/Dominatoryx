@@ -3,6 +3,7 @@ package main.util.playStateGUI;
 import main.GamePanel;
 import main.graphics.DrawText;
 import main.graphics.GameImage;
+import main.graphics.NewDrawText;
 import main.states.GameStateManager;
 import main.states.GameStyle;
 import main.util.RoundManager;
@@ -12,23 +13,24 @@ import main.util.units.Unit;
 import main.util.units.UnitMenuList;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class UnitBuyMenu extends UnitStructureTab{
-    int unitFieldHeight= ((int)GamePanel.height)/10;
+
+    private ArrayList<NewDrawText> text;
+
+    int unitFieldHeight= (int)(GamePanel.height*0.1)-2;
     int unitFieldYSeparator=0;
-    int fontSize=20;
-    int textHeight=unitFieldHeight/4;
+    int textHeight=(int)(unitFieldHeight*0.4);
 
     public UnitBuyMenu(){
         super();
+        text=new ArrayList<>();
     }
 
     @Override
     public void specialRender(Graphics g) {
-        //TODO: this will render over map with too many units to buy
-        //  Find a way to not render/partially render those outside of menu (incl. info, unit texture etc.)
         for(int i = 0; i< UnitMenuList.list.size(); i++){
-            //System.out.println("iterating as it should");
             Unit unit=UnitMenuList.list.get(i);
             if(unit ==null){
                 System.out.println("Unit null for i="+i);
@@ -40,27 +42,42 @@ public class UnitBuyMenu extends UnitStructureTab{
             else{
                 g.setColor(Color.PINK);
             }
-            int tempX=x;
+
+            int tempX=x-2;
             int tempY=y+unitFieldYSeparator+
-                    i*(unitFieldYSeparator+unitFieldHeight);
+                    i*(unitFieldYSeparator+unitFieldHeight+1);
+
             g.fillRect(tempX,tempY,width,unitFieldHeight);
-            g.setColor(Color.BLACK);
-            g.drawRect(x,y+unitFieldYSeparator+
-                    i*(unitFieldYSeparator+unitFieldHeight),width,unitFieldHeight);
+
             GameImage image= unit.getImages(2);
-            image.setPosition(tempX,tempY);
+            image.setPosition(tempX+3,tempY);
             image.setWidth(unitFieldHeight);
             image.setHeight(unitFieldHeight);
             image.render(g);
-            DrawText drawText=new DrawText(""+unit.getClass().getSimpleName(),
-                    new Object2DInt(tempX+unitFieldHeight,tempY+1*textHeight,width,textHeight));
-            drawText.setSize(fontSize);
-            drawText.render(g);
-            drawText= new DrawText("Cost: "+unit.getCost()+"$",
-                    new Object2DInt(tempX+unitFieldHeight,tempY+2*textHeight,width,textHeight));
-            drawText.setSize(fontSize);
-            drawText.render(g);
-            //place for unit info to render
+
+            if (text.size()<(i+1)*3){
+                text.add(new NewDrawText(""+unit.getClass().getSimpleName(),
+                        new Rectangle(tempX+unitFieldHeight,tempY+textHeight/4,width-unitFieldHeight,textHeight),
+                        1f,
+                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                ));
+
+                text.add(new NewDrawText("Cost: ",
+                        new Rectangle(tempX+unitFieldHeight,tempY+(int)(1.25*textHeight),(int)((width-unitFieldHeight)*0.5),textHeight),
+                        1f,
+                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                ));
+                text.add(new NewDrawText(unit.getCost()+"$",
+                        new Rectangle(tempX+unitFieldHeight+(int)((width-unitFieldHeight)*0.5),tempY+(int)(1.25*textHeight),(int)((width-unitFieldHeight)*0.5),textHeight),
+                        1f,
+                        GameStateManager.gameStyle.get(GameStyle.PALETTE.MAIN)
+                ));
+            }
+
+            for (NewDrawText dt:text){
+                dt.render(g);
+            }
+
         }
 
     }

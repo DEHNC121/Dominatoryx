@@ -17,11 +17,13 @@ public abstract class UnitStructureTab extends Object2DInt {
     }
     public abstract Color getColour();
     public abstract void specialRender(Graphics g);
+
     public void render(Graphics g){
         g.setColor(getColour());
         g.fillRect(x,y,width,height);
         specialRender(g);
     }
+
     public void input(MouseHandler mouse, KeyHandler key){
         mouseX=mouse.getX();
         mouseY=mouse.getY();

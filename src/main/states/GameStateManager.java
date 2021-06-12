@@ -37,9 +37,9 @@ public class GameStateManager
 //        set(STATES.MENU);
 
         setNew(GameStateManager.STATES.PLAY,
-                new PlayState(this, GameMapSize.LARGE,
-                        8,
-                        8));
+                new PlayState(this, GameMapSize.SMALL,
+                        1,
+                        0));
     }
 
     private void InitializeStates(){

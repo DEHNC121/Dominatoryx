@@ -79,6 +79,10 @@ public class NewDrawText {
 
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public static void setFontName(String fontName) {
         NewDrawText.fontName = fontName;
     }

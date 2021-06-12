@@ -3,7 +3,9 @@ package main.util.playStateGUI;
 import main.GamePanel;
 import main.graphics.DrawText;
 import main.graphics.GameImage;
+import main.graphics.NewDrawText;
 import main.states.GameStateManager;
+import main.states.GameStyle;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.RoundManager;
@@ -21,10 +23,12 @@ public class GUIManager {
     public TurnIndicator turnIndicator=new TurnIndicator((int)GamePanel.width*4/10,0,
             (int)(GamePanel.width)/5, (int) (GamePanel.height*0.03f));
 
-    public DrawText money=new DrawText("Arial",""+RoundManager.getCurrentPlayer().money,
-            Font.PLAIN,24,new Object2DInt((int) (GamePanel.width*0.03f),
+    public NewDrawText money=new NewDrawText(""+RoundManager.getCurrentPlayer().money,
+            new Rectangle((int) (GamePanel.width*0.03f),0,
+                    (int) (GamePanel.width*0.03f),(int) (GamePanel.width*0.03f)),
+            1f,
+            Color.white);
 
-            (int) (GamePanel.width*0.02f),(int) (GamePanel.width*0.15f),(int) (GamePanel.width*0.03f)),Color.white);
     public final int coinSize=(int)(GamePanel.width*0.03f);
     public final int buttonSize=(int)(GamePanel.width*0.05f);
 
@@ -32,12 +36,18 @@ public class GUIManager {
         unitMenu.render(g);
         for(Button b : buttonList){
             b.render(g);
+
+            g.setColor(Color.red);
+            g.drawRect(b.getRectangle().x,b.getRectangle().y,
+                    b.getRectangle().width,b.getRectangle().height);
         }
         for(GameImage image : imageList){
             image.render(g);
+
         }
         turnIndicator.render(g);
         money.render(g);
+
     }
 
     public boolean capture(int x,int y){
@@ -94,11 +104,16 @@ public class GUIManager {
             b.input(mouseHandler, keyHandler);
         }
     }
+
+    public void moneyUpdate(){
+        money.setText(""+RoundManager.getCurrentPlayer().money);
+    }
+
     public void update(){
         unitMenu.update();
         for(Button b:buttonList){
             b.update();
         }
-        money.setText(""+RoundManager.getCurrentPlayer().money);
+        moneyUpdate();
     }
 }
