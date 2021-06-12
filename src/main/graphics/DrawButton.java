@@ -20,7 +20,7 @@ public class DrawButton extends NewDrawText{
         work= new Rectangle(inRectangle.x- (((int) (GamePanel.width*inWidth)-inRectangle.width)/2),
                 inRectangle.y+(int)(inRectangle.height*0.25), (int) (GamePanel.width*inWidth),inRectangle.height);
     }
-
+    public void setWork(Rectangle rect){work=rect;}
     public DrawButton(String text, Rectangle outRectangle, float heightPercentages,float inWidth) {
         super(text, outRectangle, heightPercentages);
         initButton(inWidth);
