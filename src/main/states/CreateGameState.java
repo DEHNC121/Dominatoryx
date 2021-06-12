@@ -15,7 +15,7 @@ import static main.states.GameMapSize.*;
 
 public class CreateGameState extends GameState{
 
-    public static Map<GameMapSize,ArrayList<String>> allowedNumbers;
+    public static Map<GameMapSize,Point> allowedNumbers;
     private GameMapSize state;
     public static ArrayList<String> sizes;
 
@@ -29,14 +29,14 @@ public class CreateGameState extends GameState{
         allowedNumbers = new HashMap<>();
         sizes = new ArrayList<>(Arrays.asList("S","M","L"));
         allowedNumbers.put(LARGE,
-                new ArrayList<>(Arrays.asList("0","1","2","3","4","5","6","7","8"))
+                new Point(0,8)
         );
         allowedNumbers.put(MEDIUM,
-            new ArrayList<>(Arrays.asList("0","1","2","3","4","5","6"))
+                new Point(0,6)
 
         );
         allowedNumbers.put(SMALL,
-            new ArrayList<>(Arrays.asList("0","1","2","3","4"))
+                new Point(0,4)
 
         );
     }
@@ -48,6 +48,7 @@ public class CreateGameState extends GameState{
         textFields=new ArrayList<>();
         namedScrollFields=new ArrayList<>();
         NewDrawText.setFontName("OpenSans");
+        NewDrawText temp;
 
         textFields.add(
                 new DrawButton("BACK",
@@ -58,7 +59,7 @@ public class CreateGameState extends GameState{
         textFields.add(
                 new DrawButton("PLAY",
                         new Rectangle(0, (int) (GamePanel.height*0.79), (int) GamePanel.width, (int)(GamePanel.height*0.2)),
-                       1f,
+                        1f,
                         gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.4f));
 
         namedScrollFields.add(new NamedScrollField("Map size:",
@@ -69,21 +70,39 @@ public class CreateGameState extends GameState{
                 3,
                 1f));
 
-        namedScrollFields.add(new NamedScrollField("Players:",
+        temp=new NewDrawText(
+                "Players:",
                 new Rectangle(0, (int) (GamePanel.height * 0.5f),(int) (GamePanel.width*0.5),(int) (GamePanel.height * 0.15f)),
-                allowedNumbers.get(state),
-                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT),
-                gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
-                3,
-                1f));
+                1f,
+                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)
+        );
+        namedScrollFields.add(new NamedScrollField(
+                temp,
+                new NumericScrollField(
+                        new Rectangle(temp.getInRectangle().x+temp.getInRectangle().width, temp.getOutRectangle().y, (int)(temp.getOutRectangle().height*0.8), temp.getOutRectangle().height),
+                        null,
+                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                        3
 
-        namedScrollFields.add(new NamedScrollField("Computers:",
+                        )
+                ));
+
+        temp=new NewDrawText(
+                "Computers:",
                 new Rectangle((int) (GamePanel.width*0.47), (int) (GamePanel.height * 0.5f),(int) (GamePanel.width*0.5),(int) (GamePanel.height * 0.15f)),
-                allowedNumbers.get(state),
-                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT),
-                gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
-                3,
-                1f));
+                1f,
+                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)
+        );
+        namedScrollFields.add(new NamedScrollField(
+                temp,
+                new NumericScrollField(
+                        new Rectangle(temp.getInRectangle().x+temp.getInRectangle().width, temp.getOutRectangle().y, (int)(temp.getOutRectangle().height*0.8), temp.getOutRectangle().height),
+                        null,
+                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                        3
+
+                )
+        ));
     }
 
     public GameMapSize mapSize (String s) {
@@ -97,7 +116,13 @@ public class CreateGameState extends GameState{
 
     void updateState(GameMapSize gameMapSize){
         for (int i=1;i<namedScrollFields.size();i++){
-            namedScrollFields.get(i).getScrollField().setArray(allowedNumbers.get(gameMapSize));
+            if(i==2){
+
+                ((NumericScrollField)namedScrollFields.get(i).getScrollField()).setArray(allowedNumbers.get(gameMapSize).x,
+                        Math.min(allowedNumbers.get(gameMapSize).y,Integer.parseInt(namedScrollFields.get(i-1).getScrollField().getMainField())));
+            }else {
+                ((NumericScrollField)namedScrollFields.get(i).getScrollField()).setArray(allowedNumbers.get(gameMapSize).x+1,allowedNumbers.get(gameMapSize).y);
+            }
         }
     }
 

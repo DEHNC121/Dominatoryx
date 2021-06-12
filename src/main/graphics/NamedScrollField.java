@@ -7,14 +7,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class NamedScrollField {
-    private final Rectangle rectangle;
     private ScrollField scrollField;
     private final NewDrawText fieldName;
 
 
     public NamedScrollField(String name, Rectangle outRectangle, ArrayList<String> fields, Color nameColor, Color scrollFieldColor, int showNumberIn, float heightPercentages) {
-        rectangle=outRectangle;
-       this.fieldName =new NewDrawText(name,
+
+        this.fieldName =new NewDrawText(name,
                 new Rectangle(outRectangle.x, outRectangle.y, outRectangle.width, outRectangle.height),
                 heightPercentages,
                 nameColor);
@@ -28,6 +27,16 @@ public class NamedScrollField {
                 );
 
     }
+
+    public NamedScrollField(NewDrawText drawText,ScrollField scrollField) {
+
+        this.fieldName =drawText;
+
+
+        this.scrollField=scrollField;
+
+    }
+
 
     public String getFieldState() {
         return scrollField.getMainField();

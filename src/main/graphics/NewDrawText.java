@@ -18,8 +18,15 @@ public class NewDrawText {
     protected Color inColor;
     protected Color outColor;
 
+    public Rectangle getOutRectangle() {
+        return outRectangle;
+    }
 
-    protected void init(String text, Rectangle outRectangle,float heightPercentages){
+    public Rectangle getInRectangle() {
+        return inRectangle;
+    }
+
+    protected void init(String text, Rectangle outRectangle, float heightPercentages){
 
         this.font = new Font(fontName, Font.PLAIN, -1);
         this.text = text;
