@@ -51,6 +51,7 @@ public class MenuState extends GameState {
                 switch (i) {
                     case 1 -> gsm.set(GameStateManager.STATES.CREATE);
                     case 2 ->  gsm.setNew(GameStateManager.STATES.SAVE_LOAD,new LoadState(gsm, LoadState.Way.LOAD));
+                    case 3 -> gsm.set(GameStateManager.STATES.SETTINGS);
                     case 4 -> GamePanel.endProgram();
                     default -> System.out.println("No function added");
                 }

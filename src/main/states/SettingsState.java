@@ -1,30 +1,191 @@
 package main.states;
 
+import main.GamePanel;
+import main.graphics.DrawButton;
+import main.graphics.NamedScrollField;
+import main.graphics.NewDrawText;
+import main.graphics.NumericScrollField;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import static main.states.GameMapSize.*;
+import static main.states.GameMapSize.None;
 
 public class SettingsState extends GameState{
 
+    public static Map<GameMapSize,Point> allowedNumbers;
+    private GameMapSize state;
+    public static ArrayList<String> sizes;
+
+    private NamedScrollField namedScrollField;
+    static public ArrayList<GameStyle> styles=new ArrayList<>();
+    static {
+        styles.add(new GameStyle(new ArrayList<>(Arrays.asList(
+                new Color(2, 23, 52),
+                new Color(4, 52, 72),
+                new Color(14, 101, 98),
+                new Color(202, 180, 129),
+                new Color(230, 221, 205)
+        ))));
+        styles.add(new GameStyle(new ArrayList<>(Arrays.asList(
+                new Color(62, 32, 79),
+                new Color(90, 69, 101),
+                new Color(206, 201, 214),
+                new Color(226, 219, 233),
+                new Color(188, 174, 204)
+        ))));
+        styles.add(new GameStyle(new ArrayList<>(Arrays.asList(
+                new Color(46, 109, 92),
+                new Color(61, 144, 121),
+                new Color(71, 169, 142),
+                new Color(83, 199, 167),
+                new Color(94, 225, 189)
+        ))));
+    }
+
+    ArrayList<NewDrawText> textFields;
+
+    void init(){
+        allowedNumbers = new HashMap<>();
+        sizes = new ArrayList<>(Arrays.asList("Default","Purple","Forest"));
+        allowedNumbers.put(LARGE,
+                new Point(0,8)
+        );
+        allowedNumbers.put(MEDIUM,
+                new Point(0,6)
+
+        );
+        allowedNumbers.put(SMALL,
+                new Point(0,4)
+
+        );
+    }
+
     public SettingsState (GameStateManager gsm) {
         super(gsm);
+        init();
+        state=MEDIUM;
+        textFields=new ArrayList<>();
+        NewDrawText.setFontName("OpenSans");
+        NewDrawText temp;
 
+        textFields.add(
+                new DrawButton("BACK",
+                        new Rectangle((int)(GamePanel.width*0.01), 0, (int) (GamePanel.width*0.21),(int)(GamePanel.height*0.161)),
+                        1f,
+                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.22f));
+
+        textFields.add(
+                new DrawButton("SAVE",
+                        new Rectangle(0, (int) (GamePanel.height*0.79), (int) GamePanel.width, (int)(GamePanel.height*0.2)),
+                        1f,
+                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.4f));
+
+        namedScrollField=new NamedScrollField("Style:",
+                new Rectangle(0, (int) (GamePanel.height * 0.175f),(int) (GamePanel.width),(int) (GamePanel.height * 0.2f)),
+                sizes,
+                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT),
+                gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                3,
+                1f);
+        /*
+        temp=new NewDrawText(
+                "Players:",
+                new Rectangle(0, (int) (GamePanel.height * 0.5f),(int) (GamePanel.width*0.5),(int) (GamePanel.height * 0.15f)),
+                1f,
+                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)
+        );
+        namedScrollFields.add(new NamedScrollField(
+                temp,
+                new NumericScrollField(
+                        new Rectangle(temp.getInRectangle().x+temp.getInRectangle().width, temp.getOutRectangle().y, (int)(temp.getOutRectangle().height*0.8), temp.getOutRectangle().height),
+                        null,
+                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                        3
+
+                )
+        ));
+
+        temp=new NewDrawText(
+                "Computers:",
+                new Rectangle((int) (GamePanel.width*0.47), (int) (GamePanel.height * 0.5f),(int) (GamePanel.width*0.5),(int) (GamePanel.height * 0.15f)),
+                1f,
+                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)
+        );
+        namedScrollFields.add(new NamedScrollField(
+                temp,
+                new NumericScrollField(
+                        new Rectangle(temp.getInRectangle().x+temp.getInRectangle().width, temp.getOutRectangle().y, (int)(temp.getOutRectangle().height*0.8), temp.getOutRectangle().height),
+                        null,
+                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                        3
+
+                )
+        ));
+
+         */
+    }
+
+    public GameStyle mapSize (String s) {
+        return switch (s) {
+            case "Default" -> styles.get(0);
+            case "Purple" -> styles.get(1);
+            case "Forest" -> styles.get(2);
+            default -> styles.get(0);
+        };
+    }
+
+
+    void updateState(GameStyle gameStyle){
+        gsm.setStyle(gameStyle);
+    }
+
+
+
+
+    @Override
+    public void update() {
+        namedScrollField.update();
+        updateState(mapSize(namedScrollField.getFieldState()));
+
+        for (int i=0;i<textFields.size();i++){
+
+            if (((DrawButton)textFields.get(i)).mouseClick==2) {
+                switch (i) {
+                    case 0 -> {gsm.setStyle(GameStyle.loadOrDefault()); gsm.set(GameStateManager.STATES.MENU);}
+                    case 1 ->  {gsm.saveStyle(); gsm.set(GameStateManager.STATES.MENU);}
+                    default -> System.out.println("No function added");
+                }
+
+                ((DrawButton)textFields.get(i)).mouseClick=-1;
+            }
+        }
     }
 
     @Override
-    public void update () {
+    public void input(MouseHandler mouse, KeyHandler key) {
+        namedScrollField.input(mouse,key);
 
+        for (NewDrawText dt:textFields){
+            if (dt instanceof DrawButton){
+                ((DrawButton)dt).input(mouse);
+            }
+        }
+        mouse.setRotation(0);
     }
 
     @Override
-    public void input (MouseHandler mouse, KeyHandler key) {
-
-    }
-
-    @Override
-    public void render (Graphics2D g) {
-
+    public void render(Graphics2D g) {
+        namedScrollField.render(g);
+        for (NewDrawText dt:textFields){
+            dt.render(g);
+        }
     }
 
 }

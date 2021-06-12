@@ -26,13 +26,7 @@ public class GameStateManager
 
     public GameStateManager () {
         states=new HashMap<>(STATES.values().length);
-        gameStyle=new GameStyle(new ArrayList<>(Arrays.asList(
-                new Color(2, 23, 52),
-                new Color(4, 52, 72),
-                new Color(14, 101, 98),
-                new Color(202, 180, 129),
-                new Color(230, 221, 205)
-                )));
+        gameStyle=GameStyle.loadOrDefault();
         InitializeStates();
         set(STATES.MENU);
 
@@ -47,6 +41,7 @@ public class GameStateManager
         states.put(STATES.MENU,new MenuState(this));
         states.put(STATES.CREATE,new CreateGameState(this));
         states.put(STATES.PAUSE,new PauseState(this));
+        states.put(STATES.SETTINGS,new SettingsState(this));
     }
 
     public GameStyle getGameStyle() {
@@ -65,6 +60,9 @@ public class GameStateManager
         states.put(state,gameState);
         set(state);
     }
+
+    public void setStyle(GameStyle gs){gameStyle=gs;}
+    public void saveStyle(){gameStyle.saveStyle();}
 
     public void update ()
     {
