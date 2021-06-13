@@ -31,10 +31,8 @@ public class PlayStateWindow {
         guiManager.render(g);
     }
     public void update(){
-        if(guiManager.capture(inputX,inputY)){
-           guiManager.update();
-        }
-        else{
+        guiManager.update();
+        if(!guiManager.capture(inputX,inputY)){
             camera.update();
         }
         guiManager.moneyUpdate();

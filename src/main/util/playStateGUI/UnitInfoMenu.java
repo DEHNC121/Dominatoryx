@@ -56,6 +56,15 @@ public class UnitInfoMenu extends UnitStructureTab{
     private Unit getCurrUnit(){return WorldMap.selectedHexagon.unit;}
     @Override
     public void update(){
+        if (WorldMap.selectedHexagon!=null){
 
+            ArrayList<String> text=new ArrayList<>(Arrays.asList(
+                    "Attack: "+getCurrUnit().getAttackValue(),"Health: "+getCurrUnit().getHealth()+"/"+getCurrUnit().getMaxHealth()
+                    ,"Movement Points: "+getCurrUnit().getMovement()+"/"+getCurrUnit().getMaxMovement(),"Attack Cost: "+getCurrUnit().attackMovementCost()+"MP"));
+
+            for(int i = 0; i< 4; i++){
+                fields.get(i).setText(text.get(i));
+            }
+        }
     }
 }

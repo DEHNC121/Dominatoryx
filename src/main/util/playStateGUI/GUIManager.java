@@ -112,5 +112,6 @@ public class GUIManager {
             b.update();
         }
         moneyUpdate();
+        unitMenu.tab.update();
     }
 }

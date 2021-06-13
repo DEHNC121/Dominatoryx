@@ -95,4 +95,11 @@ public class UnitAndStructureMenu {
         tabSwitcher.update();
         tab.update();
     }
+
+//    public void softUpdate(){
+//        minimalizer.update();
+//        tabSwitcher.update();
+//        tab.update();
+//    }
+
 }
