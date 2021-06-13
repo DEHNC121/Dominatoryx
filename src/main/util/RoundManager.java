@@ -121,7 +121,7 @@ public class RoundManager {
         roundCnt=drm.roundCount;
         for(int i=0;i<players.length;i++){
             if (drm.isAI[i]) {
-                players[i]=new AI(drm.players[i]);
+                players[i]=new AI(drm.players[i],drm.dataAIS[i]);
             }
             else {
                 players[i] = new Player(drm.players[i]);

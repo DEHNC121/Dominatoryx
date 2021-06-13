@@ -3,6 +3,7 @@ package main.util;
 import javafx.util.Pair;
 import main.util.map.Hexagon2D;
 import main.util.map.WorldMap;
+import main.util.saveLoad.DataAI;
 import main.util.saveLoad.DataPlayer;
 import main.util.structures.StructureMenuList;
 import main.util.units.UnitMenuList;
@@ -33,9 +34,16 @@ public class AI extends Player {
         attackMode = false;
         attackModeRounds = 0;
     }
-    public AI(DataPlayer dp){
+    public AI(DataPlayer dp, DataAI ai){
         super(dp);
         isPlayer = false;
+        nextMoveTime = 0;
+        nOfHexagons=ai.nOfHexagons;
+        attackMode=ai.attackMode;
+        attackModeRounds=ai.attackModeRounds;
+        AIHexagons=new HashMap<>();
+        AIHexagonsToEnemies=new HashMap<>();
+        returnFlag=ai.returnFlag;
     }
     public enum moves {
         BUY_STRUCTURE,
