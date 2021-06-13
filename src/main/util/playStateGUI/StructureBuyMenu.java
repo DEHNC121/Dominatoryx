@@ -2,7 +2,7 @@ package main.util.playStateGUI;
 
 import main.GamePanel;
 import main.graphics.GameImage;
-import main.graphics.NewDrawText;
+import main.graphics.DrawText;
 import main.states.GameStateManager;
 import main.states.GameStyle;
 import main.util.RoundManager;
@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class StructureBuyMenu extends UnitStructureTab{
-    private ArrayList<NewDrawText> text;
+    private ArrayList<DrawText> text;
 
     int structureFieldHeight= (int)(GamePanel.height*0.1)-2;
     int structureFieldYSeparator=0;
@@ -55,25 +55,25 @@ public class StructureBuyMenu extends UnitStructureTab{
 
 
             if (text.size()<(i+1)*3){
-                text.add(new NewDrawText(""+structure.getClass().getSimpleName(),
+                text.add(new DrawText(""+structure.getClass().getSimpleName(),
                         new Rectangle(tempX+structureFieldHeight,tempY+textHeight/4,width-structureFieldHeight,textHeight),
                         1f,
-                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                        GameStyle.PALETTE.BACKGROUND
                 ));
 
-                text.add(new NewDrawText("Cost: ",
+                text.add(new DrawText("Cost: ",
                         new Rectangle(tempX+structureFieldHeight,tempY+(int)(1.25*textHeight),(int)((width-structureFieldHeight)*0.5),textHeight),
                         1f,
-                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                        GameStyle.PALETTE.BACKGROUND
                 ));
-                text.add(new NewDrawText(structure.getCost()+"$",
+                text.add(new DrawText(structure.getCost()+"$",
                         new Rectangle(tempX+structureFieldHeight+(int)((width-structureFieldHeight)*0.5),tempY+(int)(1.25*textHeight),(int)((width-structureFieldHeight)*0.5),textHeight),
                         1f,
                         new Color(14, 101, 98)
                 ));
             }
 
-            for (NewDrawText dt:text){
+            for (DrawText dt:text){
                 dt.render(g);
             }
 
@@ -101,5 +101,9 @@ public class StructureBuyMenu extends UnitStructureTab{
             boolean res= RoundManager.getCurrentPlayer().buyStructure(WorldMap.selectedHexagon,index);
             System.out.println("Buying structure " + index + " with " + res);
         }
+        for (DrawText dt:text){
+            dt.update();
+        }
+
     }
 }

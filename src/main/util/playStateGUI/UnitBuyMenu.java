@@ -1,13 +1,11 @@
 package main.util.playStateGUI;
 
 import main.GamePanel;
-import main.graphics.DrawText;
 import main.graphics.GameImage;
-import main.graphics.NewDrawText;
+import main.graphics.DrawText;
 import main.states.GameStateManager;
 import main.states.GameStyle;
 import main.util.RoundManager;
-import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
 import main.util.units.Unit;
 import main.util.units.UnitMenuList;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 
 public class UnitBuyMenu extends UnitStructureTab{
 
-    private ArrayList<NewDrawText> text;
+    private ArrayList<DrawText> text;
 
     int unitFieldHeight= (int)(GamePanel.height*0.1)-2;
     int unitFieldYSeparator=0;
@@ -56,25 +54,25 @@ public class UnitBuyMenu extends UnitStructureTab{
             image.render(g);
 
             if (text.size()<(i+1)*3){
-                text.add(new NewDrawText(""+unit.getClass().getSimpleName(),
+                text.add(new DrawText(""+unit.getClass().getSimpleName(),
                         new Rectangle(tempX+unitFieldHeight,tempY+textHeight/4,width-unitFieldHeight,textHeight),
                         1f,
-                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                        GameStyle.PALETTE.BACKGROUND
                 ));
 
-                text.add(new NewDrawText("Cost: ",
+                text.add(new DrawText("Cost: ",
                         new Rectangle(tempX+unitFieldHeight,tempY+(int)(1.25*textHeight),(int)((width-unitFieldHeight)*0.5),textHeight),
                         1f,
-                        GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND)
+                        GameStyle.PALETTE.BACKGROUND
                 ));
-                text.add(new NewDrawText(unit.getCost()+"$",
+                text.add(new DrawText(unit.getCost()+"$",
                         new Rectangle(tempX+unitFieldHeight+(int)((width-unitFieldHeight)*0.5),tempY+(int)(1.25*textHeight),(int)((width-unitFieldHeight)*0.5),textHeight),
                         1f,
-                        GameStateManager.gameStyle.get(GameStyle.PALETTE.MAIN)
+                        new Color(14, 101, 98)
                 ));
             }
 
-            for (NewDrawText dt:text){
+            for (DrawText dt:text){
                 dt.render(g);
             }
 
@@ -100,6 +98,9 @@ public class UnitBuyMenu extends UnitStructureTab{
                 return;
             boolean res=RoundManager.getCurrentPlayer().buyUnit(WorldMap.selectedHexagon,index);
             System.out.println("Buying unit "+index+" with "+res);
+        }
+        for (DrawText dt:text){
+            dt.update();
         }
     }
 }

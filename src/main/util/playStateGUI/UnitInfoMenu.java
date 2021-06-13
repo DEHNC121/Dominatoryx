@@ -1,16 +1,11 @@
 package main.util.playStateGUI;
 
-import main.GamePanel;
-import main.graphics.DrawText;
 import main.graphics.GameImage;
-import main.graphics.NewDrawText;
+import main.graphics.DrawText;
 import main.states.GameStateManager;
 import main.states.GameStyle;
-import main.util.map.Object2DInt;
 import main.util.map.WorldMap;
-import main.util.structures.StructureMenuList;
 import main.util.units.Unit;
-import main.util.units.UnitMenuList;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,7 +17,7 @@ public class UnitInfoMenu extends UnitStructureTab{
     int fontSize=20;
     int tabulator=width/10;
 
-    private ArrayList<NewDrawText> fields;
+    private ArrayList<DrawText> fields;
     public UnitInfoMenu() {
         super();
         fields=new ArrayList<>();
@@ -31,7 +26,7 @@ public class UnitInfoMenu extends UnitStructureTab{
                 ,"Movement Points: "+getCurrUnit().getMovement()+"/"+getCurrUnit().getMaxMovement(),"Attack Cost: "+getCurrUnit().attackMovementCost()+"MP"));
 
         for(int i = 0; i< 4; i++){
-            fields.add(new NewDrawText(text.get(i),
+            fields.add(new DrawText(text.get(i),
                     new Rectangle(0,y+imageSize+(i+1)*textHeight,width,textHeight),
                     1f,
                     GameStateManager.gameStyle.get(GameStyle.PALETTE.UPFRONT)
@@ -49,7 +44,7 @@ public class UnitInfoMenu extends UnitStructureTab{
         image.render(g);
 
 
-        for (NewDrawText dt:fields){
+        for (DrawText dt:fields){
             dt.render(g);
         }
 

@@ -1,13 +1,12 @@
 package main.graphics;
 
+import main.states.GameStyle;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 
 import java.awt.*;
 
-import java.security.SignedObject;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ScrollField {
 
@@ -19,7 +18,7 @@ public class ScrollField {
     Rectangle outRectangle;
     Rectangle wholeRectangle;
 
-    ArrayList<NewDrawText> textFields;
+    ArrayList<DrawText> textFields;
 
     private int middleIndex;
     int showNumber;
@@ -53,13 +52,52 @@ public class ScrollField {
         for (int i=showNumber/2;i>=-showNumber/2 && showNumber>0;i--){
             int number=i+showNumber/2;
             textFields.add(
-                    new NewDrawText(fields.get(number),
+                    new DrawText(fields.get(number),
                             new Rectangle(outRectangle.x, (int)(outRectangle.y+i*(outRectangle.height*0.7)), outRectangle.width , outRectangle.height),
                             1f,
                             new Color(color.getRed(),color.getGreen(),color.getBlue(),255-(Math.abs(i)*80))));
         }
 
     }
+
+    public ScrollField(Rectangle outRectangle, ArrayList<String> fieldsIN, GameStyle.PALETTE colorStyle, int showNumberIn) {
+        textFields=new ArrayList<>();
+
+        this.outRectangle = outRectangle;
+        if (fieldsIN==null){
+
+            this.showNumber= showNumberIn;
+            ArrayList<String> dataList=new ArrayList<>();
+            for (int i=0; i<=showNumber;i++){
+                dataList.add(String.valueOf(i));
+            }
+
+            this.fields = dataList;
+        }else {
+
+            this.fields = fieldsIN;
+            this.showNumber= Math.min(showNumberIn, fields.size());
+        }
+        if (showNumber % 2==0){
+            showNumber-=1;
+        }
+
+        wholeRectangle = new Rectangle(outRectangle.x, (int)(outRectangle.y-(outRectangle.height*showNumber/2)), outRectangle.width , outRectangle.height*showNumber);
+
+
+        middleIndex = fields.size()/2;
+        for (int i=showNumber/2;i>=-showNumber/2 && showNumber>0;i--){
+            int number=i+showNumber/2;
+            textFields.add(
+                    new DrawText(fields.get(number),
+                            new Rectangle(outRectangle.x, (int)(outRectangle.y+i*(outRectangle.height*0.7)), outRectangle.width , outRectangle.height),
+                            1f,
+                            colorStyle,
+                            255-(Math.abs(i)*80)));
+        }
+
+    }
+
     public ScrollField(ScrollField scrollField) {
         textFields=scrollField.textFields;
 
@@ -105,6 +143,9 @@ public class ScrollField {
             }
 
         }
+        for (DrawText dt:textFields){
+            dt.update();
+        }
 
     }
 
@@ -117,7 +158,7 @@ public class ScrollField {
     }
 
     public void render (Graphics g) {
-        for (NewDrawText dt:textFields){
+        for (DrawText dt:textFields){
             dt.render(g);
         }
     }

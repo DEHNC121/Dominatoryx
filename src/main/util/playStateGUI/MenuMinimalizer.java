@@ -1,7 +1,7 @@
 package main.util.playStateGUI;
 
 import main.GamePanel;
-import main.graphics.NewDrawText;
+import main.graphics.DrawText;
 import main.states.GameStateManager;
 import main.states.GameStyle;
 import main.util.KeyHandler;
@@ -13,19 +13,21 @@ public class MenuMinimalizer {
     Rectangle body;
     int mouseClick=-1;
     UnitAndStructureMenu menu;
-    NewDrawText name;
+    DrawText name;
 
     MenuMinimalizer(UnitAndStructureMenu menu){
         this.menu=menu;
         body=new Rectangle(0,(int) (GamePanel.height*0.05),(int) (GamePanel.width*0.16),(int) (GamePanel.height*0.05));
-        name=new NewDrawText("Shop",
+        name=new DrawText("Shop",
                 body,
                 1,
-                GameStateManager.gameStyle.get(GameStyle.PALETTE.FRONT)
+                GameStyle.PALETTE.FRONT
                 );
     }
 
     public void render(Graphics g){
+
+        name.update();
         g.setColor(GameStateManager.gameStyle.get(GameStyle.PALETTE.BACKGROUND));
         g.fillRect(body.x,body.y,body.width,body.height);
         name.render(g);

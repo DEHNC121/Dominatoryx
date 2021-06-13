@@ -1,6 +1,5 @@
 package main.util.playStateGUI;
 
-import main.graphics.DrawText;
 import main.graphics.Sprite;
 import main.util.RoundManager;
 import main.util.map.Object2DInt;

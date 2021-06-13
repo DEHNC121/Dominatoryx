@@ -1,5 +1,7 @@
 package main.graphics;
 
+import main.states.GameStyle;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -10,6 +12,9 @@ public class NumericScrollField extends ScrollField{
 
     public NumericScrollField(Rectangle outRectangle, ArrayList<String> fieldsIN, Color color, int showNumberIn) {
         super(outRectangle, fieldsIN, color, showNumberIn);
+    }
+    public NumericScrollField(Rectangle outRectangle, ArrayList<String> fieldsIN, GameStyle.PALETTE colorStyle, int showNumberIn) {
+        super(outRectangle, fieldsIN, colorStyle, showNumberIn);
     }
     public NumericScrollField(ScrollField scrollField) {
         super(scrollField);

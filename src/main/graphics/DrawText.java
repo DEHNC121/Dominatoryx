@@ -1,110 +1,139 @@
 package main.graphics;
 
-import main.util.map.Object2DInt;
+import main.GamePanel;
+import main.states.GameStateManager;
+import main.states.GameStyle;
 
 import java.awt.*;
 
-public class DrawText
-{
-    private Font font;
-    public static String fontName;
-    private String text;
+public class DrawText {
 
-    private Object2DInt position;
-    private Color color;
+    protected Font font;
+    public static String fontName="Times New Roman";
 
-    public DrawText(String text, Object2DInt position) {
-        this.font = new Font("Times New Roman", Font.PLAIN, 100);
+    protected String text;
+
+    protected Rectangle outRectangle;
+    protected Rectangle inRectangle;
+
+    protected Color textColor;
+    protected Color inColor;
+    protected Color outColor;
+
+    protected int alpha;
+
+
+    protected GameStyle.PALETTE textColorStyle;
+    protected GameStyle.PALETTE inColorStyle;
+    protected GameStyle.PALETTE outColorStyle;
+
+    public Rectangle getOutRectangle() {
+        return outRectangle;
+    }
+
+    public Rectangle getInRectangle() {
+        return inRectangle;
+    }
+
+    protected void init(String text, Rectangle outRectangle, float heightPercentages){
+
+        this.font = new Font(fontName, Font.PLAIN, -1);
         this.text = text;
-        this.position = position;
-        this.color = new Color(255, 255, 255,255);
+        this.outRectangle = outRectangle;
+        this.inRectangle = new Rectangle(0,0,0,(int)(outRectangle.height*heightPercentages)) ;
+        this.textColor = new Color(0,0,0,255);
+        this.inColor = new Color(4, 52, 72,255);
+        this.outColor = new Color(0,0,0,0);
+        this.textColorStyle = null;
+        this.inColorStyle = GameStyle.PALETTE.GROUND;
+        this.outColorStyle = null;
+        this.alpha=255;
+
+        setSize(GamePanel.getGraphics2D());
     }
 
-    public DrawText(String text, Object2DInt position, Color color) {
-        this.font = new Font("Times New Roman", Font.PLAIN, 100);
-        this.text = text;
-        this.position = position;
-        this.color = color;
+    public DrawText(String text, Rectangle outRectangle, float heightPercentages) {
+        init(text,outRectangle,heightPercentages);
     }
 
-    public DrawText(String text, Object2DInt position, int size) {
-        this.font = new Font("Times New Roman", Font.PLAIN, size);
-        this.text = text;
-        this.position = position;
-        this.color = new Color(0,0,0,255);
+    public DrawText(String text, Rectangle outRectangle, float heightPercentages, Color textColor) {
+        init(text,outRectangle,heightPercentages);
+        this.textColor = textColor;
     }
 
-    public DrawText(String name, String text, int style, int size, Object2DInt position, Color color) {
-
-        this.font = new Font(name, style, size);
-        this.text = text;
-        this.position = position;
-        this.color = color;
+    public DrawText(String text, Rectangle outRectangle, float heightPercentages, GameStyle.PALETTE textColorStyle) {
+        init(text,outRectangle,heightPercentages);
+        this.textColorStyle = textColorStyle;
     }
-    public DrawText( String text, int style, int size, Object2DInt position, Color color) {
-
-        this.font = new Font(fontName, style, size);
-        this.text = text;
-        this.position = position;
-        this.color = color;
+    public DrawText(String text, Rectangle outRectangle, float heightPercentages, GameStyle.PALETTE textColorStyle, int alpha) {
+        init(text,outRectangle,heightPercentages);
+        this.textColorStyle = textColorStyle;
+        this.alpha=alpha;
     }
 
-    public static void setFontName(String fontName) {
-        DrawText.fontName = fontName;
+    public DrawText(String text, Rectangle outRectangle, float heightPercentages, Color textColor, String fontName) {
+        init(text,outRectangle,heightPercentages);
+        this.textColor = textColor;
+        this.font = new Font(fontName, Font.PLAIN, -1);
     }
 
-    public String getName() {
-        return font.getName();
-    }
+    protected void setSize(Graphics g) {
+        font=new Font(font.getName(),Font.PLAIN,1);
+        FontMetrics metrics = g.getFontMetrics(font);
 
-    public String getText() {
-        return text;
-    }
+        while(inRectangle.height>metrics.getHeight()){
 
-    public int getStyle() {
-        return font.getStyle();
-    }
+            font=new Font(font.getName(),Font.PLAIN,font.getSize()+1);
+            metrics = g.getFontMetrics(font);
+        }
 
-    public int getSize() {
-        return font.getSize();
-    }
+        font=new Font(font.getName(),Font.PLAIN,font.getSize()-1);
+        metrics = g.getFontMetrics(font);
 
-    public Object2DInt getPosition() {
-        return position;
-    }
 
-    public void setName(String name) {
-        font=new Font(name, getStyle(),getSize());
+        int x = outRectangle.x + (outRectangle.width - metrics.stringWidth(text)) / 2;
+        int y = outRectangle.y + ((outRectangle.height - metrics.getHeight()) / 2) + metrics.getAscent();
+
+        inRectangle.setSize(metrics.stringWidth(text),metrics.getHeight());
+
+        inRectangle.setLocation(x,y-inRectangle.height);
+
+
+
     }
 
     public void setText(String text) {
         this.text = text;
     }
 
-    public void setStyle(int style) {
-        font=new Font(getName(), style,getSize());
+    public static void setFontName(String fontName) {
+        DrawText.fontName = fontName;
     }
 
-    public void setSize(int size) {
-        font=new Font(getName(), getStyle(),size);
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setPosition(Object2DInt position) {
-        this.position = position;
+    public void update(){
+        if (textColorStyle!=null){
+            Color data=GameStateManager.gameStyle.get(textColorStyle);
+            textColor= new Color(data.getRed(),data.getGreen(),data.getBlue(),alpha);
+        }
+        if (inColorStyle!=null){
+            inColor= GameStateManager.gameStyle.get(inColorStyle);
+        }
+        if (outColorStyle!=null){
+            outColor= GameStateManager.gameStyle.get(outColorStyle);
+        }
     }
 
     public void render (Graphics g) {
 
-        g.setColor(color);
+
+//        g.setColor(Color.green);
+//        g.drawRect(inRectangle.x,inRectangle.y,inRectangle.width,inRectangle.height);
+
+        g.setColor(textColor);
         g.setFont(font);
-        g.drawString(text,position.x, position.y);
+
+
+        g.drawString(text,inRectangle.x, inRectangle.y+inRectangle.height);
     }
+
 }

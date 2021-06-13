@@ -1,29 +1,26 @@
 package main.util.playStateGUI;
 
 import main.GamePanel;
-import main.graphics.DrawText;
 import main.graphics.GameImage;
-import main.graphics.NewDrawText;
+import main.graphics.DrawText;
 import main.states.GameStateManager;
-import main.states.GameStyle;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 import main.util.RoundManager;
-import main.util.map.Object2DInt;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class GUIManager {
-    public UnitAndStructureMenu unitMenu=new UnitAndStructureMenu(0,((int) GamePanel.height)/20,
-            ((int) GamePanel.width)*3/20, ((int) GamePanel.height)*17/20);
+    public UnitAndStructureMenu unitMenu=new UnitAndStructureMenu(0,(int)( GamePanel.height*0.05),
+            (int)( GamePanel.width*0.16), (int)( GamePanel.height*0.85));
     public ArrayList<Button> buttonList;
     public ArrayList<GameImage> imageList;
     public GameStateManager gsm;
     public TurnIndicator turnIndicator=new TurnIndicator((int)GamePanel.width*4/10,0,
             (int)(GamePanel.width)/5, (int) (GamePanel.height*0.03f));
 
-    public NewDrawText money=new NewDrawText(""+RoundManager.getCurrentPlayer().money,
+    public DrawText money=new DrawText(""+RoundManager.getCurrentPlayer().money,
             new Rectangle((int) (GamePanel.width*0.03f),0,
                     (int) (GamePanel.width*0.03f),(int) (GamePanel.width*0.03f)),
             1f,

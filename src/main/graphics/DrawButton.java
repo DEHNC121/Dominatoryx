@@ -1,11 +1,12 @@
 package main.graphics;
 
 import main.GamePanel;
+import main.states.GameStyle;
 import main.util.MouseHandler;
 
 import java.awt.*;
 
-public class DrawButton extends NewDrawText{
+public class DrawButton extends DrawText {
 
     private Point mousePosition;
     float inWidth;
@@ -28,6 +29,11 @@ public class DrawButton extends NewDrawText{
 
     public DrawButton(String text, Rectangle outRectangle, float heightPercentages, Color textColor,float inWidth) {
         super(text, outRectangle, heightPercentages, textColor);
+        initButton(inWidth);
+    }
+
+    public DrawButton(String text, Rectangle outRectangle, float heightPercentages, GameStyle.PALETTE textColorStyle, float inWidth) {
+        super(text, outRectangle, heightPercentages, textColorStyle);
         initButton(inWidth);
     }
 

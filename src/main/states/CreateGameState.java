@@ -23,7 +23,7 @@ public class CreateGameState extends GameState{
 
 
 
-    ArrayList<NewDrawText> textFields;
+    ArrayList<DrawText> textFields;
 
     void init(){
         allowedNumbers = new HashMap<>();
@@ -47,58 +47,58 @@ public class CreateGameState extends GameState{
         state=MEDIUM;
         textFields=new ArrayList<>();
         namedScrollFields=new ArrayList<>();
-        NewDrawText.setFontName("OpenSans");
-        NewDrawText temp;
+        DrawText.setFontName("OpenSans");
+        DrawText temp;
 
         textFields.add(
                 new DrawButton("BACK",
                         new Rectangle((int)(GamePanel.width*0.01), 0, (int) (GamePanel.width*0.21),(int)(GamePanel.height*0.161)),
                         1f,
-                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.22f));
+                        GameStyle.PALETTE.UPFRONT,0.22f));
 
         textFields.add(
                 new DrawButton("PLAY",
                         new Rectangle(0, (int) (GamePanel.height*0.79), (int) GamePanel.width, (int)(GamePanel.height*0.2)),
                         1f,
-                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.4f));
+                        GameStyle.PALETTE.UPFRONT,0.4f));
 
         namedScrollFields.add(new NamedScrollField("Map size:",
                 new Rectangle(0, (int) (GamePanel.height * 0.175f),(int) (GamePanel.width),(int) (GamePanel.height * 0.2f)),
                 sizes,
-                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT),
-                gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                GameStyle.PALETTE.FRONT,
+                GameStyle.PALETTE.UPFRONT,
                 3,
                 1f));
 
-        temp=new NewDrawText(
+        temp=new DrawText(
                 "Players:",
                 new Rectangle(0, (int) (GamePanel.height * 0.5f),(int) (GamePanel.width*0.5),(int) (GamePanel.height * 0.15f)),
                 1f,
-                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)
+                GameStyle.PALETTE.FRONT
         );
         namedScrollFields.add(new NamedScrollField(
                 temp,
                 new NumericScrollField(
                         new Rectangle(temp.getInRectangle().x+temp.getInRectangle().width, temp.getOutRectangle().y, (int)(temp.getOutRectangle().height*0.8), temp.getOutRectangle().height),
                         null,
-                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                        GameStyle.PALETTE.UPFRONT,
                         3
 
                         )
                 ));
 
-        temp=new NewDrawText(
+        temp=new DrawText(
                 "Computers:",
                 new Rectangle((int) (GamePanel.width*0.47), (int) (GamePanel.height * 0.5f),(int) (GamePanel.width*0.5),(int) (GamePanel.height * 0.15f)),
                 1f,
-                gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)
+                GameStyle.PALETTE.FRONT
         );
         namedScrollFields.add(new NamedScrollField(
                 temp,
                 new NumericScrollField(
                         new Rectangle(temp.getInRectangle().x+temp.getInRectangle().width, temp.getOutRectangle().y, (int)(temp.getOutRectangle().height*0.8), temp.getOutRectangle().height),
                         null,
-                        gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),
+                        GameStyle.PALETTE.UPFRONT,
                         3
 
                 )
@@ -148,6 +148,9 @@ public class CreateGameState extends GameState{
                 ((DrawButton)textFields.get(i)).mouseClick=-1;
             }
         }
+        for (DrawText dt:textFields){
+            dt.update();
+        }
     }
 
     @Override
@@ -156,7 +159,7 @@ public class CreateGameState extends GameState{
             sf.input(mouse,key);
         }
 
-        for (NewDrawText dt:textFields){
+        for (DrawText dt:textFields){
             if (dt instanceof DrawButton){
                 ((DrawButton)dt).input(mouse);
             }
@@ -169,7 +172,7 @@ public class CreateGameState extends GameState{
         for (NamedScrollField sf : namedScrollFields) {
             sf.render(g);
         }
-        for (NewDrawText dt:textFields){
+        for (DrawText dt:textFields){
             dt.render(g);
         }
     }

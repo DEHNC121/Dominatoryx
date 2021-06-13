@@ -2,7 +2,7 @@ package main.util.playStateGUI;
 
 import main.GamePanel;
 import main.graphics.DrawButton;
-import main.graphics.NewDrawText;
+import main.graphics.DrawText;
 import main.states.GameStateManager;
 import main.states.GameStyle;
 import main.util.KeyHandler;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class TabSwitcher {
     Rectangle body;
 
-    ArrayList<NewDrawText> switcher;
+    ArrayList<DrawText> switcher;
     int mouseClick;
     UnitAndStructureMenu menu;
 
@@ -25,13 +25,13 @@ public class TabSwitcher {
         this.menu=menu;
         float textHeight=0.8f;
 
-        switcher.add(new NewDrawText("Units",
+        switcher.add(new DrawText("Units",
                 new Rectangle(body.x, body.y,body.width/2,body.height),
                 textHeight,
                 GameStateManager.gameStyle.get(GameStyle.PALETTE.UPFRONT)
                 ));
 
-        switcher.add(new NewDrawText("Structures",
+        switcher.add(new DrawText("Structures",
                 new Rectangle(body.x+body.width/2,body.y,body.width/2,body.height),
                 textHeight,
                 GameStateManager.gameStyle.get(GameStyle.PALETTE.UPFRONT)
@@ -51,7 +51,7 @@ public class TabSwitcher {
             g.fillRect(body.x+body.width/2,body.y,body.width/2,body.height);
         }
 
-        for (NewDrawText dt:switcher){
+        for (DrawText dt:switcher){
             dt.render(g);
         }
     }
@@ -61,7 +61,7 @@ public class TabSwitcher {
     }
 
     public void input(MouseHandler mouseHandler, KeyHandler key){
-        for (NewDrawText dt:switcher){
+        for (DrawText dt:switcher){
             if (dt instanceof DrawButton){
                 ((DrawButton)dt).input(mouseHandler);
             }

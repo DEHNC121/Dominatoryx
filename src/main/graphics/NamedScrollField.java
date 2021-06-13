@@ -1,5 +1,6 @@
 package main.graphics;
 
+import main.states.GameStyle;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 
@@ -8,31 +9,42 @@ import java.util.ArrayList;
 
 public class NamedScrollField {
     private ScrollField scrollField;
-    private final NewDrawText fieldName;
+    private DrawText fieldName;
+    private float scrollFieldSize=0.8f;
 
+    void init(String name, Rectangle outRectangle, ArrayList<String> fields, GameStyle.PALETTE nameColorStyle, GameStyle.PALETTE scrollFieldColorStyle,
+              int showNumberIn, float heightPercentages){
 
-    public NamedScrollField(String name, Rectangle outRectangle, ArrayList<String> fields, Color nameColor, Color scrollFieldColor, int showNumberIn, float heightPercentages) {
-
-        this.fieldName =new NewDrawText(name,
+        this.fieldName =new DrawText(name,
                 new Rectangle(outRectangle.x, outRectangle.y, outRectangle.width, outRectangle.height),
                 heightPercentages,
-                nameColor);
+                nameColorStyle);
 
 
-        scrollField=new ScrollField(
-                new Rectangle(fieldName.inRectangle.x+fieldName.inRectangle.width, outRectangle.y, (int)(outRectangle.height*0.8), outRectangle.height),
+        this.scrollField=new ScrollField(
+                new Rectangle(fieldName.inRectangle.x+fieldName.inRectangle.width, outRectangle.y, (int)(outRectangle.height*scrollFieldSize), outRectangle.height),
                 fields,
-                scrollFieldColor,
+                scrollFieldColorStyle,
                 showNumberIn
-                );
+        );
+    }
+    public NamedScrollField(String name, Rectangle outRectangle, ArrayList<String> fields, GameStyle.PALETTE nameColorStyle, GameStyle.PALETTE scrollFieldColorStyle,
+                            int showNumberIn, float heightPercentages) {
+        init(name, outRectangle, fields, nameColorStyle, scrollFieldColorStyle, showNumberIn, heightPercentages);
 
     }
 
-    public NamedScrollField(NewDrawText drawText,ScrollField scrollField) {
+    public NamedScrollField(String name, Rectangle outRectangle, ArrayList<String> fields, GameStyle.PALETTE nameColorStyle, GameStyle.PALETTE scrollFieldColorStyle,
+                            int showNumberIn, float heightPercentages, float scrollFieldSize) {
+        this.scrollFieldSize=scrollFieldSize;
+        init(name, outRectangle, fields, nameColorStyle, scrollFieldColorStyle, showNumberIn, heightPercentages);
+
+
+    }
+
+    public NamedScrollField(DrawText drawText, ScrollField scrollField) {
 
         this.fieldName =drawText;
-
-
         this.scrollField=scrollField;
 
     }
@@ -44,7 +56,7 @@ public class NamedScrollField {
 
     public void update () {
         scrollField.update();
-
+        fieldName.update();
     }
 
     public void input (MouseHandler mouse, KeyHandler key) {
@@ -56,14 +68,16 @@ public class NamedScrollField {
         fieldName.render(g);
         scrollField.render(g);
 //        g.setColor(Color.red);
-//        g.drawRect(rectangle.x,rectangle.y,rectangle.width,rectangle.height);
+//        g.drawRect(fieldName.outRectangle.x,fieldName.outRectangle.y,fieldName.outRectangle.width,fieldName.outRectangle.height);
+//        g.setColor(Color.red);
+//        g.drawRect(scrollField.outRectangle.x,scrollField.outRectangle.y,scrollField.outRectangle.width,scrollField.outRectangle.height);
     }
 
     public ScrollField getScrollField() {
         return scrollField;
     }
 
-    public NewDrawText getFieldName() {
+    public DrawText getFieldName() {
         return fieldName;
     }
 }

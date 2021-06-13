@@ -3,7 +3,7 @@ package main.states;
 import main.GamePanel;
 import main.graphics.DrawButton;
 import main.graphics.GameImage;
-import main.graphics.NewDrawText;
+import main.graphics.DrawText;
 import main.util.KeyHandler;
 import main.util.MouseHandler;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PauseState extends GameState{
-    ArrayList<NewDrawText> textFields;
+    ArrayList<DrawText> textFields;
 
     public PauseState(GameStateManager gsm) {
         super(gsm);
@@ -25,21 +25,21 @@ public class PauseState extends GameState{
 
         ArrayList<String> text=new ArrayList<>(Arrays.asList("Pause","Resume","Restart","Save","Menu"));
 
-        NewDrawText.setFontName("OpenSans");
+        DrawText.setFontName("OpenSans");
 
 
         textFields.add(
-                new NewDrawText(text.get(textFields.size()),
+                new DrawText(text.get(textFields.size()),
                         new Rectangle(0, 0, (int) GamePanel.width,(int)(GamePanel.height*0.3)),
                         1f,
-                        gsm.getGameStyle().get(GameStyle.PALETTE.FRONT)));
+                        GameStyle.PALETTE.FRONT));
         while (textFields.size()< text.size()){
 
             textFields.add(
                     new DrawButton(text.get(textFields.size()),
                             new Rectangle(0, (int) (GamePanel.height*(start+heightStep*textFields.size())), (int) GamePanel.width,(int)(GamePanel.height*0.15)),
                             1f,
-                            gsm.getGameStyle().get(GameStyle.PALETTE.UPFRONT),0.4f));
+                            GameStyle.PALETTE.UPFRONT,0.4f));
         }
 
     }
@@ -61,12 +61,16 @@ public class PauseState extends GameState{
                 ((DrawButton)textFields.get(i)).mouseClick=-1;
             }
         }
+
+        for (DrawText dt:textFields){
+            dt.update();
+        }
     }
 
     @Override
     public void input (MouseHandler mouse, KeyHandler key) {
 
-        for (NewDrawText dt:textFields){
+        for (DrawText dt:textFields){
             if (dt instanceof DrawButton){
                 ((DrawButton)dt).input(mouse);
             }
@@ -76,7 +80,7 @@ public class PauseState extends GameState{
     @Override
     public void render (Graphics2D g) {
 
-        for (NewDrawText dt:textFields){
+        for (DrawText dt:textFields){
             dt.render(g);
         }
 
