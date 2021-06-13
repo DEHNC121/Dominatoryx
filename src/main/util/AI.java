@@ -14,7 +14,7 @@ public class AI extends Player {
     private long nextMoveTime;
     public HashMap<Hexagon2D, Integer> AIHexagons; //AI hexagons -> (distance to closest enemy)
     public HashMap<Hexagon2D, Integer> AIHexagonsToEnemies;
-    roundType round;
+    public roundType round;
     public int nOfHexagons;
     public boolean attackMode;
     public int attackModeRounds;
@@ -70,9 +70,9 @@ public class AI extends Player {
     }
     public void generateRounds () {
 
-        if (RoundManager.roundCnt > 3) {
+        if (RoundManager.roundCnt > 6) {
             if (countHexagons() < nOfHexagons) {
-                attackModeRounds = 3;
+                attackModeRounds = 2;
             }
             if (attackModeRounds > 0) {
                 round = roundType.ATTACK;
@@ -87,8 +87,10 @@ public class AI extends Player {
             }
         }
         else {
-            round = roundType.ATTACK;
-            //round = random.nextBoolean() ? roundType.ATTACK : roundType.DEFENSE;
+            if (RoundManager.roundCnt > 3)
+                round = random.nextBoolean() ? roundType.ATTACK : roundType.DEFENSE;
+            else
+                round = roundType.ATTACK;
         }
         randomize(0.1);
     }
@@ -148,13 +150,14 @@ public class AI extends Player {
         for (Map.Entry<Hexagon2D, Integer> entry :
                 hexagon.getSpecialNeighbors(10000000, (hex) -> true, (hex) -> (hex.getOwner() != this && hex.getOwner() != null)).entrySet()) {
 
-            AIHexagons.put(hexagon, entry.getValue());
+            AIHexagonsToEnemies.put(hexagon, entry.getValue());
         }
     }
 
     public void play () {
         returnFlag = false;
         makeAIHexagons();
+        makeAIHexagonsToEnemies();
         generateRounds();
 
         if (round == roundType.ATTACK) {
@@ -343,7 +346,7 @@ public class AI extends Player {
             return getRandomFromSet(map.keySet());
         }
         HashSet<Hexagon2D> set = new HashSet<>();
-        Hexagon2D hexagonToReturn = null;
+        //Hexagon2D hexagonToReturn = null;
         int maxPriority = -10;
         for (Hexagon2D hex : map.keySet()) {
             int p = getPriority(hexagon, hex);
@@ -364,15 +367,23 @@ public class AI extends Player {
                 (hex.getOwner() == RoundManager.getCurrentPlayer()), (hex)->false
         );
         int minSecure = Integer.MAX_VALUE;
-        Hexagon2D returnHexagon = null;
+        //Hexagon2D returnHexagon = null;
+        HashSet<Hexagon2D> set = new HashSet<>();
         map.entrySet().removeIf(entry -> entry.getKey().getUnit() != null);
+        map.entrySet().removeIf(entry -> AIHexagons.get(entry.getKey()) > AIHexagons.get(hexagon));
         for (Hexagon2D hexagonInMap : map.keySet()) {
             if (AIHexagons.get(hexagonInMap) < minSecure) {
                 minSecure = AIHexagons.get(hexagonInMap);
-                returnHexagon = hexagonInMap;
+                //returnHexagon = hexagonInMap;
             }
         }
-        return returnHexagon;
+        for (Hexagon2D hexagonInMap : map.keySet()) {
+            if (AIHexagons.get(hexagonInMap) == minSecure) {
+                set.add(hexagonInMap);
+            }
+        }
+        //set.removeIf(el -> AIHexagons.get(el))
+        return getRandomFromSet(set);
     }
 
 
